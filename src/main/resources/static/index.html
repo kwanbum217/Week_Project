@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajax 실습</title>
+  <style>
+    body {
+      padding: 20px;
+      font-family: sans-serif;
+
+    }
+
+    .member-box {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 5px;
+      border-radius: 5px;
+    }
+
+    input {
+      padding: 5px;
+      margin: 5px;
+    }
+
+    button {
+      padding: 5px 10px;
+      background-color: olivedrab;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>회원 관리 시스템 => Ajax 버전</h1>
+  <div>
+    <input type="text" id="name" placeholder="이름">
+    <input type="text" id="email" placeholder="이메일">
+    <button onclick="saveMember()">회원 추가</button>
+  </div>
+  <hr>
+
+  <button onclick="loadMembers()">회원 목록 불러오기</button>
+  <div id="list-area"></div>
+
+  <script>
+    // ====================================
+    // 서버에서 데이터 가져오기 => GET 방식
+    // ====================================
+    function loadMembers() {
+      // fetch('주소') : 주소로 요청을 보낸다. 기본은 GET 방식.
+      fetch('/api/members')
+        // 서버에서 보낸 response(응답된 데이터)를 json으로 변환.
+        .then(response => response.json())
+        .then(data => {
+          // data : 자바스크립트 배열 데이터가 됨.
+          // => [{name : '고길동', email : 'gildong@test.com'}, {...}, {...}]
+          console.log("받은 데이터 : ", data); //개발자 도구 콘솔에서 확인.
+
+          // 화면에 나타내기 위한 html을 담을 변수.
+          let html = '';
+
+          // 배열의 데이터를 순회하면서 html을 생성. => <div> 태그 생성
+          data.forEach(member => {
+            html += `<div class="member-box">
+                      <strong> 이름 :</strong> ${member.name} <br/>
+                      <strong> 이메일 :</strong> ${member.email}
+                      </div>`;
+          });
+
+          // 생성된 html을 화면에 나타내기.
+          document.getElementById('list-area').innerHTML = html;
+        })
+        .catch(error => {
+          console.log("에러 : ", error);
+          alert("데이터를 가져오는데 실패했습니다.");
+        })
+    }
+  </script>
+</body>
+
+</html>
