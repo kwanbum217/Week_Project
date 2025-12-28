@@ -74,7 +74,7 @@ datingapp/
 
 ## 5. AI Coding Rules
 
-*   **언어:** 한국어 응답 우선
+*   **언어:** 모든 응답, 문서(task, plan, walkthrough 등), 주석은 한국어로 작성 (영구적 적용)
 *   **No Emojis:** 코드 주석, 커밋 메시지에 이모지 사용 금지
 *   **Conciseness:** 간결하고 핵심에 집중
 *   **Pathing:** 프로젝트 루트 기준 상대 경로 사용

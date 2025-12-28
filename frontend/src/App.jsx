@@ -9,6 +9,7 @@ import OAuth2RedirectHandler from './pages/OAuth2RedirectHandler';
 import ProtectedRoute from './components/ProtectedRoute';
 import CustomerSupportChat from './components/CustomerSupportChat';
 import Background from './components/Background';
+import Navbar from './components/Navbar';
 import './App.css';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
     <Router>
       <div className="min-h-screen relative">
         <Background />
+        <Navbar />
         <Routes>
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/signup" element={<SignUp />} />

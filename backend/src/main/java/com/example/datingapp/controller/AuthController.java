@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class AuthController {
 
   @Autowired
@@ -19,11 +20,16 @@ public class AuthController {
 
   @PostMapping("/register")
   public ResponseEntity<?> registerUser(@RequestBody User user) {
-    if (userService.findByUsername(user.getUsername()).isPresent()) {
-      return ResponseEntity.badRequest().body("Username is already taken!");
+    try {
+      if (userService.findByUsername(user.getUsername()).isPresent()) {
+        return ResponseEntity.badRequest().body("Username is already taken!");
+      }
+      User savedUser = userService.registerUser(user);
+      return ResponseEntity.ok(savedUser);
+    } catch (Exception e) {
+      e.printStackTrace(); // 서버 콘솔에 에러 출력
+      return ResponseEntity.internalServerError().body("Registration failed: " + e.getMessage());
     }
-    User savedUser = userService.registerUser(user);
-    return ResponseEntity.ok(savedUser);
   }
 
   @PostMapping("/login")

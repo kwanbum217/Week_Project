@@ -31,19 +31,25 @@ public class SecurityConfig {
         .cors(cors -> cors.configurationSource(request -> {
           var corsConfiguration = new org.springframework.web.cors.CorsConfiguration();
           corsConfiguration.setAllowedOrigins(java.util.List.of("http://localhost:5173", "http://localhost:9999"));
-          corsConfiguration.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+          corsConfiguration.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
           corsConfiguration.setAllowedHeaders(java.util.List.of("*"));
+          corsConfiguration.setExposedHeaders(java.util.List.of("*"));
           corsConfiguration.setAllowCredentials(true);
           return corsConfiguration;
         })) // Enable CORS
         .csrf(csrf -> csrf.disable()) // Disable CSRF for simplicity in this MVP
+        .sessionManagement(session -> session
+            .sessionCreationPolicy(org.springframework.security.config.http.SessionCreationPolicy.STATELESS)) // Stateless
+                                                                                                              // session
         .authorizeHttpRequests(auth -> auth
             .requestMatchers(new AntPathRequestMatcher("/api/auth/**")).permitAll() // Allow auth endpoints
             .requestMatchers(new AntPathRequestMatcher("/api/support/**")).permitAll() // Allow customer support
             .requestMatchers(new AntPathRequestMatcher("/ws/**")).permitAll() // Allow WebSocket
             .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll() // Allow H2 console
             .requestMatchers(new AntPathRequestMatcher("/oauth2/**")).permitAll() // Allow OAuth2
+            .requestMatchers(new AntPathRequestMatcher("/login/**")).permitAll() // Allow login paths
             .requestMatchers(new AntPathRequestMatcher("/login/oauth2/code/**")).permitAll()
+            .requestMatchers(new AntPathRequestMatcher("/error")).permitAll() // Allow error page
             .anyRequest().authenticated())
         .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin())) // Allow H2 console frames
         .httpBasic(basic -> basic.disable()) // Disable basic auth

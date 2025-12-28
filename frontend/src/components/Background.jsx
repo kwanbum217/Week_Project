@@ -1,21 +1,105 @@
 import React from 'react';
 
+// MOOA 브랜드 배경 컴포넌트 - 따뜻하고 친근한 디자인
 const Background = () => {
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden bg-gradient-to-br from-[#4ade80] via-[#22c55e] to-[#16a34a]">
-      {/* Gradient Overlay for depth */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.2),transparent_70%)]" />
+    <div className="fixed inset-0 -z-10 overflow-hidden" style={{ background: 'linear-gradient(135deg, #FFF8E7 0%, #FFFEF7 50%, #F5E6D3 100%)' }}>
+      {/* 메인 그라데이션 오버레이 */}
+      <div 
+        className="absolute inset-0"
+        style={{
+          background: 'radial-gradient(circle at 30% 20%, rgba(245, 166, 35, 0.15) 0%, transparent 50%)'
+        }}
+      />
+      <div 
+        className="absolute inset-0"
+        style={{
+          background: 'radial-gradient(circle at 70% 80%, rgba(93, 173, 226, 0.12) 0%, transparent 50%)'
+        }}
+      />
 
-      {/* Floating Spheres */}
-      <div className="absolute top-[-10%] left-[-10%] w-[50vh] h-[50vh] rounded-full bg-gradient-to-br from-[#86efac] to-[#22c55e] opacity-40 blur-3xl animate-float-slow" />
-      <div className="absolute top-[20%] right-[-5%] w-[40vh] h-[40vh] rounded-full bg-gradient-to-bl from-[#bbf7d0] to-[#4ade80] opacity-30 blur-2xl animate-float-medium" />
-      <div className="absolute bottom-[-10%] left-[20%] w-[60vh] h-[60vh] rounded-full bg-gradient-to-tr from-[#4ade80] to-[#15803d] opacity-30 blur-3xl animate-float-fast" />
-      <div className="absolute bottom-[10%] right-[10%] w-[30vh] h-[30vh] rounded-full bg-gradient-to-tl from-[#86efac] to-[#22c55e] opacity-20 blur-2xl animate-float-medium" />
+      {/* 부드러운 원형 장식 - 오렌지 */}
+      <div 
+        className="absolute animate-float-gentle"
+        style={{
+          top: '-5%',
+          left: '-5%',
+          width: '40vh',
+          height: '40vh',
+          borderRadius: '50%',
+          background: 'linear-gradient(135deg, rgba(255, 213, 128, 0.4) 0%, rgba(245, 166, 35, 0.2) 100%)',
+          filter: 'blur(60px)',
+        }}
+      />
 
-      {/* Small particles */}
-      <div className="absolute top-[15%] left-[15%] w-4 h-4 rounded-full bg-white opacity-20 animate-pulse" />
-      <div className="absolute top-[45%] right-[25%] w-6 h-6 rounded-full bg-white opacity-10 animate-pulse delay-700" />
-      <div className="absolute bottom-[25%] left-[35%] w-3 h-3 rounded-full bg-white opacity-20 animate-pulse delay-300" />
+      {/* 부드러운 원형 장식 - 블루 */}
+      <div 
+        className="absolute animate-float-gentle"
+        style={{
+          bottom: '-10%',
+          right: '-5%',
+          width: '50vh',
+          height: '50vh',
+          borderRadius: '50%',
+          background: 'linear-gradient(135deg, rgba(133, 199, 242, 0.3) 0%, rgba(93, 173, 226, 0.15) 100%)',
+          filter: 'blur(60px)',
+          animationDelay: '2s',
+        }}
+      />
+
+      {/* 중앙 하이라이트 */}
+      <div 
+        className="absolute animate-pulse-soft"
+        style={{
+          top: '40%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '60vh',
+          height: '60vh',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, transparent 70%)',
+        }}
+      />
+
+      {/* 작은 장식 요소들 */}
+      <div 
+        className="absolute animate-pulse-soft"
+        style={{
+          top: '20%',
+          right: '20%',
+          width: '8px',
+          height: '8px',
+          borderRadius: '50%',
+          background: 'var(--mooa-orange)',
+          opacity: 0.4,
+        }}
+      />
+      <div 
+        className="absolute animate-pulse-soft"
+        style={{
+          bottom: '30%',
+          left: '15%',
+          width: '12px',
+          height: '12px',
+          borderRadius: '50%',
+          background: 'var(--mooa-blue)',
+          opacity: 0.3,
+          animationDelay: '1s',
+        }}
+      />
+      <div 
+        className="absolute animate-pulse-soft"
+        style={{
+          top: '60%',
+          right: '10%',
+          width: '6px',
+          height: '6px',
+          borderRadius: '50%',
+          background: 'var(--mooa-orange)',
+          opacity: 0.5,
+          animationDelay: '2s',
+        }}
+      />
     </div>
   );
 };

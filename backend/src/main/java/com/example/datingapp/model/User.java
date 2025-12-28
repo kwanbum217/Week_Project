@@ -7,27 +7,37 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "users")
+@Table(name = "USERS")
 public class User {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  @Column(unique = true, nullable = false)
+  @Column(name = "USERNAME", unique = true, nullable = false)
   private String username;
 
-  @Column(nullable = false)
+  @Column(name = "PASSWORD", nullable = false)
   private String password;
 
-  @Column(unique = true)
+  @Column(name = "EMAIL", unique = true)
   private String email;
 
+  @Column(name = "PROVIDER")
   private String provider;
+
+  @Column(name = "PROVIDER_ID")
   private String providerId;
 
+  @Column(name = "GENDER")
   private String gender;
+
+  @Column(name = "LOCATION")
   private String location; // Simple string for now, e.g., "Seoul"
+
+  @Column(name = "LATITUDE")
   private Double latitude;
+
+  @Column(name = "LONGITUDE")
   private Double longitude;
 
   public User(String username, String password, String gender, String location) {
