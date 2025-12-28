@@ -53,13 +53,26 @@ const Match = () => {
 
   const fetchMatches = async () => {
     try {
-      const response = await fetch(`http://localhost:9999/api/matches/${user.username}?radius=100`); // 100km radius
+      const response = await fetch(`http://localhost:9999/api/matches/${user.username}?radius=100`);
+
+      // 응답 Content-Type 확인
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        console.error('서버가 JSON이 아닌 응답을 반환했습니다');
+        setMatches([]); // 빈 배열로 설정
+        return;
+      }
+
       if (response.ok) {
         const data = await response.json();
         setMatches(data);
+      } else {
+        console.error('매칭 조회 실패:', response.status);
+        setMatches([]);
       }
     } catch (error) {
       console.error('Failed to fetch matches', error);
+      setMatches([]);
     }
   };
 

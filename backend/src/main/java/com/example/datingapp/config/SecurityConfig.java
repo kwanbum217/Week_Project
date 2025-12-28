@@ -44,6 +44,7 @@ public class SecurityConfig {
         .authorizeHttpRequests(auth -> auth
             .requestMatchers(new AntPathRequestMatcher("/api/auth/**")).permitAll() // Allow auth endpoints
             .requestMatchers(new AntPathRequestMatcher("/api/support/**")).permitAll() // Allow customer support
+            .requestMatchers(new AntPathRequestMatcher("/api/matches/**")).permitAll() // Allow match endpoints
             .requestMatchers(new AntPathRequestMatcher("/ws/**")).permitAll() // Allow WebSocket
             .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll() // Allow H2 console
             .requestMatchers(new AntPathRequestMatcher("/oauth2/**")).permitAll() // Allow OAuth2

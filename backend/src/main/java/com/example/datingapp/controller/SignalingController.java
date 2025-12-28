@@ -1,32 +1,32 @@
 package com.example.datingapp.controller;
 
-import com.example.datingapp.model.SignalingMessage;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Map;
 
 @Controller
 public class SignalingController {
 
-  @Autowired
-  private SimpMessagingTemplate messagingTemplate;
+  @MessageMapping("/call/offer")
+  @SendTo("/topic/call/offer")
+  public Map<String, Object> handleOffer(@Payload Map<String, Object> offer) {
+    // Offer 메시지 중계
+    return offer;
+  }
 
-  @MessageMapping("/signal")
-  public void processSignal(@Payload SignalingMessage message) {
-    // Send to specific user if recipient is defined, otherwise broadcast (for
-    // simple demo)
-    // In a real app, you'd send to specific user via /user/{username}/queue/signal
+  @MessageMapping("/call/answer")
+  @SendTo("/topic/call/answer")
+  public Map<String, Object> handleAnswer(@Payload Map<String, Object> answer) {
+    // Answer 메시지 중계
+    return answer;
+  }
 
-    if (message.getRecipient() != null) {
-      messagingTemplate.convertAndSendToUser(
-          message.getRecipient(),
-          "/queue/signal",
-          message);
-    } else {
-      // Broadcast to public for demo purposes if no recipient
-      messagingTemplate.convertAndSend("/topic/signal", message);
-    }
+  @MessageMapping("/call/candidate")
+  @SendTo("/topic/call/candidate")
+  public Map<String, Object> handleCandidate(@Payload Map<String, Object> candidate) {
+    // ICE Candidate 메시지 중계
+    return candidate;
   }
 }

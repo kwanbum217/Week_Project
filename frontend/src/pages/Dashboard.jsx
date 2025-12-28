@@ -1,167 +1,164 @@
+import { useState, useEffect } from 'react';
+import {
+  Box,
+  Grid,
+  Heading,
+  Text,
+  Button,
+  VStack,
+  HStack,
+  Badge,
+  useDisclosure,
+  DialogRoot,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
+  DialogTitle,
+  DialogCloseTrigger,
+} from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
+import VoiceCall from '../components/VoiceCall'; // VoiceCall 컴포넌트 임포트
 
 const Dashboard = () => {
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem('user'));
+  const { isOpen, onOpen, onClose } = useDisclosure(); // 모달 제어
+  const [targetUser, setTargetUser] = useState(''); // 통화 대상 사용자
 
-  if (!user) {
-    navigate('/login');
-    return null;
-  }
-
-  const features = [
-    {
-      icon: '👥',
-      title: '친구 찾기',
-      description: '새로운 친구를 만나보세요',
-      path: '/match',
-      colorClass: 'orange'
-    },
-    {
-      icon: '💬',
-      title: '대화하기',
-      description: '친구들과 이야기해요',
-      path: '/chat',
-      colorClass: 'blue'
-    },
-    {
-      icon: '📞',
-      title: '음성통화',
-      description: '목소리로 소통하세요',
-      path: '/voice',
-      colorClass: 'orange'
-    },
-    {
-      icon: '❤️',
-      title: '관심목록',
-      description: '관심있는 친구들',
-      path: '/match',
-      colorClass: 'blue'
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    } else {
+      navigate('/login');
     }
-  ];
+  }, [navigate]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    navigate('/login');
+  };
+
+  const handleVoiceCallClick = () => {
+    // 임시로 대상 사용자 설정 (실제로는 친구 목록 등에서 선택)
+    const target = prompt("통화할 상대방의 아이디를 입력하세요:");
+    if (target) {
+      setTargetUser(target);
+      onOpen();
+    }
+  };
+
+  if (!user) return null;
 
   return (
-    <div
-      className="min-h-screen pt-24 pb-12 px-4"
-      style={{ background: 'transparent' }}
-    >
-      <div className="max-w-5xl mx-auto">
-
-        {/* 환영 메시지 */}
-        <div className="mooa-card mb-8 text-center animate-fade-in">
-          <div
-            className="inline-flex items-center justify-center w-20 h-20 rounded-full mb-4"
-            style={{ background: 'var(--mooa-gradient)' }}
-          >
-            <span className="text-4xl">👋</span>
-          </div>
-          <h1
-            className="mb-2"
-            style={{ color: 'var(--mooa-navy)', fontSize: 'var(--font-size-3xl)' }}
-          >
-            {user.username}님, 환영합니다!
-          </h1>
-          <p style={{ color: 'var(--mooa-text-secondary)', fontSize: 'var(--font-size-lg)' }}>
-            오늘도 MOOA에서 즐거운 하루 되세요 ☀️
-          </p>
-
-          {/* 사용자 정보 배지 */}
-          <div className="flex items-center justify-center gap-4 mt-6 flex-wrap">
-            {user.location && (
-              <span
-                className="px-4 py-2 rounded-full text-lg"
-                style={{
-                  background: 'var(--mooa-bg-warm)',
-                  color: 'var(--mooa-text-primary)',
-                  border: '1px solid rgba(245, 166, 35, 0.2)'
-                }}
-              >
-                📍 {user.location}
-              </span>
-            )}
-            {user.gender && (
-              <span
-                className="px-4 py-2 rounded-full text-lg"
-                style={{
-                  background: 'var(--mooa-bg-warm)',
-                  color: 'var(--mooa-text-primary)',
-                  border: '1px solid rgba(93, 173, 226, 0.2)'
-                }}
-              >
-                {user.gender === 'male' ? '👨' : user.gender === 'female' ? '👩' : '🧑'} {user.gender === 'male' ? '남성' : user.gender === 'female' ? '여성' : '기타'}
-              </span>
-            )}
-          </div>
-        </div>
-
-        {/* 기능 카드 그리드 */}
-        <h2
-          className="mb-6"
-          style={{ color: 'var(--mooa-navy)', fontSize: 'var(--font-size-2xl)' }}
-        >
-          무엇을 하시겠어요?
-        </h2>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="mooa-feature-card animate-fade-in"
-              style={{ animationDelay: `${index * 0.1}s` }}
-              onClick={() => navigate(feature.path)}
-            >
-              <div className={`icon ${feature.colorClass}`}>
-                <span>{feature.icon}</span>
-              </div>
-              <h3
-                className="font-semibold mb-2"
-                style={{ color: 'var(--mooa-navy)', fontSize: 'var(--font-size-xl)' }}
-              >
-                {feature.title}
-              </h3>
-              <p style={{ color: 'var(--mooa-text-secondary)', fontSize: 'var(--font-size-base)' }}>
-                {feature.description}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        {/* 빠른 시작 섹션 */}
-        <div
-          className="mooa-card animate-fade-in"
-          style={{
-            background: 'var(--mooa-gradient)',
-            color: 'white'
-          }}
-        >
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-              <h3
-                className="font-bold mb-2"
-                style={{ fontSize: 'var(--font-size-2xl)' }}
-              >
-                💡 오늘의 추천
-              </h3>
-              <p style={{ fontSize: 'var(--font-size-lg)', opacity: 0.9 }}>
-                새로운 친구와 대화를 시작해보세요!
-              </p>
-            </div>
-            <button
-              onClick={() => navigate('/match')}
-              className="px-8 py-4 bg-white rounded-2xl font-bold transition-all hover:shadow-lg hover:-translate-y-1"
-              style={{
-                color: 'var(--mooa-orange)',
-                fontSize: 'var(--font-size-lg)',
-                minWidth: '180px'
-              }}
-            >
-              친구 찾기 →
-            </button>
-          </div>
-        </div>
-
+    <Box minHeight="100vh" py={12} px={6} position="relative">
+      {/* 배경 요소 */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] right-[-5%] w-[30%] h-[30%] rounded-full bg-orange-100/40 blur-3xl animate-float-gentle" />
+        <div className="absolute bottom-[10%] left-[-5%] w-[25%] h-[25%] rounded-full bg-blue-100/40 blur-3xl animate-float-gentle" style={{ animationDelay: '3s' }} />
       </div>
-    </div>
+
+      <div className="max-w-6xl mx-auto relative z-10">
+        {/* 헤더 섹션 */}
+        <HStack justifyContent="space-between" mb={12} className="animate-fade-in">
+          <VStack align="start" spacing={1}>
+            <Heading size="lg" color="var(--mooa-navy)">
+              안녕하세요, <span style={{ color: 'var(--mooa-orange)' }}>{user.username}</span>님!
+            </Heading>
+            <Text fontSize="lg" color="var(--mooa-text-secondary)">
+              오늘도 즐거운 하루 되세요 ☀️
+            </Text>
+          </VStack>
+          <Button
+            onClick={handleLogout}
+            variant="ghost"
+            colorScheme="gray"
+            size="lg"
+            className="mooa-btn-outline"
+            style={{ border: '2px solid #E2E8F0', color: 'var(--mooa-text-secondary)' }}
+          >
+            로그아웃
+          </Button>
+        </HStack>
+
+        {/* 메인 기능 그리드 */}
+        <Grid templateColumns={{ base: "1fr", md: "repeat(2, 1fr)", lg: "repeat(3, 1fr)" }} gap={8} className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
+
+          {/* 친구 찾기 카드 */}
+          <div className="mooa-feature-card">
+            <div className="icon orange">👥</div>
+            <Heading size="md" mb={3} color="var(--mooa-navy)">친구 찾기</Heading>
+            <Text color="var(--mooa-text-secondary)" mb={6}>
+              취미가 같은 동네 친구를<br />찾아보세요
+            </Text>
+            <Button className="mooa-btn-primary w-full">
+              친구 찾기
+            </Button>
+          </div>
+
+          {/* 모임 참여 카드 */}
+          <div className="mooa-feature-card">
+            <div className="icon blue">🎉</div>
+            <Heading size="md" mb={3} color="var(--mooa-navy)">모임 참여</Heading>
+            <Text color="var(--mooa-text-secondary)" mb={6}>
+              등산, 독서, 트로트 등<br />다양한 모임이 있어요
+            </Text>
+            <Button className="mooa-btn-secondary w-full">
+              모임 보기
+            </Button>
+          </div>
+
+          {/* 음성 통화 카드 (New) */}
+          <div className="mooa-feature-card">
+            <div className="icon orange">📞</div>
+            <Heading size="md" mb={3} color="var(--mooa-navy)">음성 통화</Heading>
+            <Text color="var(--mooa-text-secondary)" mb={6}>
+              친구와 목소리로<br />안부를 전하세요
+            </Text>
+            <Button className="mooa-btn-primary w-full" onClick={handleVoiceCallClick}>
+              통화하기
+            </Button>
+          </div>
+
+          {/* 내 프로필 카드 */}
+          <div className="mooa-glass-card p-6 col-span-full lg:col-span-1">
+            <VStack align="start" spacing={4}>
+              <Heading size="md" color="var(--mooa-navy)">내 프로필</Heading>
+              <HStack>
+                <Badge colorScheme="orange" p={2} borderRadius="md" fontSize="md">
+                  {user.location || '지역 미설정'}
+                </Badge>
+                <Badge colorScheme="blue" p={2} borderRadius="md" fontSize="md">
+                  {user.gender === 'male' ? '남성' : user.gender === 'female' ? '여성' : '성별 미설정'}
+                </Badge>
+              </HStack>
+              <Text color="var(--mooa-text-secondary)">
+                이메일: {user.email || '미등록'}
+              </Text>
+              <Button size="sm" variant="link" color="var(--mooa-orange)">
+                프로필 수정하기 &gt;
+              </Button>
+            </VStack>
+          </div>
+
+        </Grid>
+      </div>
+
+      {/* 음성 통화 모달 */}
+      <DialogRoot open={isOpen} onOpenChange={onClose} size="xl">
+        <DialogContent borderRadius="24px">
+          <DialogHeader>
+            <DialogTitle>음성 통화</DialogTitle>
+            <DialogCloseTrigger />
+          </DialogHeader>
+          <DialogBody pb={6}>
+            <VoiceCall currentUser={user} targetUser={targetUser} />
+          </DialogBody>
+        </DialogContent>
+      </DialogRoot>
+    </Box>
   );
 };
 
