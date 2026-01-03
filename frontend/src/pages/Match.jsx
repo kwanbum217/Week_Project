@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Box, Container, Heading, Text, SimpleGrid, Button, Flex, VStack, HStack, Stack } from '@chakra-ui/react';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaUserPlus, FaRegEnvelope, FaRegComments } from 'react-icons/fa6';
+import { FaUserPlus, FaRegEnvelope, FaComments } from 'react-icons/fa6';
 import Footer from '../components/Footer';
 
 const Match = () => {
@@ -170,150 +170,147 @@ const Match = () => {
                   const isFemale = friend.gender === '여성';
 
                   return (
-                    <>
-                      <Box
-                        key={friend.id}
-                        flex={1}
-                        minW="300px"
-                        bg="white"
-                        borderRadius="2xl"
-                        overflow="hidden"
-                        boxShadow="lg"
-                        transition="all 0.3s"
-                        _hover={{ transform: 'translateY(-5px)', boxShadow: 'xl' }}
-                        border="1px solid"
-                        borderColor="gray.100"
-                      >
-                        <Box p={4}>
-                          <Flex align="center" gap={3} mb={4}>
-                            <Box
-                              w="60px"
-                              h="60px"
-                              borderRadius="full"
-                              bg="gray.200"
-                              flexShrink={0}
-                              overflow="hidden"
-                              position="relative"
-                            >
-                              <img
-                                src={friend.image}
-                                alt={friend.name}
-                                style={{
-                                  width: '100%',
-                                  height: '100%',
-                                  objectFit: 'cover',
-                                  filter: isGuest ? 'blur(4px)' : 'none'
-                                }}
-                                onError={(e) => {
-                                  e.target.style.display = 'none';
-                                  e.target.parentElement.style.backgroundColor = '#E2E8F0';
-                                }}
-                              />
-                            </Box>
+                    <Box
+                      key={friend.id}
+                      flex={1}
+                      minW="300px"
+                      bg="white"
+                      borderRadius="2xl"
+                      overflow="hidden"
+                      boxShadow="lg"
+                      transition="all 0.3s"
+                      _hover={{ transform: 'translateY(-5px)', boxShadow: 'xl' }}
+                      border="1px solid"
+                      borderColor="gray.100"
+                    >
+                      <Box p={4}>
+                        <Flex align="center" gap={3} mb={4}>
+                          <Box
+                            w="60px"
+                            h="60px"
+                            borderRadius="full"
+                            bg="gray.200"
+                            flexShrink={0}
+                            overflow="hidden"
+                            position="relative"
+                          >
+                            <img
+                              src={friend.image}
+                              alt={friend.name}
+                              style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover',
+                                filter: isGuest ? 'blur(4px)' : 'none'
+                              }}
+                              onError={(e) => {
+                                e.target.style.display = 'none';
+                                e.target.parentElement.style.backgroundColor = '#E2E8F0';
+                              }}
+                            />
+                          </Box>
 
-                            <Box>
-                              <Heading fontSize="lg" mb={1}>
-                                {friend.name}
-                              </Heading>
-                              <Text fontSize="sm" color="gray.600" mb={1}>
-                                {friend.age}세 ({friend.gender})
-                              </Text>
-                              <Text fontSize="sm" color="gray.500">
-                                📍 {isGuest ? friend.location.split(' ')[0] + ' ***' : friend.location} ({friend.distance}km)
-                              </Text>
-                            </Box>
+                          <Box>
+                            <Heading fontSize="lg" mb={1}>
+                              {friend.name}
+                            </Heading>
+                            <Text fontSize="sm" color="gray.600" mb={1}>
+                              {friend.age}세 ({friend.gender})
+                            </Text>
+                            <Text fontSize="sm" color="gray.500">
+                              📍 {isGuest ? friend.location.split(' ')[0] + ' ***' : friend.location} ({friend.distance}km)
+                            </Text>
+                          </Box>
 
-                            <Box ml="auto" bg="orange.100" color="orange.800" fontSize="0.9em" fontWeight="bold" borderRadius="md" px={2} py={1} whiteSpace="nowrap">
-                              {friend.matchRate}% 일치
+                          <Box ml="auto" bg="orange.100" color="orange.800" fontSize="0.9em" fontWeight="bold" borderRadius="md" px={2} py={1} whiteSpace="nowrap">
+                            {friend.matchRate}% 일치
+                          </Box>
+                        </Flex>
+
+                        <Text color="gray.600" mb={4} fontSize="sm">
+                          {isGuest ? "\"회원가입하고 저와 친구가 되어주세요!\"" : "\"같이 등산 다니실 분 찾아요~ 편하게 연락주세요!\""}
+                        </Text>
+
+                        <Text fontSize="xs" fontWeight="bold" color="gray.500" mb={2}>
+                          주요 관심사
+                        </Text>
+                        <HStack spacing={2} mb={6}>
+                          {friend.interests.map(interest => (
+                            <Box key={interest} px={2} py={1} bg="blue.50" color="blue.600" borderRadius="full" fontSize="sm" fontWeight="medium">
+                              #{interest}
                             </Box>
+                          ))}
+                        </HStack>
+
+                        <Button
+                          w="full"
+                          style={{
+                            background: isFemale ? 'linear-gradient(to bottom, #FF80AB, #FF4081)' : 'linear-gradient(to bottom, #2C4A6E, #1E3A5F)',
+                          }}
+                          color="white"
+                          mb={2}
+                          onClick={() => isGuest ? navigate('/login') : alert('친구 추가 되었습니다!')}
+                          justifyContent="center"
+                          px={6}
+                          _hover={{
+                            opacity: 0.9
+                          }}
+                        >
+                          <Flex w="100%" align="center" justify="space-between">
+                            <Text>{isGuest ? "로그인하고 친구 추가하기" : "친구 추가하기"}</Text>
+                            <Flex align="center">
+                              <Box w="1px" h="16px" bg="whiteAlpha.400" mx={4} />
+                              <FaUserPlus />
+                            </Flex>
                           </Flex>
+                        </Button>
 
-                          <Text color="gray.600" mb={4} fontSize="sm">
-                            {isGuest ? "\"회원가입하고 저와 친구가 되어주세요!\"" : "\"같이 등산 다니실 분 찾아요~ 편하게 연락주세요!\""}
-                          </Text>
-
-                          <Text fontSize="xs" fontWeight="bold" color="gray.500" mb={2}>
-                            주요 관심사
-                          </Text>
-                          <HStack spacing={2} mb={6}>
-                            {friend.interests.map(interest => (
-                              <Box key={interest} px={2} py={1} bg="blue.50" color="blue.600" borderRadius="full" fontSize="sm" fontWeight="medium">
-                                #{interest}
-                              </Box>
-                            ))}
-                          </HStack>
-
-                          <Button
-                            w="full"
-                            style={{
-                              background: isFemale ? 'linear-gradient(to bottom, #FF80AB, #FF4081)' : 'linear-gradient(to bottom, #2C4A6E, #1E3A5F)',
-                            }}
-                            color="white"
-                            mb={2}
-                            onClick={() => isGuest ? navigate('/login') : alert('친구 추가 되었습니다!')}
-                            justifyContent="center"
-                            px={6}
-                            _hover={{
-                              opacity: 0.9
-                            }}
-                          >
-                            <Flex w="100%" align="center" justify="space-between">
-                              <Text>{isGuest ? "로그인하고 친구 추가하기" : "친구 추가하기"}</Text>
-                              <Flex align="center">
-                                <Box w="1px" h="16px" bg="whiteAlpha.400" mx={4} />
-                                <FaUserPlus />
-                              </Flex>
+                        <Button
+                          w="full"
+                          style={{
+                            background: isFemale ? 'linear-gradient(to bottom, #FF4081, #F50057)' : 'linear-gradient(to bottom, #1E3A5F, #162B47)',
+                          }}
+                          color="white"
+                          mb={2}
+                          onClick={() => isGuest ? navigate('/login') : alert('문자가 전송되었습니다!')}
+                          justifyContent="center"
+                          px={6}
+                          _hover={{
+                            opacity: 0.9
+                          }}
+                        >
+                          <Flex w="100%" align="center" justify="space-between">
+                            <Text>{isGuest ? "로그인하고 문자 보내기" : "문자 보내기"}</Text>
+                            <Flex align="center">
+                              <Box w="1px" h="16px" bg="whiteAlpha.400" mx={4} />
+                              <FaRegEnvelope />
                             </Flex>
-                          </Button>
+                          </Flex>
+                        </Button>
 
-                          <Button
-                            w="full"
-                            style={{
-                              background: isFemale ? 'linear-gradient(to bottom, #FF4081, #F50057)' : 'linear-gradient(to bottom, #1E3A5F, #162B47)',
-                            }}
-                            color="white"
-                            mb={2}
-                            onClick={() => isGuest ? navigate('/login') : alert('문자가 전송되었습니다!')}
-                            justifyContent="center"
-                            px={6}
-                            _hover={{
-                              opacity: 0.9
-                            }}
-                          >
-                            <Flex w="100%" align="center" justify="space-between">
-                              <Text>{isGuest ? "로그인하고 문자 보내기" : "문자 보내기"}</Text>
-                              <Flex align="center">
-                                <Box w="1px" h="16px" bg="whiteAlpha.400" mx={4} />
-                                <FaRegEnvelope />
-                              </Flex>
+                        <Button
+                          w="full"
+                          style={{
+                            background: isFemale ? 'linear-gradient(to bottom, #F50057, #C51162)' : 'linear-gradient(to bottom, #162B47, #0D1A2B)',
+                          }}
+                          color="white"
+                          onClick={() => isGuest ? navigate('/login') : navigate('/chat')}
+                          justifyContent="center"
+                          px={6}
+                          _hover={{
+                            opacity: 0.9
+                          }}
+                        >
+                          <Flex w="100%" align="center" justify="space-between">
+                            <Text>{isGuest ? "로그인하고 대화하기" : "대화 요청하기"}</Text>
+                            <Flex align="center">
+                              <Box w="1px" h="16px" bg="whiteAlpha.400" mx={4} />
+                              <FaComments />
                             </Flex>
-                          </Button>
-
-                          <Button
-                            w="full"
-                            style={{
-                              background: isFemale ? 'linear-gradient(to bottom, #F50057, #C51162)' : 'linear-gradient(to bottom, #162B47, #0D1A2B)',
-                            }}
-                            color="white"
-                            onClick={() => isGuest ? navigate('/login') : navigate('/chat')}
-                            justifyContent="center"
-                            px={6}
-                            _hover={{
-                              opacity: 0.9
-                            }}
-                          >
-                            <Flex w="100%" align="center" justify="space-between">
-                              <Text>{isGuest ? "로그인하고 대화하기" : "대화 요청하기"}</Text>
-                              <Flex align="center">
-                                <Box w="1px" h="16px" bg="whiteAlpha.400" mx={4} />
-                                <FaRegComments />
-                              </Flex>
-                            </Flex>
-                          </Button>
-                        </Box>
+                          </Flex>
+                        </Button>
                       </Box>
-                      {/* Manual Divider Removed */}
-                    </>
+                    </Box>
                   );
                 })}
               </Flex>

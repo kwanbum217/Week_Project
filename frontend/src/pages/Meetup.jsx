@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Box, Heading, Text, Badge, Button, VStack, Flex, HStack } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import { FaUserPlus, FaRegEnvelope, FaRegComments, FaUsers } from "react-icons/fa6";
+import { FaUserPlus, FaRegEnvelope, FaComments, FaUsers } from "react-icons/fa6";
 import Footer from '../components/Footer';
 
 const Meetup = () => {
@@ -291,7 +291,7 @@ const Meetup = () => {
                                                     <Text>모임회장에게 문자 보내기</Text>
                                                     <Flex align="center">
                                                         <Box w="1px" h="16px" bg="whiteAlpha.400" mx={4} />
-                                                        <FaRegComments />
+                                                        <FaComments />
                                                     </Flex>
                                                 </Flex>
                                             </Button>

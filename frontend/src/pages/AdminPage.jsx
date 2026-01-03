@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Table, Thead, Tbody, Tr, Th, Td, Heading, Spinner, Alert, AlertIcon } from '@chakra-ui/react';
+import { Box, Heading, Spinner, Alert, Table } from '@chakra-ui/react';
 
 const AdminPage = () => {
     const [users, setUsers] = useState([]);
@@ -39,11 +39,11 @@ const AdminPage = () => {
     if (loading) return <Box p={10} display="flex" justifyContent="center"><Spinner size="xl" /></Box>;
     if (error) return (
         <Box p={10} mt={20}>
-            <Alert status="error" variant="subtle" flexDirection="column" alignItems="center" justifyContent="center" textAlign="center" height="200px">
-                <AlertIcon boxSize="40px" mr={0} />
+            <Alert.Root status="error" flexDirection="column" alignItems="center" justifyContent="center" textAlign="center" py={10}>
+                <Alert.Indicator boxSize="40px" />
                 <Heading size="md" mt={4} mb={1}>접근 제한</Heading>
-                {error}
-            </Alert>
+                <Alert.Description>{error}</Alert.Description>
+            </Alert.Root>
         </Box>
     );
 
@@ -51,37 +51,38 @@ const AdminPage = () => {
         <Box p={10} maxW="1200px" mx="auto" mt={32}>
             <Heading mb={8} color="teal.600">관리자 대시보드</Heading>
             <Box overflowX="auto" shadow="lg" borderRadius="lg" bg="white">
-                <Table variant="simple">
-                    <Thead bg="gray.100">
-                        <Tr>
-                            <Th>ID</Th>
-                            <Th>이메일 / 계정</Th>
-                            <Th>이름</Th>
-                            <Th>가입 경로</Th>
-                            <Th>권한</Th>
-                            <Th>지역</Th>
-                        </Tr>
-                    </Thead>
-                    <Tbody>
+                <Table.Root variant="simple">
+                    <Table.Header bg="gray.100">
+                        <Table.Row>
+                            <Table.ColumnHeader>ID</Table.ColumnHeader>
+                            <Table.ColumnHeader>이메일 / 계정</Table.ColumnHeader>
+                            <Table.ColumnHeader>이름</Table.ColumnHeader>
+                            <Table.ColumnHeader>가입 경로</Table.ColumnHeader>
+                            <Table.ColumnHeader>권한</Table.ColumnHeader>
+                            <Table.ColumnHeader>지역</Table.ColumnHeader>
+                        </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
                         {users.map(user => (
-                            <Tr key={user.id} _hover={{ bg: "gray.50" }}>
-                                <Td>{user.id}</Td>
-                                <Td fontWeight="bold">{user.email}</Td>
-                                <Td>{user.username}</Td>
-                                <Td>{user.provider}</Td>
-                                <Td>
+                            <Table.Row key={user.id} _hover={{ bg: "gray.50" }}>
+                                <Table.Cell>{user.id}</Table.Cell>
+                                <Table.Cell fontWeight="bold">{user.email}</Table.Cell>
+                                <Table.Cell>{user.username}</Table.Cell>
+                                <Table.Cell>{user.provider}</Table.Cell>
+                                <Table.Cell>
                                     <Box as="span" px={2} py={1} borderRadius="md" bg={user.role === 'ADMIN' ? 'red.100' : 'green.100'} color={user.role === 'ADMIN' ? 'red.700' : 'green.700'} fontSize="sm" fontWeight="bold">
                                         {user.role}
                                     </Box>
-                                </Td>
-                                <Td>{user.location || '-'}</Td>
-                            </Tr>
+                                </Table.Cell>
+                                <Table.Cell>{user.location || '-'}</Table.Cell>
+                            </Table.Row>
                         ))}
-                    </Tbody>
-                </Table>
+                    </Table.Body>
+                </Table.Root>
             </Box>
         </Box>
     );
 };
 
 export default AdminPage;
+

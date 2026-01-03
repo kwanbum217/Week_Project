@@ -331,7 +331,7 @@ const Market = () => {
                         bg="white"
                         borderRadius="full"
                         borderColor="gray.300"
-                        focusBorderColor="gray.500"
+                        _focus={{ borderColor: 'gray.500', boxShadow: '0 0 0 1px var(--chakra-colors-gray-500)' }}
                         _hover={{ borderColor: 'gray.400' }}
                         pr="3.5rem"
                     />
