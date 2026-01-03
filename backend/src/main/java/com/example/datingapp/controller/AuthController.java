@@ -32,6 +32,14 @@ public class AuthController {
     }
   }
 
+  @GetMapping("/check-id")
+  public ResponseEntity<?> checkIdDuplicate(@RequestParam String username) {
+    if (userService.findByUsername(username).isPresent()) {
+      return ResponseEntity.badRequest().body("이미 사용 중인 아이디입니다.");
+    }
+    return ResponseEntity.ok("사용 가능한 아이디입니다.");
+  }
+
   @PostMapping("/login")
   public ResponseEntity<?> loginUser(@RequestBody User user) {
     return userService.findByUsername(user.getUsername())

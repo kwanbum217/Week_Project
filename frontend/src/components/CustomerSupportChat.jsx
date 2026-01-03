@@ -31,7 +31,7 @@ const CustomerSupportChat = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:9999/api/support/ask', {
+      const response = await fetch('/api/support/ask', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -81,12 +81,12 @@ const CustomerSupportChat = () => {
           right="30px"
           size="lg"
           borderRadius="full"
-          background="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+          background="var(--mooa-orange)"
           color="white"
-          boxShadow="0 8px 24px rgba(102, 126, 234, 0.4)"
+          boxShadow="0 8px 24px rgba(255, 142, 83, 0.4)"
           _hover={{
             transform: 'scale(1.1)',
-            boxShadow: '0 12px 32px rgba(102, 126, 234, 0.6)',
+            boxShadow: '0 12px 32px rgba(255, 142, 83, 0.6)',
           }}
           transition="all 0.3s ease"
           onClick={() => setIsOpen(true)}
@@ -114,11 +114,11 @@ const CustomerSupportChat = () => {
           flexDirection="column"
           zIndex={1000}
           overflow="hidden"
-          border="1px solid rgba(102, 126, 234, 0.2)"
+          border="1px solid rgba(255, 142, 83, 0.2)"
         >
           {/* 헤더 */}
           <Box
-            background="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+            background="var(--mooa-orange)"
             color="white"
             p={4}
             display="flex"
@@ -187,7 +187,7 @@ const CustomerSupportChat = () => {
               >
                 <Box
                   bg={msg.type === 'user'
-                    ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+                    ? 'var(--mooa-orange)'
                     : 'white'
                   }
                   color={msg.type === 'user' ? 'white' : 'gray.800'}
@@ -215,7 +215,7 @@ const CustomerSupportChat = () => {
               <Box alignSelf="flex-start" maxWidth="80%">
                 <Box bg="white" p={3} borderRadius="12px" boxShadow="sm">
                   <HStack spacing={2}>
-                    <Spinner size="sm" color="purple.500" />
+                    <Spinner size="sm" color="orange.500" />
                     <Text fontSize="sm" color="gray.600">답변 작성 중...</Text>
                   </HStack>
                 </Box>
@@ -234,14 +234,14 @@ const CustomerSupportChat = () => {
                 size="md"
                 borderRadius="full"
                 _focus={{
-                  borderColor: 'purple.400',
-                  boxShadow: '0 0 0 1px #764ba2',
+                  borderColor: 'orange.400',
+                  boxShadow: '0 0 0 1px #FF8E53',
                 }}
                 disabled={isLoading}
               />
               <Button
                 onClick={sendMessage}
-                background="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+                background="var(--mooa-orange)"
                 color="white"
                 borderRadius="full"
                 size="md"

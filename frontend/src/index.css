@@ -214,6 +214,59 @@ h4 {
   color: white;
 }
 
+/* 로고 컬러 버튼 (네이비) */
+.mooa-btn-navy {
+  background: var(--mooa-navy);
+  color: white;
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  padding: 16px 32px;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 56px;
+  position: relative;
+  z-index: 10;
+}
+
+.mooa-btn-navy:hover {
+  background: var(--mooa-navy-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(30, 58, 95, 0.35);
+}
+
+/* NEW 뱃지 컬러 버튼 (코랄) */
+.mooa-btn-coral {
+  background: #FF8E53;
+  color: white;
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  padding: 16px 32px;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 56px;
+  position: relative;
+  z-index: 10;
+}
+
+.mooa-btn-coral:hover {
+  background: #E87A40;
+  /* Slightly darker shade */
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 142, 83, 0.35);
+}
+
 /* 입력 필드 */
 .mooa-input {
   width: 100%;

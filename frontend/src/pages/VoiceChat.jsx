@@ -18,7 +18,7 @@ const VoiceChat = () => {
   };
 
   useEffect(() => {
-    const socket = new SockJS('http://localhost:9999/ws');
+    const socket = new SockJS('/ws');
     const client = Stomp.over(socket);
     client.debug = null; // 디버그 로그 비활성화
 

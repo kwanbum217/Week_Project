@@ -1,287 +1,355 @@
-import { useState, useEffect, useRef } from 'react';
-import { Box, Input, VStack, Text, HStack, Heading, Button } from '@chakra-ui/react';
-import SockJS from 'sockjs-client';
-import Stomp from 'stompjs';
+import { useState, useEffect } from 'react';
+import {
+  Box,
+  VStack,
+  HStack,
+  Text,
+  Heading,
+  Container,
+  Button,
+  Flex
+} from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+import Footer from '../components/Footer';
 
 const Chat = () => {
-  const [messages, setMessages] = useState([]);
-  const [message, setMessage] = useState('');
-  const [stompClient, setStompClient] = useState(null);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
-  const [isConnected, setIsConnected] = useState(false);
-  const messagesEndRef = useRef(null);
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
-  // Listen for user updates from other windows
+  // Check user on mount
   useEffect(() => {
-    const handleStorageChange = () => {
-      const storedUser = JSON.parse(localStorage.getItem('user'));
-      if (storedUser) {
-        setUser(storedUser);
-      }
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-
-    // Initial check in case we missed the event or opened later
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    if (storedUser && !user) {
-      setUser(storedUser);
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
     }
+  }, []);
 
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
-  }, [user]);
+  const isGuest = !user || user.username === 'Guest';
 
-  useEffect(() => {
-    if (!user) {
-      console.log("No user found, waiting for login...");
-      return;
+  // Guest Mock Data - "Demo" Chat List
+  const guestChatList = [
+    { id: 1, name: '무아지기', message: '무아에 오신 것을 환영합니다! 👋', time: '방금', unread: 1, avatar: 'M' },
+    { id: 2, name: '즐거운하루', message: '이번 주 등산 모임 오시나요?', time: '10분 전', unread: 2, avatar: '즐' },
+    { id: 3, name: '등산매니아', message: '사진을 보냈습니다.', time: '어제', unread: 0, avatar: '등' },
+  ];
+
+  const chatList = isGuest ? guestChatList : []; // Real user logic would go here
+
+  // Helper to chunk array (Same as Match.jsx)
+  const chunkArray = (arr, size) => {
+    const chunked = [];
+    for (let i = 0; i < arr.length; i += size) {
+      chunked.push(arr.slice(i, i + size));
     }
-
-    const socket = new SockJS('http://localhost:9999/ws');
-    const client = Stomp.over(socket);
-    client.debug = null; // Disable debug logs
-
-    console.log("Attempting WebSocket connection for user:", user.username);
-
-    client.connect({}, () => {
-      console.log("✅ WebSocket connected successfully!");
-      setIsConnected(true);
-
-      client.subscribe('/topic/public', (payload) => {
-        const receivedMessage = JSON.parse(payload.body);
-        console.log("Received message from WebSocket:", receivedMessage);
-
-        // JOIN/LEAVE 메시지는 항상 추가
-        if (receivedMessage.type === 'JOIN' || receivedMessage.type === 'LEAVE') {
-          setMessages((prev) => [...prev, receivedMessage]);
-          return;
-        }
-
-        // CHAT 메시지는 중복 체크 후 추가
-        setMessages((prev) => {
-          // 자신이 보낸 메시지는 이미 로컬에 추가되었으므로 무시
-          const isDuplicate = prev.some(
-            msg => msg.sender === receivedMessage.sender &&
-              msg.content === receivedMessage.content &&
-              msg.type === 'CHAT'
-          );
-
-          if (isDuplicate) {
-            console.log("Duplicate message detected, ignoring");
-            return prev;
-          }
-
-          console.log("Adding new message from WebSocket");
-          return [...prev, receivedMessage];
-        });
-      });
-
-      client.send("/app/chat.addUser",
-        {},
-        JSON.stringify({ sender: user.username, type: 'JOIN' })
-      );
-    }, (error) => {
-      console.error("❌ WebSocket connection error:", error);
-      setIsConnected(false);
-    });
-
-    setStompClient(client);
-
-    return () => {
-      if (client && client.connected) {
-        client.disconnect();
-      }
-      setIsConnected(false);
-    };
-  }, [user]);
-
-  const sendMessage = () => {
-    if (!message.trim()) {
-      console.warn("Empty message, not sending");
-      return;
-    }
-
-    if (!user) {
-      console.error("No user logged in");
-      return;
-    }
-
-    const chatMessage = {
-      sender: user.username,
-      content: message.trim(),
-      type: 'CHAT'
-    };
-
-    console.log("Sending message:", chatMessage);
-
-    // 즉시 로컬 상태에 추가하여 UI에 표시
-    setMessages((prev) => {
-      // 중복 체크 (혹시 이미 있는지)
-      const exists = prev.some(
-        msg => msg.sender === chatMessage.sender &&
-          msg.content === chatMessage.content &&
-          msg.type === 'CHAT'
-      );
-
-      if (exists) {
-        console.log("Message already exists locally");
-        return prev;
-      }
-
-      return [...prev, chatMessage];
-    });
-
-    setMessage('');
-
-    // WebSocket으로 전송 (연결되어 있으면)
-    if (stompClient && isConnected) {
-      try {
-        stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
-        console.log("Message sent via WebSocket");
-      } catch (error) {
-        console.error("Failed to send message via WebSocket:", error);
-      }
-    } else {
-      console.warn("WebSocket not connected. Message only saved locally.");
-    }
+    return chunked;
   };
 
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
-
-  if (!user) {
-    return (
-      <Box
-        height="100vh"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        bg="#f0e6d2"
-        fontFamily="'Courier New', Courier, monospace"
-      >
-        <VStack spacing={4}>
-          <Heading size="lg" color="#5c4033">Letter Chat</Heading>
-          <Text color="#8b4513">Please log in from the main window to start chatting.</Text>
-        </VStack>
-      </Box>
-    );
-  }
+  const chatRows = chunkArray(chatList, 3);
 
   return (
-    <Box
-      bg="#f0e6d2"
-      color="#3e2723"
-      fontFamily="'Courier New', Courier, monospace"
-      height="100vh"
-      p={4}
-      display="flex"
-      flexDirection="column"
-      backgroundImage="linear-gradient(#e1d9c5 1px, transparent 1px), linear-gradient(90deg, #e1d9c5 1px, transparent 1px)"
-      backgroundSize="20px 20px"
-    >
-      <Box
-        borderBottom="2px solid #5c4033"
-        mb={4}
-        pb={2}
-        textAlign="center"
-      >
-        <Heading size="md" color="#5c4033" fontFamily="'Courier New', Courier, monospace" letterSpacing="widest">
-          DAILY CHAT
-        </Heading>
-        <Text fontSize="xs" color="#8b4513" fontStyle="italic">Est. 2025 • Vol. 1</Text>
-        <Text fontSize="xs" color={isConnected ? "green.600" : "red.600"} fontWeight="bold" mt={1}>
-          {isConnected ? "• Connected" : "• Disconnected"}
-        </Text>
-      </Box>
+    <Flex direction="column" minH="100vh">
+      <Box maxW="1980px" mx="auto" px="200px" py={10} flex="1" w="full">
+        <VStack spacing={10} align="stretch">
+          {/* Map Section - Simulated Kakao Map */}
+          <Box
+            w="full"
+            h="400px"
+            borderRadius="2xl"
+            overflow="hidden"
+            position="relative"
+            boxShadow="lg"
+            border="1px solid"
+            borderColor="gray.200"
+          >
+            {/* Map Background */}
+            <Box
+              position="absolute"
+              top={0}
+              left={0}
+              right={0}
+              bottom={0}
+              backgroundImage="url('/img/map_background.png')"
+              backgroundSize="cover"
+              backgroundPosition="center"
+            />
 
-      <VStack
-        flex={1}
-        overflowY="auto"
-        align="stretch"
-        spacing={4}
-        mb={4}
-        p={4}
-        css={{
-          '&::-webkit-scrollbar': {
-            width: '6px',
-          },
-          '&::-webkit-scrollbar-track': {
-            background: 'transparent',
-          },
-          '&::-webkit-scrollbar-thumb': {
-            background: '#8b4513',
-            borderRadius: '0px',
-          },
-        }}
-      >
-        {messages.map((msg, index) => (
-          <Box key={index} alignSelf={msg.sender === user.username ? 'flex-end' : 'flex-start'} maxWidth="80%">
-            {msg.type === 'JOIN' || msg.type === 'LEAVE' ? (
-              <Text fontSize="xs" color="#8b4513" fontStyle="italic" textAlign="center" width="100%">
-                *** {msg.sender} {msg.content} ***
+            {/* Overlay Info */}
+            <Box
+              position="absolute"
+              top={4}
+              left={4}
+              bg="whiteAlpha.900"
+              p={4}
+              borderRadius="xl"
+              boxShadow="md"
+              zIndex={2}
+              maxW="lg"
+            >
+              <Heading size="md" color="var(--mooa-navy)" mb={1}>
+                내 주변 대화 친구
+              </Heading>
+              <Text fontSize="sm" color="gray.600">
+                회원가입시 <strong>대화 요청을 허락한 사용자</strong>들이 지도에 표시됩니다.
               </Text>
-            ) : (
-              <Box>
-                <Text fontSize="xs" color="#5c4033" mb={0} fontWeight="bold">
-                  {msg.sender === user.username ? 'Me' : msg.sender}
-                </Text>
-                <Box
-                  bg={msg.sender === user.username ? '#fff9c4' : '#ffffff'}
-                  p={3}
-                  border="1px solid #8b4513"
-                  boxShadow="3px 3px 0px rgba(92, 64, 51, 0.2)"
-                  position="relative"
-                >
-                  <Text fontSize="sm" lineHeight="1.5">
-                    {msg.content}
-                  </Text>
+            </Box>
+
+            {/* Simulated Markers */}
+            {[
+              { top: '30%', left: '40%', name: '행복한산책', avatar: '행' },
+              { top: '60%', left: '60%', name: '즐거운하루', avatar: '즐' },
+              { top: '45%', left: '70%', name: '건강지킴이', avatar: '건' },
+              { top: '70%', left: '20%', name: '등산매니아', avatar: '등' },
+            ].map((marker, idx) => (
+              <Box
+                key={idx}
+                position="absolute"
+                top={marker.top}
+                left={marker.left}
+                transform="translate(-50%, -50%)"
+                zIndex={1}
+                cursor="pointer"
+                _hover={{ zIndex: 10, transform: "translate(-50%, -50%) scale(1.1)" }}
+                transition="all 0.2s"
+              >
+                <Box position="relative">
+                  <Box
+                    w="48px"
+                    h="48px"
+                    bg="var(--mooa-orange)"
+                    color="white"
+                    borderRadius="full"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    fontWeight="bold"
+                    fontSize="lg"
+                    boxShadow="lg"
+                    border="3px solid white"
+                  >
+                    {marker.avatar}
+                  </Box>
+                  {/* Pulse Effect */}
+                  <Box
+                    position="absolute"
+                    top={0}
+                    left={0}
+                    right={0}
+                    bottom={0}
+                    borderRadius="full"
+                    bg="var(--mooa-orange)"
+                    opacity={0.4}
+                    animation="ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite"
+                    zIndex={-1}
+                  />
+                  {/* Tooltip Label */}
+                  <Box
+                    position="absolute"
+                    top="-35px"
+                    left="50%"
+                    transform="translateX(-50%)"
+                    bg="white"
+                    px={3}
+                    py={1}
+                    borderRadius="md"
+                    boxShadow="md"
+                    whiteSpace="nowrap"
+                    fontSize="xs"
+                    fontWeight="bold"
+                    color="gray.700"
+                  >
+                    {marker.name}
+                  </Box>
+                  {/* Arrow for tooltip */}
+                  <Box
+                    position="absolute"
+                    top="-12px"
+                    left="50%"
+                    transform="translateX(-50%) rotate(45deg)"
+                    w={3}
+                    h={3}
+                    bg="white"
+                  />
                 </Box>
               </Box>
-            )}
-          </Box>
-        ))}
-        <div ref={messagesEndRef} />
-      </VStack>
+            ))}
 
-      <HStack
-        pt={2}
-        alignItems="center"
-        p={2}
-        borderTop="2px solid #5c4033"
-        bg="#f0e6d2"
-      >
-        <Input
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Type a letter..."
-          onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-          bg="transparent"
-          border="none"
-          borderBottom="1px solid #5c4033"
-          _focus={{ boxShadow: 'none', borderBottom: '2px solid #8b4513' }}
-          color="#3e2723"
-          autoFocus
-          _placeholder={{ color: '#8d6e63', fontStyle: 'italic' }}
-          borderRadius="0"
-          px={2}
-          fontFamily="'Courier New', Courier, monospace"
-        />
-        <Button
-          onClick={sendMessage}
-          bg="#5c4033"
-          color="#f0e6d2"
-          borderRadius="0"
-          _hover={{ bg: "#3e2723" }}
-          size="sm"
-          fontFamily="'Courier New', Courier, monospace"
-        >
-          SEND
-        </Button>
-      </HStack>
-    </Box>
+            {/* Kakao Map Logo Placeholder (Bottom Right) */}
+            <Box position="absolute" bottom={2} right={2} opacity={0.7}>
+              <Text fontSize="xs" fontWeight="bold" bg="whiteAlpha.800" px={1}>KakaoMap</Text>
+            </Box>
+          </Box>
+
+          {/* Header */}
+          <Box textAlign="center" pt="60px">
+            <Heading as="h1" size="2xl" mb={4} color="var(--mooa-navy)">
+              대화하기
+            </Heading>
+            <Text fontSize="xl" color="gray.600">
+              {isGuest
+                ? "로그인 계정이 없으시군요? 아래는 대화방 예시입니다."
+                : "참여 중인 대화방 목록입니다."}
+            </Text>
+          </Box>
+
+          {/* Grid Rows */}
+          <VStack align="stretch">
+            {chatRows.length > 0 ? chatRows.map((row, rowIndex) => (
+              <Flex
+                key={rowIndex}
+                mb="75px"
+                direction={{ base: 'column', lg: 'row' }}
+                gap="40px"
+                align="stretch"
+                justify="center" // Center if fewer than 3 items
+              >
+                {row.map((chat) => (
+                  <Box
+                    key={chat.id}
+                    flex={1}
+                    minW="300px"
+                    bg="white"
+                    borderRadius="2xl"
+                    overflow="hidden"
+                    boxShadow="lg"
+                    transition="all 0.3s"
+                    _hover={{ transform: 'translateY(-5px)', boxShadow: 'xl' }}
+                    border="1px solid"
+                    borderColor="gray.100"
+                    cursor="pointer"
+                    onClick={() => isGuest ? navigate('/login') : console.log('Open chat')}
+                    display="flex"
+                    flexDirection="column"
+                  >
+                    <Flex p={6} flex="1" flexDirection="column">
+                      <Flex align="center" gap={4} mb={4}>
+                        <Flex
+                          w="60px"
+                          h="60px"
+                          borderRadius="full"
+                          bg="var(--mooa-orange-light)"
+                          color="var(--mooa-orange-dark)"
+                          align="center"
+                          justify="center"
+                          fontSize="xl"
+                          fontWeight="bold"
+                          shrink={0}
+                        >
+                          {chat.avatar}
+                        </Flex>
+                        <Box flex={1}>
+                          <Flex justify="space-between" align="center" mb={1}>
+                            <Heading fontSize="lg" color="var(--mooa-navy)">
+                              {chat.name}
+                            </Heading>
+                            <Text fontSize="sm" color="gray.500">
+                              {chat.time}
+                            </Text>
+                          </Flex>
+                          <Text fontSize="sm" color="gray.500" noOfLines={1}>
+                            {isGuest && chat.id !== 1 ? '🔒 (내용을 보려면 로그인하세요)' : chat.message}
+                          </Text>
+                        </Box>
+                      </Flex>
+
+                      {chat.unread > 0 ? (
+                        <Flex justify="flex-end" mb="auto">
+                          <Box
+                            bg="red.500"
+                            color="white"
+                            px={3}
+                            py={1}
+                            borderRadius="full"
+                            fontSize="xs"
+                            fontWeight="bold"
+                          >
+                            {chat.unread}개 안 읽음
+                          </Box>
+                        </Flex>
+                      ) : <Box mb="auto" />}
+
+                      <Button
+                        w="full"
+                        mt={6}
+                        bg="white"
+                        border="1px solid"
+                        borderColor="var(--mooa-orange)"
+                        color="var(--mooa-orange)"
+                        _hover={{ bg: 'orange.50' }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          isGuest ? navigate('/login') : console.log('Enter chat');
+                        }}
+                      >
+                        대화방 입장하기
+                      </Button>
+                    </Flex>
+                  </Box>
+                ))}
+                {/* Spacer (if needed to push items left, but 'justify=center' keeps them centered like Match.jsx mostly does, or logic differs. 
+                    Match.jsx uses justify="center". If there is 1 item, it centers. 
+                    If the user wants strictly left aligned for incomplete rows, justify="start" is better. 
+                    But Match.jsx uses justify="center". I will stick to Match.jsx logic: justify="center".
+                */}
+              </Flex>
+            )) : (
+              <Box textAlign="center" py={20} color="gray.500">
+                대화방이 없습니다. 친구를 찾아 대화를 시작해보세요!
+              </Box>
+            )}
+          </VStack>
+
+          {/* Guest CTA (Same style as Match.jsx) */}
+          {isGuest && (
+            <Box
+              mt="75px"
+              textAlign="center"
+              p={8}
+              borderRadius="2xl"
+              position="relative"
+              overflow="hidden"
+              backgroundImage="url('/img/chat_guest_banner.jpg')"
+              backgroundSize="cover"
+              backgroundPosition="center 30%"
+              _before={{
+                content: '""',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                bg: 'blackAlpha.600',
+                zIndex: 1
+              }}
+            >
+              <Box position="relative" zIndex={2}>
+                <Heading size="lg" mb={2} color="white" fontWeight="bold">
+                  더 많은 친구들과 대화해보세요
+                </Heading>
+                <Text color="whiteAlpha.900" fontSize="lg" mb={6}>
+                  궁금한 모임에 참여하고, 친구들과 즐겁게 수다를 떨어보세요!
+                </Text>
+                <Button
+                  colorScheme="orange"
+                  bg="var(--mooa-orange)"
+                  color="white"
+                  onClick={() => navigate('/login')}
+                  size="lg"
+                  px={8}
+                  h="56px"
+                  fontSize="lg"
+                  _hover={{ bg: 'orange.500', transform: 'translateY(-2px)', boxShadow: 'lg' }}
+                  transition="all 0.2s"
+                >
+                  로그인하고 대화하기
+                </Button>
+              </Box>
+            </Box>
+          )}
+        </VStack>
+      </Box>
+      <Footer />
+    </Flex>
+
   );
 };
 

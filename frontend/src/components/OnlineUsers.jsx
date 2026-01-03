@@ -9,7 +9,7 @@ const OnlineUsers = ({ currentUser }) => {
   useEffect(() => {
     if (!currentUser) return;
 
-    const socket = new SockJS('http://localhost:9999/ws');
+    const socket = new SockJS('/ws');
     const client = Stomp.over(socket);
 
     // 디버그 로그 비활성화

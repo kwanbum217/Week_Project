@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import { Box, Heading, Text, Button, VStack } from '@chakra-ui/react';
 
 const ProtectedRoute = ({ children }) => {
@@ -33,7 +33,7 @@ const ProtectedRoute = ({ children }) => {
     );
   }
 
-  return children;
+  return children ? children : <Outlet />;
 };
 
 export default ProtectedRoute;

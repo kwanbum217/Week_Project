@@ -22,7 +22,7 @@ const VoiceCall = ({ currentUser, targetUser }) => {
 
   useEffect(() => {
     // WebSocket 연결 설정
-    const socket = new SockJS('http://localhost:9999/ws');
+    const socket = new SockJS('/ws');
     const client = Stomp.over(socket);
 
     client.connect({}, () => {
