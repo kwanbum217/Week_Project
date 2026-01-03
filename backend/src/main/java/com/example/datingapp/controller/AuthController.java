@@ -2,10 +2,14 @@ package com.example.datingapp.controller;
 
 import com.example.datingapp.model.User;
 import com.example.datingapp.service.UserService;
+import com.example.datingapp.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -18,6 +22,9 @@ public class AuthController {
   @Autowired
   private PasswordEncoder passwordEncoder;
 
+  @Autowired
+  private JwtTokenProvider tokenProvider;
+
   @PostMapping("/register")
   public ResponseEntity<?> registerUser(@RequestBody User user) {
     try {
@@ -27,7 +34,7 @@ public class AuthController {
       User savedUser = userService.registerUser(user);
       return ResponseEntity.ok(savedUser);
     } catch (Exception e) {
-      e.printStackTrace(); // 서버 콘솔에 에러 출력
+      e.printStackTrace();
       return ResponseEntity.internalServerError().body("Registration failed: " + e.getMessage());
     }
   }
@@ -45,7 +52,16 @@ public class AuthController {
     return userService.findByUsername(user.getUsername())
         .map(u -> {
           if (passwordEncoder.matches(user.getPassword(), u.getPassword())) {
-            return ResponseEntity.ok(u);
+            // JWT 토큰 생성
+            String token = tokenProvider.generateToken(u.getUsername());
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("token", token);
+            response.put("id", u.getId());
+            response.put("username", u.getUsername());
+            response.put("email", u.getEmail());
+
+            return ResponseEntity.ok(response);
           } else {
             return ResponseEntity.badRequest().body("Invalid password");
           }

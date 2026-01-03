@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { Box, VStack, Heading, Input, Button, Text } from '@chakra-ui/react';
-import { useToast } from '../hooks/useToast';
 
 const ExerciseTool = () => {
     const [exerciseType, setExerciseType] = useState('');
     const [duration, setDuration] = useState('');
-    const toast = useToast();
+    const [message, setMessage] = useState('');
 
     const saveExercise = async () => {
         if (!exerciseType || !duration) return;
@@ -15,33 +14,32 @@ const ExerciseTool = () => {
             durationMinutes: parseInt(duration)
         };
 
+        // JWT 토큰 가져오기
+        const token = localStorage.getItem('token');
+
+        const headers = { 'Content-Type': 'application/json' };
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+
         try {
             const response = await fetch('/api/health/exercise', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: headers,
                 body: JSON.stringify(exerciseData)
             });
 
             if (response.ok) {
-                toast({
-                    title: '운동 기록 완료',
-                    status: 'success',
-                    duration: 2000,
-                    isClosable: true,
-                });
+                setMessage('✅ 운동 기록이 저장되었습니다!');
                 setExerciseType('');
                 setDuration('');
+            } else if (response.status === 401) {
+                setMessage('⚠️ 로그인 후 이용해주세요');
             } else {
                 throw new Error('Failed to save');
             }
         } catch (error) {
-            toast({
-                title: '저장 실패',
-                description: '서버와 통신 중 오류가 발생했습니다.',
-                status: 'error',
-                duration: 2000,
-                isClosable: true,
-            });
+            setMessage('⚠️ 로그인 후 이용해주세요');
         }
     };
 
@@ -60,6 +58,11 @@ const ExerciseTool = () => {
                 <Button colorScheme="orange" onClick={saveExercise} width="full">
                     저장하기
                 </Button>
+                {message && (
+                    <Text color={message.includes('✅') ? 'green.500' : 'orange.500'} fontWeight="bold" textAlign="center">
+                        {message}
+                    </Text>
+                )}
             </VStack>
         </Box>
     );

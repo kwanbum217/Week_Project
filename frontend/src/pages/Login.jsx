@@ -44,8 +44,12 @@ const Login = () => {
       console.log('Response status:', response.status);
 
       if (response.ok) {
-        const user = await response.json();
-        localStorage.setItem('user', JSON.stringify(user));
+        const data = await response.json();
+        // JWT 토큰 저장
+        if (data.token) {
+          localStorage.setItem('token', data.token);
+        }
+        localStorage.setItem('user', JSON.stringify(data));
         toaster.create({
           title: '로그인 성공',
           description: 'MOOA에 오신 것을 환영합니다!',

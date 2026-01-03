@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { Box, VStack, Heading, Input, Button, SimpleGrid, Text } from '@chakra-ui/react';
-import { useToast } from '../hooks/useToast';
 
 const VitalTool = () => {
     const [systolic, setSystolic] = useState('');
     const [diastolic, setDiastolic] = useState('');
     const [bloodSugar, setBloodSugar] = useState('');
-    const toast = useToast();
+    const [message, setMessage] = useState('');
 
     const saveVital = async () => {
         if (!systolic && !diastolic && !bloodSugar) return;
@@ -17,34 +16,33 @@ const VitalTool = () => {
             bloodSugar: bloodSugar ? parseInt(bloodSugar) : null
         };
 
+        // JWT 토큰 가져오기
+        const token = localStorage.getItem('token');
+
+        const headers = { 'Content-Type': 'application/json' };
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+
         try {
             const response = await fetch('/api/health/vital', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: headers,
                 body: JSON.stringify(vitalData)
             });
 
             if (response.ok) {
-                toast({
-                    title: '건강수치 기록 완료',
-                    status: 'success',
-                    duration: 2000,
-                    isClosable: true,
-                });
+                setMessage('✅ 건강수치가 저장되었습니다!');
                 setSystolic('');
                 setDiastolic('');
                 setBloodSugar('');
+            } else if (response.status === 401) {
+                setMessage('⚠️ 로그인 후 이용해주세요');
             } else {
                 throw new Error('Failed to save');
             }
         } catch (error) {
-            toast({
-                title: '저장 실패',
-                description: '서버와 통신 중 오류가 발생했습니다.',
-                status: 'error',
-                duration: 2000,
-                isClosable: true,
-            });
+            setMessage('⚠️ 로그인 후 이용해주세요');
         }
     };
 
@@ -69,6 +67,11 @@ const VitalTool = () => {
                 <Button colorScheme="teal" onClick={saveVital} width="full">
                     기록하기
                 </Button>
+                {message && (
+                    <Text color={message.includes('✅') ? 'green.500' : 'orange.500'} fontWeight="bold" textAlign="center">
+                        {message}
+                    </Text>
+                )}
             </VStack>
         </Box>
     );
