@@ -20,6 +20,11 @@ public class MatchController {
   @Autowired
   private UserService userService;
 
+  @GetMapping
+  public ResponseEntity<List<com.example.datingapp.dto.MatchDTO>> getAllMatches() {
+    return ResponseEntity.ok(matchService.getAllMatches());
+  }
+
   @GetMapping("/{username}")
   public ResponseEntity<List<User>> getMatches(@PathVariable String username,
       @RequestParam(defaultValue = "10") double radius) {

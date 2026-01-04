@@ -17,75 +17,14 @@ const Match = () => {
     }
   }, []);
 
-  // Rich Mock Data
-  const matches = [
-    {
-      id: 1,
-      name: '행복한산행',
-      gender: '여성',
-      age: 65,
-      location: '서울 강남구',
-      image: '/img/friend_hiking.png',
-      matchRate: 98,
-      distance: 0.8,
-      interests: ['등산', '요가', '건강']
-    },
-    {
-      id: 2,
-      name: '두바퀴여행',
-      gender: '남성',
-      age: 68,
-      location: '서울 서초구',
-      image: '/img/friend_cycling.png',
-      matchRate: 92,
-      distance: 1.5,
-      interests: ['자전거', '여행', '사진']
-    },
-    {
-      id: 3,
-      name: '즐거운스텝',
-      gender: '여성',
-      age: 62,
-      location: '서울 송파구',
-      image: '/img/friend_dancing.png',
-      matchRate: 88,
-      distance: 2.1,
-      interests: ['댄스', '음악', '사교']
-    },
-    {
-      id: 4,
-      name: '지혜의숲',
-      gender: '남성',
-      age: 64,
-      location: '서울 강남구',
-      image: '/img/friend_chess.png',
-      matchRate: 85,
-      distance: 1.2,
-      interests: ['바둑', '독서', '토론']
-    },
-    {
-      id: 5,
-      name: '맛있는식탁',
-      gender: '여성',
-      age: 66,
-      location: '서울 강동구',
-      image: '/img/friend_hiking.png',
-      matchRate: 80,
-      distance: 3.5,
-      interests: ['요리', '원예', '봉사']
-    },
-    {
-      id: 6,
-      name: '강태공',
-      gender: '남성',
-      age: 70,
-      location: '경기 성남시',
-      image: '/img/friend_cycling.png',
-      matchRate: 78,
-      distance: 5.2,
-      interests: ['낚시', '등산', '맛집']
-    }
-  ];
+  const [matches, setMatches] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:9999/api/matches')
+      .then(res => res.json())
+      .then(data => setMatches(data))
+      .catch(err => console.error('Failed to fetch matches:', err));
+  }, []);
 
   const categories = ['전체', '운동/건강', '문화/예술', '여행', '봉사활동'];
 
