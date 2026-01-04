@@ -45,16 +45,17 @@ public class SecurityConfig {
             .requestMatchers(new AntPathRequestMatcher("/api/auth/**")).permitAll() // Allow auth endpoints
             .requestMatchers(new AntPathRequestMatcher("/api/support/**")).permitAll() // Allow customer support
             .requestMatchers(new AntPathRequestMatcher("/api/matches/**")).permitAll() // Allow match endpoints
-            .requestMatchers(new AntPathRequestMatcher("/api/health/**")).permitAll() // Allow health endpoints (auth
-                                                                                      // checked in controller)
-            .requestMatchers(new AntPathRequestMatcher("/api/meetups/**")).permitAll() // Allow meetup endpoints
-            .requestMatchers(new AntPathRequestMatcher("/api/market/**")).permitAll() // Allow market endpoints
             .requestMatchers(new AntPathRequestMatcher("/ws/**")).permitAll() // Allow WebSocket
             .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll() // Allow H2 console
             .requestMatchers(new AntPathRequestMatcher("/oauth2/**")).permitAll() // Allow OAuth2
             .requestMatchers(new AntPathRequestMatcher("/login/**")).permitAll() // Allow login paths
             .requestMatchers(new AntPathRequestMatcher("/login/oauth2/code/**")).permitAll()
             .requestMatchers(new AntPathRequestMatcher("/api/admin/**")).hasRole("ADMIN")
+            .requestMatchers(new AntPathRequestMatcher("/api/location/**")).authenticated() // Location based services
+                                                                                            // require login
+            .requestMatchers(new AntPathRequestMatcher("/ws-chat/**")).authenticated() // Chat WebSocket
+            .requestMatchers(new AntPathRequestMatcher("/chat/**")).authenticated() // Chat API
+            .requestMatchers(new AntPathRequestMatcher("/auth/**")).permitAll() // Auth alias
             .requestMatchers(new AntPathRequestMatcher("/error")).permitAll() // Allow error page
             .anyRequest().authenticated())
         .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin())) // Allow H2 console frames

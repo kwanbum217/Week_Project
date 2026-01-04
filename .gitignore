@@ -24,7 +24,4 @@ dist-ssr
 *.sw?
 
 # Spring Boot
-backend/application.properties
-backend/src/main/resources/application.properties
-backend/src/main/resources/application-*.properties
-backend/target/
+

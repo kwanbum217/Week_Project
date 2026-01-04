@@ -148,12 +148,13 @@ const Layout = () => {
           {/* Public Preview Routes */}
           <Route path="/match" element={<Match />} />
           <Route path="/meetup" element={<Meetup />} />
-          <Route path="/chat" element={<Chat />} />
           <Route path="/market" element={<Market />} />
           <Route path="/info" element={<Info />} />
 
           {/* Protected Routes */}
           <Route element={<ProtectedRoute />}>
+            <Route path="/chat" element={<Chat />} />
+            <Route path="/chat/:roomId" element={<Chat />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/voice" element={<VoiceChat />} />
           </Route>
