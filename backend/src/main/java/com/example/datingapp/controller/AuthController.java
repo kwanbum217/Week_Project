@@ -2,14 +2,10 @@ package com.example.datingapp.controller;
 
 import com.example.datingapp.model.User;
 import com.example.datingapp.service.UserService;
-import com.example.datingapp.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -23,7 +19,7 @@ public class AuthController {
   private PasswordEncoder passwordEncoder;
 
   @Autowired
-  private JwtTokenProvider tokenProvider;
+  private com.example.datingapp.security.JwtTokenProvider jwtTokenProvider;
 
   @PostMapping("/register")
   public ResponseEntity<?> registerUser(@RequestBody User user) {
@@ -34,7 +30,7 @@ public class AuthController {
       User savedUser = userService.registerUser(user);
       return ResponseEntity.ok(savedUser);
     } catch (Exception e) {
-      e.printStackTrace();
+      e.printStackTrace(); // 서버 콘솔에 에러 출력
       return ResponseEntity.internalServerError().body("Registration failed: " + e.getMessage());
     }
   }
@@ -52,14 +48,31 @@ public class AuthController {
     return userService.findByUsername(user.getUsername())
         .map(u -> {
           if (passwordEncoder.matches(user.getPassword(), u.getPassword())) {
-            // JWT 토큰 생성
-            String token = tokenProvider.generateToken(u.getUsername());
+            // Generate Token
+            // We can use the username or email. TokenProvider expects Authentication or
+            // String.
+            // Let's create a partial Authentication or use a simpler generate method if
+            // avail.
+            // JwtTokenProvider has generateToken(String email) which sets subject to email.
+            // But existing system seems to use username.
 
-            Map<String, Object> response = new HashMap<>();
-            response.put("token", token);
-            response.put("id", u.getId());
-            response.put("username", u.getUsername());
-            response.put("email", u.getEmail());
+            // Workaround: We will use generateToken(Authentication) by creating a dummy
+            // token
+            // or check if there is a generateToken(String username).
+            // Checked JwtTokenProvider: has generateToken(Authentication) and
+            // generateToken(String email).
+            // If we use generateToken(String email), we need to ensure username is email or
+            // handled correctly.
+            // Let's create a UsernamePasswordAuthenticationToken for generation.
+
+            org.springframework.security.authentication.UsernamePasswordAuthenticationToken authentication = new org.springframework.security.authentication.UsernamePasswordAuthenticationToken(
+                u, null, new com.example.datingapp.security.CustomUserDetails(u).getAuthorities());
+
+            String token = jwtTokenProvider.generateToken(authentication);
+
+            java.util.Map<String, Object> response = new java.util.HashMap<>();
+            response.put("user", u);
+            response.put("accessToken", token);
 
             return ResponseEntity.ok(response);
           } else {

@@ -87,7 +87,7 @@ Week_ProjectCl/
 ### Backend
 | 기술 | 버전 | 설명 |
 |------|------|------|
-| Java | 21 (LTS) | 프로그래밍 언어 |
+| Java | 17 (LTS) | 프로그래밍 언어 |
 | Spring Boot | 3.1.5 | 백엔드 프레임워크 |
 | Spring Security | - | 인증/인가 |
 | Spring WebSocket | - | 실시간 통신 |

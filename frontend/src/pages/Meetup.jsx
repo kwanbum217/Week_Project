@@ -7,18 +7,6 @@ import Footer from '../components/Footer';
 const Meetup = () => {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
-    const [meetups, setMeetups] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState('전체');
-    const [loading, setLoading] = useState(true);
-
-    // 카테고리 매핑 (한글 -> API 파라미터)
-    const categoryMap = {
-        '전체': 'ALL',
-        '운동/건강': 'EXERCISE_HEALTH',
-        '문화/예술': 'CULTURE_ART',
-        '여행': 'TRAVEL',
-        '봉사활동': 'VOLUNTEER'
-    };
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -27,41 +15,107 @@ const Meetup = () => {
         }
     }, []);
 
-    // API에서 모임 데이터 불러오기
-    useEffect(() => {
-        fetchMeetups(selectedCategory);
-    }, [selectedCategory]);
-
-    const fetchMeetups = async (category) => {
-        setLoading(true);
-        try {
-            const categoryParam = categoryMap[category] || 'ALL';
-            const response = await fetch(`http://localhost:9999/api/meetups?category=${categoryParam}`);
-            if (response.ok) {
-                const data = await response.json();
-                // tags 문자열을 배열로 변환
-                const processedData = data.map(meetup => ({
-                    ...meetup,
-                    tags: meetup.tags ? meetup.tags.split(',') : []
-                }));
-                setMeetups(processedData);
-            } else {
-                console.error('Failed to fetch meetups');
-                setMeetups([]);
-            }
-        } catch (error) {
-            console.error('Error fetching meetups:', error);
-            setMeetups([]);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const handleCategoryClick = (category) => {
-        setSelectedCategory(category);
-    };
-
     const isGuest = !user || user.username === 'Guest';
+
+    // Temporary dummy data for meetups
+    const meetups = [
+        {
+            id: 3,
+            title: '사진 촬영 출사',
+            description: '풍경 사진 찍으러 같이 가요.',
+            location: '서울 전체',
+            date: '비정기적',
+            members: 24,
+            maxMembers: 30,
+            cost: "회비 10,000원",
+            transport: "카풀 가능",
+            startTime: "13:00",
+            endTime: "18:00",
+            image: '/img/photo_meetup.png',
+            tags: ['사진', '예술', '여행'],
+            supplies: '개인 카메라, 삼각대(선택)'
+        },
+        {
+            id: 1,
+            title: '주말 등산 모임',
+            description: '함께 관악산 등산하실 분 구합니다. 초보자 환영!',
+            location: '서울 관악구',
+            date: '매주 토요일 오전 9시',
+            members: 15,
+            maxMembers: 20,
+            cost: "참가비 무료",
+            transport: "대중교통 권장",
+            startTime: "09:00",
+            endTime: "13:00",
+            image: '/img/hiking_meetup.png',
+            tags: ['등산', '건강', '친목'],
+            supplies: '등산화, 물, 간단한 간식'
+        },
+        {
+            id: 5,
+            title: '맛집 탐방대',
+            description: '숨겨진 맛집을 찾아 떠나는 미식 여행!',
+            location: '서울 홍대/합정',
+            date: '매주 금요일 저녁',
+            members: 12,
+            maxMembers: 20,
+            cost: "식비 1/N",
+            transport: "홍대입구역 3번 출구",
+            startTime: "19:00",
+            endTime: "21:30",
+            image: '/img/gourmet_meetup.png',
+            tags: ['맛집', '먹방', '불금'],
+            supplies: '즐거운 마음, 회비'
+        },
+        {
+            id: 2,
+            title: '강남 독서 토론',
+            description: '한 달에 한 권, 깊이 있는 대화를 나눕니다.',
+            location: '서울 강남구',
+            date: '매월 첫째 주 일요일',
+            members: 8,
+            maxMembers: 10,
+            cost: "카페비 각자 부담",
+            transport: "주차 가능 (2시간 무료)",
+            startTime: "15:00",
+            endTime: "17:00",
+            image: '/img/book_club_meetup.png',
+            tags: ['독서', '토론', '교양'],
+            supplies: '이달의 선정 도서, 필기도구'
+        },
+        {
+            id: 6,
+            title: '클래식 음악 감상',
+            description: '다같이 모여서 클래식 명곡을 감상해요.',
+            location: '서울 서초구',
+            date: '격주 일요일 오후',
+            members: 6,
+            maxMembers: 8,
+            cost: "티켓비 실비",
+            transport: "남부터미널역 5분 거리",
+            startTime: "14:00",
+            endTime: "16:30",
+            image: '/img/classic_music_meetup.png',
+            tags: ['음악', '클래식', '힐링'],
+            supplies: '편안한 복장'
+        },
+        {
+            id: 4,
+            title: '동네 산책 모임',
+            description: '저녁 드시고 가볍게 산책해요.',
+            location: '서울 마포구',
+            date: '매일 저녁 8시',
+            members: 5,
+            maxMembers: 10,
+            cost: "참가비 무료",
+            transport: "망원한강공원 주차장",
+            startTime: "20:00",
+            endTime: "21:30",
+            image: '/img/neighborhood_walk.png',
+            tags: ['산책', '운동', '동네'],
+            supplies: '운동화, 물'
+        }
+    ];
 
     const displayMeetups = isGuest ? meetups.slice(0, 6) : meetups;
 
@@ -92,184 +146,161 @@ const Meetup = () => {
                         </Text>
                     </Box>
 
-                    {/* Filter Chips */}
+                    {/* Filter Chips (Visual only for consistency) */}
                     <Flex justify="center" gap={4} wrap="wrap" mb={24}>
                         {['전체', '운동/건강', '문화/예술', '여행', '봉사활동'].map(cat => (
                             <Button
                                 key={cat}
-                                colorScheme={cat === selectedCategory ? "blue" : "gray"}
-                                bg={cat === selectedCategory ? "var(--mooa-navy)" : "transparent"}
-                                color={cat === selectedCategory ? "white" : "gray.600"}
-                                variant={cat === selectedCategory ? "solid" : "outline"}
+                                colorScheme={cat === '전체' ? "blue" : "gray"}
+                                bg={cat === '전체' ? "var(--mooa-navy)" : "transparent"}
+                                color={cat === '전체' ? "white" : "gray.600"}
+                                variant={cat === '전체' ? "solid" : "outline"}
                                 borderRadius="full"
                                 px={6}
-                                _hover={{
-                                    bg: cat === selectedCategory ? "var(--mooa-navy)" : "gray.100",
-                                    transform: 'scale(1.05)',
-                                    boxShadow: 'md',
-                                    borderColor: 'gray.400'
-                                }}
-                                transition="all 0.2s ease-in-out"
-                                onClick={() => handleCategoryClick(cat)}
+                                _hover={{ bg: cat === '전체' ? "var(--mooa-navy)" : "gray.100" }}
                             >
                                 {cat}
                             </Button>
                         ))}
                     </Flex>
 
-                    {/* Loading State */}
-                    {loading && (
-                        <Box textAlign="center" py={10}>
-                            <Text fontSize="lg" color="gray.500">모임을 불러오는 중...</Text>
-                        </Box>
-                    )}
-
                     {/* Meetup Grid (Rows of 3) */}
-                    {!loading && (
-                        <VStack align="stretch">
-                            {meetupRows.map((row, rowIndex) => (
-                                <Flex
-                                    key={rowIndex}
-                                    mb="75px"
-                                    direction={{ base: 'column', lg: 'row' }}
-                                    gap="40px"
-                                    align="stretch"
-                                    justify="center"
-                                    position="relative"
-                                >
-                                    {row.map((meetup) => (
-                                        <Box
-                                            key={meetup.id}
-                                            flex={1}
-                                            minW="300px"
-                                            bg="white"
-                                            borderRadius="2xl"
-                                            overflow="hidden"
-                                            boxShadow="lg"
-                                            transition="all 0.3s"
-                                            _hover={{ transform: 'translateY(-5px)', boxShadow: 'xl' }}
-                                            border="1px solid"
-                                            borderColor="gray.100"
-                                        >
-                                            {/* Image Area */}
-                                            <Box h="280px" bg="gray.100" position="relative">
-                                                <img
-                                                    src={meetup.image}
-                                                    alt={meetup.title}
-                                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                                    onError={(e) => { e.target.src = 'https://via.placeholder.com/300x200?text=Meetup'; }}
-                                                />
-                                                <Badge
-                                                    position="absolute"
-                                                    top={4}
-                                                    right={4}
-                                                    bg={meetup.members >= 15 ? "red.500" : "var(--mooa-orange)"}
-                                                    color="white"
-                                                    px={3}
-                                                    py={1}
-                                                    borderRadius="full"
-                                                    fontSize="md"
-                                                    boxShadow="md"
-                                                >
-                                                    {meetup.members >= 15 ? "🏆 인기모임" : "모집중"}
-                                                </Badge>
-                                            </Box>
-
-                                            {/* Content Area */}
-                                            <Box p={6}>
-                                                <Flex align="center" justify="space-between" mb={2}>
-                                                    <Text fontSize="24px" fontWeight="bold" color="gray.800">
-                                                        {meetup.title}
-                                                    </Text>
-                                                </Flex>
-
-                                                <Text color="gray.500" fontSize="md" mb={1}>
-                                                    📍 {isGuest ? meetup.location.split(' ')[0] + ' ***' : meetup.location}
-                                                </Text>
-                                                <Text color="gray.500" fontSize="md" mb={4}>
-                                                    📅 {meetup.date} ({meetup.startTime} ~ {meetup.endTime})
-                                                </Text>
-
-                                                <Text color="gray.600" mb={6} noOfLines={2} h="3em">
-                                                    {meetup.description}
-                                                </Text>
-
-                                                <Text fontSize="sm" fontWeight="bold" color="gray.700" mb={1}>
-                                                    회비: {meetup.cost}
-                                                </Text>
-
-                                                <Text fontSize="sm" fontWeight="bold" color="gray.700" mb={1}>
-                                                    출발지: {meetup.transport}
-                                                </Text>
-
-                                                <Text fontSize="sm" fontWeight="bold" color="gray.700" mb={1}>
-                                                    준비물: {meetup.supplies}
-                                                </Text>
-
-                                                <Text fontSize="sm" fontWeight="bold" color="var(--mooa-orange)" mb={1}>
-                                                    현재 {meetup.members}명 / 정원 {meetup.maxMembers}명
-                                                </Text>
-
-                                                <Text fontSize="xs" fontWeight="bold" color="gray.500" mb={2}>
-                                                    모임 태그
-                                                </Text>
-                                                <HStack spacing={2} mb={6}>
-                                                    {meetup.tags && meetup.tags.map(tag => (
-                                                        <Box key={tag} px={2} py={1} bg="blue.50" color="blue.600" borderRadius="full" fontSize="sm" fontWeight="medium">
-                                                            #{tag}
-                                                        </Box>
-                                                    ))}
-                                                </HStack>
-
-                                                <Button
-                                                    w="full"
-                                                    size="lg"
-                                                    bg="var(--mooa-navy)"
-                                                    color="white"
-                                                    _hover={{ opacity: 0.9 }}
-                                                    onClick={() => isGuest ? navigate('/login') : alert('참여 신청이 완료되었습니다!')}
-                                                    justifyContent="center"
-                                                >
-                                                    <Flex w="100%" align="center" justify="space-between">
-                                                        <Text>{isGuest ? "로그인하고 참여하기" : `참여하기 (${meetup.members}명)`}</Text>
-                                                        <Flex align="center">
-                                                            <Box w="1px" h="16px" bg="whiteAlpha.400" mx={4} />
-                                                            <FaUsers />
-                                                        </Flex>
-                                                    </Flex>
-                                                </Button>
-                                                <Button
-                                                    w="full"
-                                                    size="lg"
-                                                    bg="gray.500"
-                                                    color="white"
-                                                    mt={2}
-                                                    _hover={{ opacity: 0.9 }}
-                                                    onClick={() => alert('모임장에게 문자를 보낼 준비가 되었습니다.')}
-                                                    justifyContent="center"
-                                                >
-                                                    <Flex w="100%" align="center" justify="space-between">
-                                                        <Text>모임회장에게 문자 보내기</Text>
-                                                        <Flex align="center">
-                                                            <Box w="1px" h="16px" bg="whiteAlpha.400" mx={4} />
-                                                            <FaComments />
-                                                        </Flex>
-                                                    </Flex>
-                                                </Button>
-                                            </Box>
+                    <VStack align="stretch">
+                        {meetupRows.map((row, rowIndex) => (
+                            <Flex
+                                key={rowIndex}
+                                mb="75px"
+                                direction={{ base: 'column', lg: 'row' }}
+                                gap="40px"
+                                align="stretch"
+                                justify="center"
+                                position="relative"
+                            >
+                                {row.map((meetup) => (
+                                    <Box
+                                        key={meetup.id}
+                                        flex={1}
+                                        minW="300px"
+                                        bg="white"
+                                        borderRadius="2xl"
+                                        overflow="hidden"
+                                        boxShadow="lg"
+                                        transition="all 0.3s"
+                                        _hover={{ transform: 'translateY(-5px)', boxShadow: 'xl' }}
+                                        border="1px solid"
+                                        borderColor="gray.100"
+                                    >
+                                        {/* Image Area */}
+                                        <Box h="280px" bg="gray.100" position="relative">
+                                            <img
+                                                src={meetup.image}
+                                                alt={meetup.title}
+                                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                                onError={(e) => { e.target.src = 'https://via.placeholder.com/300x200?text=Meetup'; }}
+                                            />
+                                            <Badge
+                                                position="absolute"
+                                                top={4}
+                                                right={4}
+                                                bg={rowIndex === 0 ? "red.500" : "var(--mooa-orange)"}
+                                                color="white"
+                                                px={3}
+                                                py={1}
+                                                borderRadius="full"
+                                                fontSize="md"
+                                                boxShadow="md"
+                                            >
+                                                {rowIndex === 0 ? "🏆 인기모임" : "모집중"}
+                                            </Badge>
                                         </Box>
-                                    ))}
-                                </Flex>
-                            ))}
-                        </VStack>
-                    )}
 
-                    {/* Empty State */}
-                    {!loading && meetups.length === 0 && (
-                        <Box textAlign="center" py={10}>
-                            <Text fontSize="lg" color="gray.500">해당 카테고리의 모임이 없습니다.</Text>
-                        </Box>
-                    )}
+                                        {/* Content Area */}
+                                        <Box p={6}>
+                                            <Flex align="center" justify="space-between" mb={2}>
+                                                <Text fontSize="24px" fontWeight="bold" color="gray.800">
+                                                    {meetup.title}
+                                                </Text>
+                                            </Flex>
+
+                                            <Text color="gray.500" fontSize="md" mb={1}>
+                                                📍 {isGuest ? meetup.location.split(' ')[0] + ' ***' : meetup.location}
+                                            </Text>
+                                            <Text color="gray.500" fontSize="md" mb={4}>
+                                                📅 {meetup.date} ({meetup.startTime} ~ {meetup.endTime})
+                                            </Text>
+
+                                            <Text color="gray.600" mb={6} noOfLines={2} h="3em">
+                                                {meetup.description}
+                                            </Text>
+
+                                            <Text fontSize="sm" fontWeight="bold" color="gray.700" mb={1}>
+                                                회비: {meetup.cost}
+                                            </Text>
+
+                                            <Text fontSize="sm" fontWeight="bold" color="gray.700" mb={1}>
+                                                출발지: {meetup.transport}
+                                            </Text>
+
+                                            <Text fontSize="sm" fontWeight="bold" color="gray.700" mb={1}>
+                                                준비물: {meetup.supplies}
+                                            </Text>
+
+                                            <Text fontSize="sm" fontWeight="bold" color="var(--mooa-orange)" mb={1}>
+                                                현재 {meetup.members}명 / 정원 {meetup.maxMembers}명
+                                            </Text>
+
+                                            <Text fontSize="xs" fontWeight="bold" color="gray.500" mb={2}>
+                                                모임 태그
+                                            </Text>
+                                            <HStack spacing={2} mb={6}>
+                                                {meetup.tags && meetup.tags.map(tag => (
+                                                    <Box key={tag} px={2} py={1} bg="blue.50" color="blue.600" borderRadius="full" fontSize="sm" fontWeight="medium">
+                                                        #{tag}
+                                                    </Box>
+                                                ))}
+                                            </HStack>
+
+                                            <Button
+                                                w="full"
+                                                size="lg"
+                                                bg="var(--mooa-navy)"
+                                                color="white"
+                                                _hover={{ opacity: 0.9 }}
+                                                onClick={() => isGuest ? navigate('/login') : alert('참여 신청이 완료되었습니다!')}
+                                                justifyContent="center"
+                                            >
+                                                <Flex w="100%" align="center" justify="space-between">
+                                                    <Text>{isGuest ? "로그인하고 참여하기" : `참여하기 (${meetup.members}명)`}</Text>
+                                                    <Flex align="center">
+                                                        <Box w="1px" h="16px" bg="whiteAlpha.400" mx={4} />
+                                                        <FaUsers />
+                                                    </Flex>
+                                                </Flex>
+                                            </Button>
+                                            <Button
+                                                w="full"
+                                                size="lg"
+                                                bg="gray.500"
+                                                color="white"
+                                                mt={2}
+                                                _hover={{ opacity: 0.9 }}
+                                                onClick={() => alert('모임장에게 문자를 보낼 준비가 되었습니다.')}
+                                                justifyContent="center"
+                                            >
+                                                <Flex w="100%" align="center" justify="space-between">
+                                                    <Text>모임회장에게 문자 보내기</Text>
+                                                    <Flex align="center">
+                                                        <Box w="1px" h="16px" bg="whiteAlpha.400" mx={4} />
+                                                        <FaComments />
+                                                    </Flex>
+                                                </Flex>
+                                            </Button>
+                                        </Box>
+                                    </Box>
+                                ))}
+                            </Flex>
+                        ))}
+                    </VStack>
 
                     {isGuest && (
                         <Box

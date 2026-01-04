@@ -24,6 +24,12 @@ export default defineConfig({
         ws: true,
         changeOrigin: true,
         secure: false,
+      },
+      '/ws-chat': {
+        target: 'http://localhost:9999',
+        ws: true,
+        changeOrigin: true,
+        secure: false,
       }
     }
   },

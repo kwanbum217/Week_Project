@@ -15,10 +15,27 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
   @Autowired
   private JwtChannelInterceptor jwtChannelInterceptor;
 
+  @Autowired
+  private com.example.datingapp.security.JwtTokenProvider jwtTokenProvider;
+
+  @Autowired
+  private com.example.datingapp.service.UserService userService;
+
   @Override
   public void registerStompEndpoints(StompEndpointRegistry registry) {
+    registry.addEndpoint("/ws-chat")
+        .addInterceptors(new com.example.datingapp.security.JwtHandshakeInterceptor(jwtTokenProvider, userService))
+        .setAllowedOriginPatterns("*")
+        .withSockJS();
+
+    // Keep existing /ws endpoint for backward compatibility if needed, or remove if
+    // replaced.
+    // User requested specifically to add /ws-chat. I will keep /ws too just in
+    // case, or replace it?
+    // "WebSocket connection when JWT auth required" -> usually replaces.
+    // I will add the new one.
     registry.addEndpoint("/ws")
-        .setAllowedOriginPatterns("*") // Allow all origins for now
+        .setAllowedOriginPatterns("*")
         .withSockJS();
   }
 

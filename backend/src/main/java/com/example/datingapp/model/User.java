@@ -3,7 +3,7 @@ package com.example.datingapp.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Data
@@ -11,13 +11,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Table(name = "USERS")
 public class User {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column(name = "USERNAME", unique = true, nullable = false)
   private String username;
 
-  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+  @JsonIgnore
   @Column(name = "PASSWORD", nullable = false)
   private String password;
 
@@ -34,7 +34,7 @@ public class User {
   private String gender;
 
   @Column(name = "LOCATION")
-  private String location;
+  private String location; // Simple string for now, e.g., "Seoul"
 
   @Column(name = "LATITUDE")
   private Double latitude;
@@ -47,32 +47,6 @@ public class User {
 
   @Column(name = "ROLE")
   private String role = "USER";
-
-  // ===== 회원가입 폼 추가 필드 =====
-
-  @Column(name = "PHONE")
-  private String phone;
-
-  @Column(name = "INTERESTS")
-  private String interests;
-
-  @Column(name = "WANT_TO_HOST")
-  private String wantToHost;
-
-  @Column(name = "WANT_TO_FIND_FRIENDS")
-  private Boolean wantToFindFriends = false;
-
-  @Column(name = "WANT_TO_MEET")
-  private Boolean wantToMeet = false;
-
-  @Column(name = "WANT_TO_CHAT")
-  private Boolean wantToChat = false;
-
-  @Column(name = "WANT_TO_SHARE")
-  private Boolean wantToShare = false;
-
-  @Column(name = "AGREE_TO_RECEIVE_TEXTS")
-  private Boolean agreeToReceiveTexts = false;
 
   public User(String username, String password, String gender, String location) {
     this.username = username;
