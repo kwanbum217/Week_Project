@@ -157,12 +157,29 @@ const Navbar = () => {
             </div>
 
             {/* Row 2: Main Menu + Screen Size */}
-            <div className="flex justify-between items-center w-full whitespace-nowrap mt-2">
+            <div className="flex justify-between items-center w-full whitespace-nowrap" style={{ marginTop: '24px' }}>
               {(!user ? publicNavItems : navItems).map((item) => (
                 <Link
                   key={item.path}
                   to={item.path}
-                  className="text-lg font-bold text-[#333] hover:text-[#FF6B00] transition-colors"
+                  className="text-lg font-bold text-[#333] transition-all duration-200 ease-in-out px-3 py-2 rounded-lg"
+                  style={{
+                    ':hover': {
+                      color: '#FF6B00',
+                      transform: 'scale(1.05)',
+                      backgroundColor: 'rgba(255, 107, 0, 0.1)'
+                    }
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.color = '#FF6B00';
+                    e.target.style.transform = 'scale(1.08)';
+                    e.target.style.backgroundColor = 'rgba(255, 107, 0, 0.08)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.color = location.pathname === item.path ? '#FF6B00' : '#333';
+                    e.target.style.transform = 'scale(1)';
+                    e.target.style.backgroundColor = 'transparent';
+                  }}
                 >
                   {item.label}
                 </Link>
