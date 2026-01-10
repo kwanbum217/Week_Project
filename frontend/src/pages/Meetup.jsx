@@ -202,7 +202,7 @@ const Meetup = () => {
                                                 position="absolute"
                                                 top={4}
                                                 right={4}
-                                                bg={rowIndex === 0 ? "red.500" : "var(--mooa-orange)"}
+                                                bg={rowIndex === 0 ? "red.500" : "#25D366"}
                                                 color="white"
                                                 px={3}
                                                 py={1}
@@ -245,7 +245,7 @@ const Meetup = () => {
                                                 준비물: {meetup.supplies}
                                             </Text>
 
-                                            <Text fontSize="sm" fontWeight="bold" color="var(--mooa-orange)" mb={1}>
+                                            <Text fontSize="sm" fontWeight="bold" color="#25D366" mb={1}>
                                                 현재 {meetup.members}명 / 정원 {meetup.maxMembers}명
                                             </Text>
 
@@ -329,9 +329,9 @@ const Meetup = () => {
                                 <Heading size="lg" mb={2} color="white">모임에 참여하고 친구를 만들어보세요!</Heading>
                                 <Text color="whiteAlpha.900" mb={6}>간단하게 가입하고 내 취향에 딱 맞는 모임에 참여해보세요.</Text>
                                 <Button
-                                    bg="var(--mooa-orange)"
+                                    bg="#25D366"
                                     color="white"
-                                    _hover={{ bg: "#d65a00" }}
+                                    _hover={{ bg: "#20bd5a" }}
                                     onClick={() => navigate('/signup')}
                                     size="lg"
                                     px={8}

@@ -253,7 +253,7 @@ const Match = () => {
             <Box h="400px" w="100%" borderRadius="2xl" overflow="hidden" boxShadow="lg" border="1px solid" borderColor="gray.200" position="relative">
               {!location ? (
                 <Flex justify="center" align="center" h="100%" bg="gray.50" direction="column" gap={4}>
-                  <Spinner size="xl" color="var(--mooa-orange)" thickness="4px" />
+                  <Spinner size="xl" color="#25D366" thickness="4px" />
                   <Text color="gray.500">현재 위치를 불러오는 중입니다...</Text>
                   <Text fontSize="sm" color="gray.400">브라우저의 위치 권한을 허용해주세요.</Text>
                 </Flex>
@@ -301,11 +301,11 @@ const Match = () => {
                 onClick={() => setSelectedFilter(cat)}
                 borderRadius="full"
                 px={6}
-                bg={selectedFilter === cat ? 'var(--mooa-orange)' : 'white'}
+                bg={selectedFilter === cat ? '#25D366' : 'white'}
                 color={selectedFilter === cat ? 'white' : 'gray.600'}
                 border="1px solid"
                 borderColor="gray.200"
-                _hover={{ bg: selectedFilter === cat ? 'var(--mooa-orange)' : 'gray.50' }}
+                _hover={{ bg: selectedFilter === cat ? '#25D366' : 'gray.50' }}
               >
                 {cat}
               </Button>
@@ -316,7 +316,7 @@ const Match = () => {
           <VStack align="stretch">
             {loading ? (
               <Flex justify="center" align="center" h="200px">
-                <Spinner size="xl" color="var(--mooa-orange)" />
+                <Spinner size="xl" color="#25D366" />
               </Flex>
             ) : matchRows.length > 0 ? (
               matchRows.map((row, rowIndex) => (
@@ -490,12 +490,11 @@ const Match = () => {
                 <Heading size="lg" mb={2} color="white">더 많은 친구들이 기다리고 있어요!</Heading>
                 <Text color="whiteAlpha.900" mb={6}>간단하게 가입하고 100명 이상의 동네 친구를 만나보세요.</Text>
                 <Button
-                  colorScheme="orange"
-                  bg="var(--mooa-orange)"
+                  bg="#25D366"
                   color="white"
                   onClick={() => navigate('/signup')}
                   size="lg"
-                  _hover={{ bg: 'orange.500' }}
+                  _hover={{ bg: '#20bd5a' }}
                 >
                   무아 회원가입하기
                 </Button>

@@ -356,11 +356,11 @@ const Market = () => {
                             key={cat}
                             size="md"
                             borderRadius="full"
-                            bg={selectedCategory === cat ? 'gray.800' : 'white'}
+                            bg={selectedCategory === cat ? '#25D366' : 'white'}
                             color={selectedCategory === cat ? 'white' : 'gray.800'}
                             border="1px solid"
-                            borderColor={selectedCategory === cat ? 'gray.800' : 'gray.200'}
-                            _hover={{ bg: selectedCategory === cat ? 'gray.900' : 'gray.50' }}
+                            borderColor={selectedCategory === cat ? '#25D366' : 'gray.200'}
+                            _hover={{ bg: selectedCategory === cat ? '#20bd5a' : 'gray.50' }}
                             onClick={() => setSelectedCategory(cat)}
                             fontSize="15px"
                             px={5}
@@ -403,11 +403,10 @@ const Market = () => {
                         <Heading size="lg" mb={2} color="white">원하는 물건을 못 찾으셨나요?</Heading>
                         <Text color="whiteAlpha.900" mb={6}>더 많은 나눔이 기다리고 있습니다. 지금 가입하고 확인해보세요!</Text>
                         <Button
-                            colorScheme="orange"
-                            bg="var(--mooa-orange)"
+                            bg="#25D366"
                             color="white"
                             size="lg"
-                            _hover={{ bg: 'orange.600', transform: 'scale(1.05)' }}
+                            _hover={{ bg: '#20bd5a', transform: 'scale(1.05)' }}
                             transition="all 0.2s"
                             onClick={() => navigate('/signup')}
                             boxShadow="lg"
