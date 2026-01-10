@@ -81,12 +81,13 @@ const CustomerSupportChat = () => {
           right="30px"
           size="lg"
           borderRadius="full"
-          background="var(--mooa-orange)"
+          background="#25D366"
           color="white"
-          boxShadow="0 8px 24px rgba(255, 142, 83, 0.4)"
+          boxShadow="0 8px 24px rgba(37, 211, 102, 0.4)"
           _hover={{
             transform: 'scale(1.1)',
-            boxShadow: '0 12px 32px rgba(255, 142, 83, 0.6)',
+            boxShadow: '0 12px 32px rgba(37, 211, 102, 0.6)',
+            bg: "#20bd5a"
           }}
           transition="all 0.3s ease"
           onClick={() => setIsOpen(true)}
@@ -114,11 +115,11 @@ const CustomerSupportChat = () => {
           flexDirection="column"
           zIndex={1000}
           overflow="hidden"
-          border="1px solid rgba(255, 142, 83, 0.2)"
+          border="1px solid rgba(37, 211, 102, 0.2)"
         >
           {/* 헤더 */}
           <Box
-            background="var(--mooa-orange)"
+            background="#25D366"
             color="white"
             p={4}
             display="flex"
@@ -187,7 +188,7 @@ const CustomerSupportChat = () => {
               >
                 <Box
                   bg={msg.type === 'user'
-                    ? 'var(--mooa-orange)'
+                    ? '#25D366'
                     : 'white'
                   }
                   color={msg.type === 'user' ? 'white' : 'gray.800'}
@@ -215,7 +216,7 @@ const CustomerSupportChat = () => {
               <Box alignSelf="flex-start" maxWidth="80%">
                 <Box bg="white" p={3} borderRadius="12px" boxShadow="sm">
                   <HStack spacing={2}>
-                    <Spinner size="sm" color="orange.500" />
+                    <Spinner size="sm" color="#25D366" />
                     <Text fontSize="sm" color="gray.600">답변 작성 중...</Text>
                   </HStack>
                 </Box>
@@ -234,19 +235,20 @@ const CustomerSupportChat = () => {
                 size="md"
                 borderRadius="full"
                 _focus={{
-                  borderColor: 'orange.400',
-                  boxShadow: '0 0 0 1px #FF8E53',
+                  borderColor: '#25D366',
+                  boxShadow: '0 0 0 1px #25D366',
                 }}
                 disabled={isLoading}
               />
               <Button
                 onClick={sendMessage}
-                background="var(--mooa-orange)"
+                background="#25D366"
                 color="white"
                 borderRadius="full"
                 size="md"
                 px={6}
                 _hover={{
+                  bg: "#20bd5a",
                   transform: 'scale(1.05)',
                 }}
                 transition="all 0.2s"

@@ -405,73 +405,47 @@ const Match = () => {
                             ))}
                           </HStack>
 
-                          <Button
-                            w="full"
-                            style={{
-                              background: isFemale ? 'linear-gradient(to bottom, #FF80AB, #FF4081)' : 'linear-gradient(to bottom, #2C4A6E, #1E3A5F)',
-                            }}
-                            color="white"
-                            mb={2}
-                            onClick={() => isGuest ? navigate('/login') : alert('친구 추가 되었습니다!')}
-                            justifyContent="center"
-                            px={6}
-                            _hover={{
-                              opacity: 0.9
-                            }}
-                          >
-                            <Flex w="100%" align="center" justify="space-between">
-                              <Text>{isGuest ? "로그인하고 친구 추가하기" : "친구 추가하기"}</Text>
-                              <Flex align="center">
-                                <Box w="1px" h="16px" bg="whiteAlpha.400" mx={4} />
-                                <FaUserPlus />
-                              </Flex>
-                            </Flex>
-                          </Button>
+                          <Flex gap={2} mt={4}>
+                            <Button
+                              flex={1}
+                              bg="#25D366"
+                              color="white"
+                              _hover={{ bg: "#20bd5a" }}
+                              onClick={() => isGuest ? navigate('/login') : alert('친구 추가 되었습니다!')}
+                              size="sm"
+                              fontSize="sm"
+                              borderRadius="full"
+                            >
+                              친구 추가
+                            </Button>
 
-                          <Button
-                            w="full"
-                            style={{
-                              background: isFemale ? 'linear-gradient(to bottom, #FF4081, #F50057)' : 'linear-gradient(to bottom, #1E3A5F, #162B47)',
-                            }}
-                            color="white"
-                            mb={2}
-                            onClick={() => isGuest ? navigate('/login') : alert('문자가 전송되었습니다!')}
-                            justifyContent="center"
-                            px={6}
-                            _hover={{
-                              opacity: 0.9
-                            }}
-                          >
-                            <Flex w="100%" align="center" justify="space-between">
-                              <Text>{isGuest ? "로그인하고 문자 보내기" : "문자 보내기"}</Text>
-                              <Flex align="center">
-                                <Box w="1px" h="16px" bg="whiteAlpha.400" mx={4} />
-                                <FaRegEnvelope />
-                              </Flex>
-                            </Flex>
-                          </Button>
+                            <Button
+                              flex={1}
+                              bg="white"
+                              color="#25D366"
+                              border="1px solid #25D366"
+                              _hover={{ bg: "#f0fdf4" }}
+                              onClick={() => isGuest ? navigate('/login') : alert('문자가 전송되었습니다!')}
+                              size="sm"
+                              fontSize="sm"
+                              borderRadius="full"
+                            >
+                              문자 보내기
+                            </Button>
 
-                          <Button
-                            w="full"
-                            style={{
-                              background: isFemale ? 'linear-gradient(to bottom, #F50057, #C51162)' : 'linear-gradient(to bottom, #162B47, #0D1A2B)',
-                            }}
-                            color="white"
-                            onClick={() => isGuest ? navigate('/login') : navigate('/chat')}
-                            justifyContent="center"
-                            px={6}
-                            _hover={{
-                              opacity: 0.9
-                            }}
-                          >
-                            <Flex w="100%" align="center" justify="space-between">
-                              <Text>{isGuest ? "로그인하고 대화하기" : "대화 요청하기"}</Text>
-                              <Flex align="center">
-                                <Box w="1px" h="16px" bg="whiteAlpha.400" mx={4} />
-                                <FaComments />
-                              </Flex>
-                            </Flex>
-                          </Button>
+                            <Button
+                              flex={1}
+                              bg="#333333"
+                              color="white"
+                              _hover={{ bg: "black" }}
+                              onClick={() => isGuest ? navigate('/login') : navigate('/chat')}
+                              size="sm"
+                              fontSize="sm"
+                              borderRadius="full"
+                            >
+                              대화 요청
+                            </Button>
+                          </Flex>
                         </Box>
                       </Box>
                     );

@@ -70,7 +70,7 @@ const Navbar = () => {
       }}
     >
       <div className="w-full">
-        <div className="w-full max-w-[1980px] mx-auto px-[200px] h-32 flex justify-center items-center gap-12">
+        <div className="w-full max-w-[1980px] mx-auto px-[200px] h-36 flex justify-center items-center gap-12">
 
           {/* Left Column: Logo */}
           <Link to="/main" className="flex-shrink-0 block" style={{ marginLeft: '-10px' }}>
@@ -83,10 +83,10 @@ const Navbar = () => {
           </Link>
 
           {/* Right Column: Search/Utils + Menu */}
-          <div className="relative flex flex-col w-fit">
+          <div className="relative flex flex-col w-fit gap-5">
 
             {/* Row 1: Search Bar (Left) + Utility Buttons (Right) */}
-            <div className="flex justify-between items-center mb-1 w-full">
+            <div className="flex justify-between items-center w-full">
               {/* Search Bar */}
               <div
                 className="relative w-[500px] rounded-full"
@@ -171,7 +171,7 @@ const Navbar = () => {
             </div>
 
             {/* Row 2: Main Menu + Screen Size */}
-            <div className="flex justify-between items-center w-full whitespace-nowrap mt-2">
+            <div className="flex justify-between items-center w-full whitespace-nowrap">
               {(!user ? publicNavItems : navItems).map((item) => (
                 <Link
                   key={item.path}

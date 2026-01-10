@@ -165,7 +165,7 @@ const Chat = () => {
                       )}
                       <Box
                         maxW="70%"
-                        bg={isMe ? 'var(--mooa-orange)' : 'white'}
+                        bg={isMe ? '#25D366' : 'white'}
                         color={isMe ? 'white' : 'gray.800'}
                         px={4}
                         py={2}
@@ -195,19 +195,19 @@ const Chat = () => {
                   borderRadius="full"
                   bg="gray.50"
                   border="none"
-                  _focus={{ ring: 2, ringColor: 'var(--mooa-orange)' }}
+                  _focus={{ ring: 2, ringColor: '#25D366' }}
                   h="50px"
                   px={6}
                 />
                 <IconButton
                   icon={<span style={{ fontSize: '20px' }}>➤</span>}
                   onClick={sendMessage}
-                  colorScheme="orange"
-                  bg="var(--mooa-orange)"
+                  bg="#25D366"
+                  color="white"
                   isRound
                   size="lg"
                   aria-label="Send message"
-                  _hover={{ transform: 'scale(1.05)' }}
+                  _hover={{ transform: 'scale(1.05)', bg: "#20bd5a" }}
                   transition="all 0.2s"
                 />
               </HStack>
@@ -248,7 +248,7 @@ const Chat = () => {
                           {participant.name}
                         </Text>
                         {participant.name === '나' && (
-                          <Badge ml="auto" fontSize="xs" colorScheme="orange">ME</Badge>
+                          <Badge ml="auto" fontSize="xs" bg="#25D366" color="white">ME</Badge>
                         )}
                       </HStack>
                     </Popover.Trigger>
