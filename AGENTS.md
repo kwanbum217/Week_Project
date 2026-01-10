@@ -32,13 +32,15 @@ This document outlines the coding standards, technology stack, and design system
 ## 3. Design System
 
 *   **Colors:**
-    *   **Primary:** #4ade80 (Green accent)
-    *   **Background:** Black / Glass morphism
-    *   **Text:** Gray scale
+    *   **Primary:** #22c55e (Green accent)
+    *   **Secondary:** #16a34a (Darker green)
+    *   **Background:** #ffffff (White) / #f8fafc (Light gray)
+    *   **Text:** #1e293b (Dark) / #64748b (Muted)
 *   **UI Style:**
-    *   Glass Card 디자인 (backdrop-blur)
-    *   Dark theme 기반
-    *   애니메이션 배경 (파티클)
+    *   Light theme 기반
+    *   부드러운 그림자 (shadow-md)
+    *   둥근 모서리 (rounded-lg)
+    *   깔끔하고 모던한 디자인
 
 ## 4. Code Structure
 

@@ -126,8 +126,8 @@ const LandingPage = () => {
                 <Box pt={0} position="relative" overflow="hidden">
                     {/* 배경 장식 */}
                     <div className="absolute inset-0 pointer-events-none -z-10">
-                        <div className="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-orange-100/50 blur-3xl animate-float-gentle" />
-                        <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-blue-100/50 blur-3xl animate-float-gentle" style={{ animationDelay: '2s' }} />
+                        <div className="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-[rgba(74,222,128,0.1)] blur-3xl animate-float-gentle" />
+                        <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[rgba(34,197,94,0.1)] blur-3xl animate-float-gentle" style={{ animationDelay: '2s' }} />
                     </div>
 
                     <Box maxW="1980px" mx="auto" px="200px" py={8}>
@@ -135,7 +135,7 @@ const LandingPage = () => {
                             <Box className="animate-fade-in">
                                 <Text
                                     fontSize={{ base: "xl", md: "2xl" }}
-                                    color="var(--mooa-orange)"
+                                    color="var(--love-green)"
                                     fontWeight="bold"
                                     mb={4}
                                 >
@@ -146,15 +146,15 @@ const LandingPage = () => {
                                     fontSize={{ base: "4xl", md: "6xl" }}
                                     fontWeight="900"
                                     lineHeight="1.2"
-                                    color="var(--mooa-navy)"
+                                    color="white"
                                     mb={6}
                                 >
                                     친구와 함께하는<br />
-                                    <span style={{ color: 'var(--mooa-orange)' }}>즐거운 인생 2막</span>
+                                    <span style={{ color: 'var(--love-green)' }}>즐거운 인생 2막</span>
                                 </Heading>
                                 <Text
                                     fontSize={{ base: "lg", md: "xl" }}
-                                    color="var(--mooa-text-secondary)"
+                                    color="gray.300"
                                     maxW="2xl"
                                     mx="auto"
                                     mb={10}
@@ -168,13 +168,13 @@ const LandingPage = () => {
                 </Box>
 
                 {/* Recommended Friends Section */}
-                <Box py={20} bg="#F8F9FA">
+                <Box py={20} bg="transparent">
                     <Box maxW="1980px" mx="auto" px="200px">
                         <VStack spacing={2} align="start" mb={10}>
-                            <Heading fontSize="2xl" color="gray.800">
+                            <Heading fontSize="2xl" color="white">
                                 가까운 친구 추천
                             </Heading>
-                            <Text color="gray.500" fontSize="lg">
+                            <Text color="gray.400" fontSize="lg">
                                 나와 가까운 거리의 친구를 추천합니다
                             </Text>
                             <Text color="gray.500" fontSize="sm">
@@ -186,12 +186,13 @@ const LandingPage = () => {
                             {recommendedFriends.map((friend) => (
                                 <Box
                                     key={friend.id}
-                                    bg="white"
+                                    bg="var(--love-bg-glass)"
                                     borderRadius="2xl"
                                     overflow="hidden"
-                                    boxShadow="lg"
+                                    boxShadow="0 4px 15px rgba(0,0,0,0.3)"
+                                    border="1px solid rgba(255,255,255,0.1)"
                                     transition="all 0.3s"
-                                    _hover={{ transform: 'translateY(-5px)', boxShadow: 'xl' }}
+                                    _hover={{ transform: 'translateY(-5px)', boxShadow: '0 8px 25px rgba(74,222,128,0.2)', borderColor: 'var(--love-green)' }}
                                     position="relative"
                                 >
                                     {/* Image Area with Badges */}
@@ -203,7 +204,7 @@ const LandingPage = () => {
                                         />
                                         <Flex position="absolute" top={3} left={3} gap={2}>
                                             <Badge
-                                                bg="#2D3250"
+                                                bg="rgba(0,0,0,0.7)"
                                                 color="white"
                                                 px={3}
                                                 py={1}
@@ -215,8 +216,8 @@ const LandingPage = () => {
                                                 📍 나와의 거리
                                             </Badge>
                                             <Badge
-                                                bg="#20C997"
-                                                color="white"
+                                                bg="var(--love-green)"
+                                                color="black"
                                                 px={3}
                                                 py={1}
                                                 borderRadius="full"
@@ -234,10 +235,10 @@ const LandingPage = () => {
                                         <VStack align="start" spacing={3}>
                                             <Box>
                                                 <Flex align="baseline" gap={2}>
-                                                    <Text fontSize="xl" fontWeight="bold" color="gray.800">
+                                                    <Text fontSize="xl" fontWeight="bold" color="white">
                                                         {friend.name},
                                                     </Text>
-                                                    <Text fontSize="xl" color="gray.600">
+                                                    <Text fontSize="xl" color="gray.400">
                                                         {friend.age}
                                                     </Text>
                                                 </Flex>
@@ -251,12 +252,12 @@ const LandingPage = () => {
                                                     <Badge
                                                         key={idx}
                                                         colorScheme="green"
-                                                        variant="subtle"
+                                                        variant="outline"
                                                         borderRadius="full"
                                                         px={3}
                                                         py={1}
-                                                        color="#20C997"
-                                                        bg="#E6FCF5"
+                                                        color="var(--love-green)"
+                                                        borderColor="var(--love-green)"
                                                     >
                                                         {interest}
                                                     </Badge>
@@ -266,9 +267,9 @@ const LandingPage = () => {
                                             <Flex w="full" gap={1} mt={2}>
                                                 <Button
                                                     flex={1}
-                                                    bg="#2D3250"
-                                                    color="white"
-                                                    _hover={{ bg: "#1A2035" }}
+                                                    bg="var(--love-green)"
+                                                    color="black"
+                                                    _hover={{ bg: "var(--love-green-dark)" }}
                                                     borderRadius="xl"
                                                     fontSize="11px"
                                                     px={1}
@@ -279,9 +280,10 @@ const LandingPage = () => {
                                                 </Button>
                                                 <Button
                                                     flex={1}
-                                                    bg="#FF8E53"
-                                                    color="white"
-                                                    _hover={{ bg: "#E67035" }}
+                                                    bg="transparent"
+                                                    border="1px solid var(--love-green)"
+                                                    color="var(--love-green)"
+                                                    _hover={{ bg: "rgba(74,222,128,0.1)" }}
                                                     borderRadius="xl"
                                                     fontSize="11px"
                                                     px={1}
@@ -292,9 +294,9 @@ const LandingPage = () => {
                                                 </Button>
                                                 <Button
                                                     flex={1}
-                                                    bg="#4A5568"
+                                                    bg="gray.700"
                                                     color="white"
-                                                    _hover={{ bg: "#2D3748" }}
+                                                    _hover={{ bg: "gray.600" }}
                                                     borderRadius="xl"
                                                     fontSize="11px"
                                                     px={1}
@@ -313,13 +315,13 @@ const LandingPage = () => {
                 </Box>
 
                 {/* Nearby Meetings Section */}
-                <Box py={20} bg="white">
+                <Box py={20} bg="transparent">
                     <Box maxW="1980px" mx="auto" px="200px">
                         <VStack spacing={2} align="start" mb={10}>
-                            <Heading fontSize="2xl" color="gray.800">
+                            <Heading fontSize="2xl" color="white">
                                 지금, 우리 만나
                             </Heading>
-                            <Text color="gray.500" fontSize="lg">
+                            <Text color="gray.400" fontSize="lg">
                                 나와 가까운 거리의 모임을 추천합니다
                             </Text>
                             <Text color="gray.500" fontSize="sm">
@@ -331,12 +333,13 @@ const LandingPage = () => {
                             {nearbyMeetings.map((meeting) => (
                                 <Flex
                                     key={meeting.id}
-                                    bg="white"
+                                    bg="var(--love-bg-glass)"
                                     borderRadius="2xl"
                                     overflow="hidden"
                                     boxShadow="none"
+                                    border="1px solid rgba(255,255,255,0.1)"
                                     transition="all 0.3s"
-                                    _hover={{ transform: 'translateY(-5px)' }}
+                                    _hover={{ transform: 'translateY(-5px)', borderColor: 'var(--love-green)' }}
                                     direction="row"
                                     h="180px"
                                 >
@@ -351,8 +354,8 @@ const LandingPage = () => {
                                             position="absolute"
                                             top={2}
                                             left={2}
-                                            bg="rgba(0, 163, 196, 0.9)"
-                                            color="white"
+                                            bg="rgba(0, 0, 0, 0.7)"
+                                            color="var(--love-green)"
                                             px={2}
                                             py={0.5}
                                             borderRadius="md"
@@ -367,8 +370,10 @@ const LandingPage = () => {
                                         <Box>
                                             <Flex justify="space-between" align="start" mb={1}>
                                                 <Badge
-                                                    colorScheme="orange"
-                                                    variant="subtle"
+                                                    colorScheme="green"
+                                                    variant="solid"
+                                                    bg="var(--love-green)"
+                                                    color="black"
                                                     borderRadius="md"
                                                     px={2}
                                                     fontSize="xs"
@@ -380,26 +385,21 @@ const LandingPage = () => {
                                                     {meeting.date}
                                                 </Text>
                                             </Flex>
-                                            <Text fontSize="md" fontWeight="bold" color="gray.800" noOfLines={1} mb={2}>
+                                            <Text fontSize="md" fontWeight="bold" color="white" noOfLines={1} mb={2}>
                                                 {meeting.title}
                                             </Text>
                                         </Box>
 
                                         <VStack align="start" spacing={1} w="full">
-                                            <Flex align="center" gap={2} color="gray.600" fontSize="xs">
+                                            <Flex align="center" gap={2} color="gray.400" fontSize="xs">
                                                 <span>📍</span>
                                                 <Text noOfLines={1}>{meeting.location}</Text>
                                             </Flex>
-                                            <Flex align="center" gap={2} color="gray.600" fontSize="xs">
+                                            <Flex align="center" gap={2} color="gray.400" fontSize="xs">
                                                 <span>👥</span>
                                                 <Text>{meeting.members}명 참여중</Text>
                                             </Flex>
                                         </VStack>
-
-                                        {/* Optional: Add a small join button or arrow if needed, 
-                                        but for now relying on the card click/hover affordance 
-                                        or keeping it simple as per "intro" request. 
-                                        Let's add a small text link/button at the bottom right or just keep it clean. */}
                                     </Box>
                                 </Flex>
                             ))}
@@ -408,13 +408,13 @@ const LandingPage = () => {
                 </Box>
 
                 {/* Chat Section */}
-                <Box py={20} bg="#F8F9FA">
+                <Box py={20} bg="transparent">
                     <Box maxW="1980px" mx="auto" px="200px">
                         <VStack spacing={2} align="start" mb={10}>
-                            <Heading fontSize="2xl" color="gray.800">
+                            <Heading fontSize="2xl" color="white">
                                 대화하기
                             </Heading>
-                            <Text color="gray.500" fontSize="lg">
+                            <Text color="gray.400" fontSize="lg">
                                 관심사가 같은 친구들과 이야기를 나눠보세요
                             </Text>
                             <Text color="gray.500" fontSize="sm">
@@ -423,7 +423,7 @@ const LandingPage = () => {
                         </VStack>
 
                         <Box
-                            bg="white"
+                            bg="var(--love-bg-glass)"
                             borderRadius="2xl"
                             overflow="hidden"
                             boxShadow="none"
@@ -431,26 +431,26 @@ const LandingPage = () => {
                             position="relative"
                             cursor="pointer"
                             transition="all 0.3s"
-                            _hover={{ transform: 'translateY(-5px)', boxShadow: 'none' }}
+                            _hover={{ transform: 'translateY(-5px)', boxShadow: '0 0 20px rgba(74,222,128,0.2)' }}
                         >
                             <img
                                 src="/img/chat_couple.jpg"
                                 alt="Chat with friends"
-                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.7 }}
                             />
                             <Box
                                 position="absolute"
                                 bottom={0}
                                 left={0}
                                 right={0}
-                                bg="linear-gradient(to top, rgba(0,0,0,0.8), transparent)"
+                                bg="linear-gradient(to top, rgba(0,0,0,0.9), transparent)"
                                 p={8}
                                 pt={20}
                             >
                                 <VStack align="start" spacing={2}>
                                     <Badge
-                                        bg="#FF8E53"
-                                        color="white"
+                                        bg="var(--love-green)"
+                                        color="black"
                                         px={3}
                                         py={1}
                                         borderRadius="full"
@@ -461,7 +461,7 @@ const LandingPage = () => {
                                     <Heading color="white" fontSize="3xl">
                                         새로운 친구와 대화를 시작해보세요
                                     </Heading>
-                                    <Text color="gray.200" fontSize="lg">
+                                    <Text color="gray.300" fontSize="lg">
                                         나와 비슷한 관심사를 가진 친구들이 기다리고 있어요.
                                     </Text>
                                 </VStack>
@@ -471,15 +471,15 @@ const LandingPage = () => {
                 </Box>
 
                 {/* Market & Info Section */}
-                <Box py={20} bg="white">
+                <Box py={20} bg="transparent">
                     <Box maxW="1980px" mx="auto" px="200px">
                         <SimpleGrid columns={{ base: 1, lg: 2 }} gap="80px">
                             {/* Mooa Market */}
                             <Box>
-                                <Heading fontSize="2xl" color="gray.800" mb={2}>
+                                <Heading fontSize="2xl" color="white" mb={2}>
                                     무아나눔
                                 </Heading>
-                                <Text color="gray.500" fontSize="lg" mb={8}>
+                                <Text color="gray.400" fontSize="lg" mb={8}>
                                     가까운 친구들과 함께 무료나눔하세요
                                 </Text>
                                 <Link to="/market" style={{ display: 'block' }}>
@@ -490,7 +490,8 @@ const LandingPage = () => {
                                         overflow="hidden"
                                         boxShadow="md"
                                         transition="transform 0.3s"
-                                        _hover={{ transform: 'scale(1.02)' }}
+                                        _hover={{ transform: 'scale(1.02)', boxShadow: '0 0 20px rgba(74,222,128,0.2)' }}
+                                        border="1px solid rgba(255,255,255,0.1)"
                                     >
                                         <img
                                             src="/img/market_intro.jpg"
@@ -503,24 +504,26 @@ const LandingPage = () => {
 
                             {/* Mooa Info */}
                             <Box>
-                                <Heading fontSize="2xl" color="gray.800" mb={2}>
+                                <Heading fontSize="2xl" color="white" mb={2}>
                                     무아정보
                                 </Heading>
-                                <Text color="gray.500" fontSize="lg" mb={8}>
+                                <Text color="gray.400" fontSize="lg" mb={8}>
                                     무아님들에게 필요한 정보를 확인하세요
                                 </Text>
                                 <SimpleGrid columns={3} gap={4}>
-                                    {/* 1. 복지정책 - Navy */}
+                                    {/* 1. 복지정책 - Green */}
                                     <VStack
-                                        bg="#1E3A5F"
+                                        bg="rgba(74, 222, 128, 0.1)"
+                                        border="1px solid var(--love-green)"
                                         h="140px"
                                         justify="center"
                                         spacing={2}
                                         cursor="pointer"
                                         transition="transform 0.2s"
-                                        _hover={{ transform: 'translateY(-5px)' }}
+                                        _hover={{ transform: 'translateY(-5px)', bg: "rgba(74, 222, 128, 0.2)" }}
+                                        borderRadius="lg"
                                     >
-                                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--love-green)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                                             <circle cx="9" cy="7" r="4"></circle>
                                             <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
@@ -529,17 +532,19 @@ const LandingPage = () => {
                                         <Text color="white" fontWeight="bold">복지정책</Text>
                                     </VStack>
 
-                                    {/* 2. 지자체소식 - Orange */}
+                                    {/* 2. 지자체소식 - Dark Green */}
                                     <VStack
-                                        bg="#FF6B00"
+                                        bg="rgba(21, 128, 61, 0.2)"
+                                        border="1px solid #15803d"
                                         h="140px"
                                         justify="center"
                                         spacing={2}
                                         cursor="pointer"
                                         transition="transform 0.2s"
-                                        _hover={{ transform: 'translateY(-5px)' }}
+                                        _hover={{ transform: 'translateY(-5px)', bg: "rgba(21, 128, 61, 0.3)" }}
+                                        borderRadius="lg"
                                     >
-                                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                             <path d="M3 21h18" />
                                             <path d="M5 21V7l8-4 8 4v14" />
                                             <path d="M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2" />
@@ -547,15 +552,17 @@ const LandingPage = () => {
                                         <Text color="white" fontWeight="bold">지자체소식</Text>
                                     </VStack>
 
-                                    {/* 3. 병원정보 - Teal */}
+                                    {/* 3. 병원정보 - Gray */}
                                     <VStack
-                                        bg="#20C997"
+                                        bg="rgba(255, 255, 255, 0.05)"
+                                        border="1px solid rgba(255, 255, 255, 0.1)"
                                         h="140px"
                                         justify="center"
                                         spacing={2}
                                         cursor="pointer"
                                         transition="transform 0.2s"
-                                        _hover={{ transform: 'translateY(-5px)' }}
+                                        _hover={{ transform: 'translateY(-5px)', bg: "rgba(255, 255, 255, 0.1)" }}
+                                        borderRadius="lg"
                                     >
                                         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                             <rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect>
@@ -566,31 +573,35 @@ const LandingPage = () => {
                                         <Text color="white" fontWeight="bold">병원정보</Text>
                                     </VStack>
 
-                                    {/* 4. 건강상식 - Light Teal */}
+                                    {/* 4. 건강상식 - Light Green */}
                                     <VStack
-                                        bg="#4DB6AC"
+                                        bg="rgba(134, 239, 172, 0.1)"
+                                        border="1px solid #86efac"
                                         h="140px"
                                         justify="center"
                                         spacing={2}
                                         cursor="pointer"
                                         transition="transform 0.2s"
-                                        _hover={{ transform: 'translateY(-5px)' }}
+                                        _hover={{ transform: 'translateY(-5px)', bg: "rgba(134, 239, 172, 0.2)" }}
+                                        borderRadius="lg"
                                     >
-                                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#86efac" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                                         </svg>
                                         <Text color="white" fontWeight="bold">건강상식</Text>
                                     </VStack>
 
-                                    {/* 5. 도서추천 - Yellow */}
+                                    {/* 5. 도서추천 - White */}
                                     <VStack
-                                        bg="#FFD43B"
+                                        bg="rgba(255, 255, 255, 0.05)"
+                                        border="1px solid rgba(255, 255, 255, 0.2)"
                                         h="140px"
                                         justify="center"
                                         spacing={2}
                                         cursor="pointer"
                                         transition="transform 0.2s"
-                                        _hover={{ transform: 'translateY(-5px)' }}
+                                        _hover={{ transform: 'translateY(-5px)', bg: "rgba(255, 255, 255, 0.1)" }}
+                                        borderRadius="lg"
                                     >
                                         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
@@ -599,17 +610,19 @@ const LandingPage = () => {
                                         <Text color="white" fontWeight="bold">도서추천</Text>
                                     </VStack>
 
-                                    {/* 6. 공연안내 - Coral */}
+                                    {/* 6. 공연안내 - Green Accent */}
                                     <VStack
-                                        bg="#FF8E53"
+                                        bg="rgba(74, 222, 128, 0.1)"
+                                        border="1px solid var(--love-green)"
                                         h="140px"
                                         justify="center"
                                         spacing={2}
                                         cursor="pointer"
                                         transition="transform 0.2s"
-                                        _hover={{ transform: 'translateY(-5px)' }}
+                                        _hover={{ transform: 'translateY(-5px)', bg: "rgba(74, 222, 128, 0.2)" }}
+                                        borderRadius="lg"
                                     >
-                                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--love-green)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                             <path d="M9 18V5l12-2v13"></path>
                                             <circle cx="6" cy="18" r="3"></circle>
                                             <circle cx="18" cy="16" r="3"></circle>

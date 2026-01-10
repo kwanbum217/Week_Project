@@ -1,71 +1,77 @@
 @import "tailwindcss";
 
-/* MOOA 디자인 시스템 - 시니어 친화적 소셜 네트워킹 */
+/* Love Letter 디자인 시스템 - 라이트 테마 */
 
 :root {
-  /* MOOA 색상 팔레트 */
-  --mooa-orange: #F5A623;
-  --mooa-orange-light: #FFD580;
-  --mooa-orange-dark: #E8941A;
-  --mooa-blue: #5DADE2;
-  --mooa-blue-light: #85C7F2;
-  --mooa-blue-dark: #3498DB;
-  --mooa-navy: #1E3A5F;
-  --mooa-navy-light: #2C4A6E;
+  /* Love Letter 색상 팔레트 - 라이트 테마 */
+  --love-green: #22c55e;
+  --love-green-light: #4ade80;
+  --love-green-dark: #16a34a;
+  --love-white: #ffffff;
+  --love-gray-lightest: #f8fafc;
+  --love-gray-lighter: #f1f5f9;
+  --love-gray-light: #e2e8f0;
+  --love-gray: #cbd5e1;
+  --love-gray-dark: #64748b;
 
-  /* 배경색 */
-  --mooa-bg-cream: #FFFEF7;
-  --mooa-bg-warm: #FFF8E7;
-  --mooa-bg-card: #FFFFFF;
+  /* 배경색 - 라이트 테마 */
+  --love-bg-main: #ffffff;
+  --love-bg-card: #ffffff;
+  --love-bg-glass: rgba(255, 255, 255, 0.95);
 
-  /* 텍스트 색상 */
-  --mooa-text-primary: #1E3A5F;
-  --mooa-text-secondary: #5A6C7D;
-  --mooa-text-muted: #8CA0B3;
+  /* 텍스트 색상 - 라이트 테마 */
+  --love-text-primary: #0f172a;
+  --love-text-secondary: #334155;
+  --love-text-muted: #64748b;
+  --love-text-accent: #22c55e;
 
   /* 그라데이션 */
-  --mooa-gradient: linear-gradient(135deg, #F5A623 0%, #5DADE2 100%);
-  --mooa-gradient-warm: linear-gradient(135deg, #FFD580 0%, #FFF8E7 100%);
+  --love-gradient: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  --love-gradient-light: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
 
-  /* 시니어 친화적 폰트 크기 */
-  --font-size-xs: 14px;
-  --font-size-sm: 16px;
-  --font-size-base: 18px;
-  --font-size-lg: 20px;
-  --font-size-xl: 24px;
-  --font-size-2xl: 28px;
-  --font-size-3xl: 32px;
-  --font-size-4xl: 40px;
+  /* 폰트 크기 */
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 30px;
+  --font-size-4xl: 36px;
 }
 
 body {
   font-family: 'Noto Sans KR', 'Inter', system-ui, -apple-system, sans-serif;
   font-size: var(--font-size-base);
-  color: var(--mooa-text-primary);
-  background-color: var(--mooa-bg-cream);
+  color: var(--love-text-primary);
+  background-color: var(--love-bg-main);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
 
-/* 시니어 친화적 큰 폰트 */
+/* 타이포그래피 */
 h1 {
   font-size: var(--font-size-4xl);
   font-weight: 700;
+  color: var(--love-text-primary);
 }
 
 h2 {
   font-size: var(--font-size-3xl);
   font-weight: 600;
+  color: var(--love-text-primary);
 }
 
 h3 {
   font-size: var(--font-size-2xl);
   font-weight: 600;
+  color: var(--love-text-primary);
 }
 
 h4 {
   font-size: var(--font-size-xl);
   font-weight: 500;
+  color: var(--love-text-primary);
 }
 
 /* 부드러운 애니메이션 */
@@ -117,36 +123,38 @@ h4 {
   animation: fade-in 0.5s ease-out forwards;
 }
 
-/* MOOA 카드 스타일 */
+/* Love Letter 카드 스타일 - 라이트 테마 */
 .mooa-card {
-  background: var(--mooa-bg-card);
+  background: var(--love-bg-card);
   border-radius: 24px;
-  box-shadow: 0 4px 24px rgba(30, 58, 95, 0.08);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
   padding: 32px;
+  border: 1px solid var(--love-gray-light);
   transition: all 0.3s ease;
 }
 
 .mooa-card:hover {
-  box-shadow: 0 8px 32px rgba(30, 58, 95, 0.12);
+  box-shadow: 0 8px 32px rgba(34, 197, 94, 0.15);
+  border-color: var(--love-green-light);
   transform: translateY(-2px);
 }
 
-/* 글라스 카드 */
+/* 글라스 카드 - 라이트 테마 */
 .mooa-glass-card {
-  background: rgba(255, 255, 255, 0.85);
+  background: var(--love-bg-glass);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--love-gray-light);
   border-radius: 24px;
-  box-shadow: 0 8px 32px rgba(30, 58, 95, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
   padding: 40px;
 }
 
-/* 프라이머리 버튼 (오렌지) */
+/* 프라이머리 버튼 (그린) */
 .mooa-btn-primary {
-  background: var(--mooa-orange);
+  background: var(--love-green);
   color: white;
   font-size: var(--font-size-lg);
-  font-weight: 600;
+  font-weight: 700;
   padding: 16px 32px;
   border-radius: 16px;
   border: none;
@@ -162,20 +170,20 @@ h4 {
 }
 
 .mooa-btn-primary:hover {
-  background: var(--mooa-orange-dark);
+  background: var(--love-green-dark);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(245, 166, 35, 0.35);
+  box-shadow: 0 4px 20px rgba(34, 197, 94, 0.4);
 }
 
-/* 세컨더리 버튼 (블루) */
+/* 세컨더리 버튼 - 라이트 테마 */
 .mooa-btn-secondary {
-  background: var(--mooa-blue);
-  color: white;
+  background: var(--love-gray-lighter);
+  color: var(--love-text-primary);
   font-size: var(--font-size-lg);
   font-weight: 600;
   padding: 16px 32px;
   border-radius: 16px;
-  border: none;
+  border: 1px solid var(--love-gray-light);
   cursor: pointer;
   transition: all 0.3s ease;
   display: inline-flex;
@@ -186,20 +194,21 @@ h4 {
 }
 
 .mooa-btn-secondary:hover {
-  background: var(--mooa-blue-dark);
+  background: var(--love-gray-light);
+  border-color: var(--love-green);
+  color: var(--love-green-dark);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(93, 173, 226, 0.35);
 }
 
 /* 아웃라인 버튼 */
 .mooa-btn-outline {
   background: transparent;
-  color: var(--mooa-orange);
+  color: var(--love-green);
   font-size: var(--font-size-lg);
   font-weight: 600;
   padding: 16px 32px;
   border-radius: 16px;
-  border: 2px solid var(--mooa-orange);
+  border: 2px solid var(--love-green);
   cursor: pointer;
   transition: all 0.3s ease;
   display: inline-flex;
@@ -210,19 +219,20 @@ h4 {
 }
 
 .mooa-btn-outline:hover {
-  background: var(--mooa-orange);
+  background: var(--love-green);
   color: white;
+  box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
 }
 
-/* 로고 컬러 버튼 (네이비) */
+/* 로고 컬러 버튼 - 라이트 테마 */
 .mooa-btn-navy {
-  background: var(--mooa-navy);
-  color: white;
+  background: var(--love-gray-lightest);
+  color: var(--love-green-dark);
   font-size: var(--font-size-lg);
   font-weight: 600;
   padding: 16px 32px;
   border-radius: 16px;
-  border: none;
+  border: 1px solid var(--love-green);
   cursor: pointer;
   transition: all 0.3s ease;
   display: inline-flex;
@@ -235,14 +245,15 @@ h4 {
 }
 
 .mooa-btn-navy:hover {
-  background: var(--mooa-navy-light);
+  background: var(--love-green);
+  color: white;
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(30, 58, 95, 0.35);
+  box-shadow: 0 4px 20px rgba(34, 197, 94, 0.2);
 }
 
-/* NEW 뱃지 컬러 버튼 (코랄) */
+/* 핑크 포인트 버튼 */
 .mooa-btn-coral {
-  background: #FF8E53;
+  background: #ec4899;
   color: white;
   font-size: var(--font-size-lg);
   font-weight: 600;
@@ -261,33 +272,38 @@ h4 {
 }
 
 .mooa-btn-coral:hover {
+<<<<<<< Updated upstream
   background: #E87A40;
   /* Slightly darker shade */
+=======
+  background: #db2777;
+>>>>>>> Stashed changes
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(255, 142, 83, 0.35);
+  box-shadow: 0 4px 20px rgba(236, 72, 153, 0.4);
 }
 
-/* 입력 필드 */
+/* 입력 필드 - 라이트 테마 */
 .mooa-input {
   width: 100%;
   font-size: var(--font-size-lg);
   padding: 16px 20px;
-  border: 2px solid #E8EEF4;
+  border: 2px solid var(--love-gray-light);
   border-radius: 16px;
   background: white;
-  color: var(--mooa-text-primary);
+  color: var(--love-text-primary);
   transition: all 0.3s ease;
   outline: none;
   min-height: 56px;
 }
 
 .mooa-input:focus {
-  border-color: var(--mooa-orange);
-  box-shadow: 0 0 0 4px rgba(245, 166, 35, 0.15);
+  border-color: var(--love-green);
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.15);
+  background: white;
 }
 
 .mooa-input::placeholder {
-  color: var(--mooa-text-muted);
+  color: var(--love-text-muted);
 }
 
 /* 레이블 */
@@ -295,48 +311,50 @@ h4 {
   display: block;
   font-size: var(--font-size-base);
   font-weight: 600;
-  color: var(--mooa-text-primary);
+  color: var(--love-text-secondary);
   margin-bottom: 8px;
 }
 
-/* 네비게이션 링크 */
+/* 네비게이션 링크 - 라이트 테마 */
 .mooa-nav-link {
   font-size: var(--font-size-lg);
   font-weight: 500;
-  color: var(--mooa-text-secondary);
+  color: var(--love-text-secondary);
   padding: 12px 20px;
   border-radius: 12px;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 8px;
 }
 
 .mooa-nav-link:hover {
-  background: var(--mooa-bg-warm);
-  color: var(--mooa-orange);
+  background: var(--love-gray-lighter);
+  color: var(--love-green-dark);
 }
 
 .mooa-nav-link.active {
-  background: var(--mooa-orange);
-  color: white;
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--love-green-dark);
+  border: 1px solid rgba(34, 197, 94, 0.2);
 }
 
-/* 기능 카드 (대시보드용) */
+/* 기능 카드 (대시보드용) - 라이트 테마 */
 .mooa-feature-card {
   background: white;
   border-radius: 20px;
   padding: 28px;
   text-align: center;
   transition: all 0.3s ease;
-  border: 2px solid transparent;
+  border: 1px solid var(--love-gray-light);
   cursor: pointer;
 }
 
 .mooa-feature-card:hover {
-  border-color: var(--mooa-orange);
+  border-color: var(--love-green);
   transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(30, 58, 95, 0.1);
+  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.15);
 }
 
 .mooa-feature-card .icon {
@@ -348,17 +366,20 @@ h4 {
   justify-content: center;
   margin: 0 auto 16px;
   font-size: 32px;
+  color: white;
 }
 
 .mooa-feature-card .icon.orange {
-  background: linear-gradient(135deg, #FFD580 0%, #F5A623 100%);
+  background: var(--love-green);
+  box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
 }
 
 .mooa-feature-card .icon.blue {
-  background: linear-gradient(135deg, #85C7F2 0%, #5DADE2 100%);
+  background: var(--love-gray-dark);
+  color: white;
 }
 
-/* ===== Online Users Sidebar ===== */
+/* ===== Online Users Sidebar - 라이트 테마 ===== */
 .online-users-sidebar {
   position: fixed;
   right: 0;
@@ -372,6 +393,7 @@ h4 {
   padding: 24px;
   z-index: 100;
   overflow-y: auto;
+  border-left: 1px solid var(--love-gray-light);
 }
 
 .online-users-header {
@@ -384,28 +406,29 @@ h4 {
 .online-users-header h3 {
   font-size: var(--font-size-lg);
   font-weight: 600;
-  color: var(--mooa-navy);
+  color: var(--love-green-dark);
   margin: 0;
 }
 
 .online-count {
-  background: #22c55e;
-  color: white;
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--love-green-dark);
   padding: 4px 12px;
   border-radius: 20px;
   font-size: var(--font-size-sm);
   font-weight: 500;
+  border: 1px solid rgba(34, 197, 94, 0.2);
 }
 
 .online-users-divider {
   height: 1px;
-  background: #e5e7eb;
+  background: var(--love-gray-light);
   margin-bottom: 16px;
 }
 
 .online-users-empty {
   text-align: center;
-  color: var(--mooa-text-secondary);
+  color: var(--love-text-muted);
   padding: 32px 0;
   font-size: var(--font-size-base);
 }
@@ -422,25 +445,28 @@ h4 {
   gap: 12px;
   padding: 12px;
   border-radius: 16px;
-  background: var(--mooa-bg-warm);
+  background: var(--love-gray-lightest);
   cursor: pointer;
   transition: all 0.2s ease;
+  border: 1px solid transparent;
 }
 
 .online-user-item:hover {
   transform: translateX(-4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: var(--love-gray-lighter);
+  border-color: var(--love-green);
 }
 
 .online-user-item.is-me {
-  background: var(--mooa-orange-light);
+  background: rgba(34, 197, 94, 0.1);
+  border-color: rgba(34, 197, 94, 0.3);
 }
 
 .user-avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: var(--mooa-gradient);
+  background: var(--love-gradient);
   color: white;
   display: flex;
   align-items: center;
@@ -457,7 +483,7 @@ h4 {
 
 .user-name {
   font-weight: 600;
-  color: var(--mooa-navy);
+  color: var(--love-text-primary);
   font-size: var(--font-size-base);
 }
 
@@ -466,12 +492,13 @@ h4 {
   align-items: center;
   gap: 4px;
   font-size: var(--font-size-xs);
-  color: #22c55e;
+  color: var(--love-green);
 }
 
 .status-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #22c55e;
+  background: var(--love-green);
+  box-shadow: 0 0 5px var(--love-green);
 }

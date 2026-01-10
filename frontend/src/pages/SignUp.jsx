@@ -267,17 +267,22 @@ const SignUp = () => {
         py={8}
         mb="75px"
       >
-        <div className="mooa-glass-card w-full max-w-2xl mx-4 animate-fade-in">
+        {/* 배경 요소 */}
+        <div className="absolute inset-0 pointer-events-none -z-10">
+          <div className="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-[rgba(74,222,128,0.05)] blur-3xl animate-float-gentle" />
+          <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[rgba(34,197,94,0.05)] blur-3xl animate-float-gentle" style={{ animationDelay: '2s' }} />
+        </div>
+
+        <div className="w-full max-w-2xl mx-4 animate-fade-in p-8 rounded-3xl border border-white/10 shadow-2xl backdrop-blur-md bg-[var(--love-bg-glass)]">
           <VStack spacing={6} align="stretch">
 
             {/* 로고 섹션 */}
             <Box textAlign="center" mb={4}>
               <Link to="/main">
                 <div
-                  className="inline-flex items-center justify-center w-20 h-20 rounded-2xl mb-4 overflow-hidden cursor-pointer transition-transform hover:scale-105"
+                  className="inline-flex items-center justify-center w-20 h-20 rounded-2xl mb-4 overflow-hidden cursor-pointer transition-transform hover:scale-105 shadow-[0_0_15px_rgba(74,222,128,0.2)] border border-[var(--love-green)]"
                   style={{
-                    background: 'var(--mooa-gradient-warm)',
-                    boxShadow: '0 4px 12px rgba(245, 166, 35, 0.1)'
+                    background: 'rgba(0,0,0,0.5)',
                   }}
                 >
                   <img
@@ -294,11 +299,12 @@ const SignUp = () => {
               <Heading
                 fontFamily="'Noto Sans KR', 'Inter', sans-serif"
                 mb={2}
-                style={{ color: 'var(--mooa-navy)', fontSize: 'var(--font-size-3xl)' }}
+                color="white"
+                fontSize="3xl"
               >
                 MOOA 회원가입
               </Heading>
-              <Text style={{ color: 'var(--mooa-text-secondary)', fontSize: 'var(--font-size-base)' }}>
+              <Text color="gray.400" fontSize="base">
                 새로운 인연을 만나보세요
               </Text>
             </Box>
@@ -306,21 +312,20 @@ const SignUp = () => {
             <form onSubmit={handleSubmit}>
               <VStack spacing={5}>
                 <div className="w-full">
-                  <label className="mooa-label">아이디</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-1">아이디</label>
                   <div style={{ display: 'flex', gap: '10px', width: '100%' }}>
                     <input
                       name="username"
                       onChange={handleChange}
                       placeholder="아이디를 입력하세요"
-                      className="mooa-input"
+                      className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[var(--love-green)] focus:ring-1 focus:ring-[var(--love-green)] transition-all"
                       style={{ flex: 1 }}
                       required
                     />
                     <button
                       type="button"
                       onClick={handleCheckId}
-                      className="mooa-btn-secondary"
-                      style={{ height: '56px', padding: '0 24px', whiteSpace: 'nowrap', flexShrink: 0 }}
+                      className="h-12 px-6 rounded-xl bg-gray-700 text-white font-medium hover:bg-gray-600 transition-colors whitespace-nowrap flex-shrink-0"
                     >
                       중복확인
                     </button>
@@ -329,7 +334,7 @@ const SignUp = () => {
                     <Text
                       mt={2}
                       fontSize="sm"
-                      color={isIdChecked ? "green.500" : "red.500"}
+                      color={isIdChecked ? "green.400" : "red.400"}
                       fontWeight="medium"
                     >
                       {idCheckResult}
@@ -338,24 +343,42 @@ const SignUp = () => {
                 </div>
 
                 <div className="w-full">
+<<<<<<< Updated upstream
                   <label className="mooa-label">프로필명</label>
+=======
+                  <label className="block text-sm font-medium text-gray-300 mb-1">비밀번호</label>
+>>>>>>> Stashed changes
                   <input
                     name="nickname"
                     onChange={handleChange}
+<<<<<<< Updated upstream
                     placeholder="프로필명을 입력하세요"
                     className="mooa-input"
+=======
+                    placeholder="비밀번호를 입력하세요"
+                    className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[var(--love-green)] focus:ring-1 focus:ring-[var(--love-green)] transition-all"
+>>>>>>> Stashed changes
                     required
                   />
                 </div>
 
                 <div className="w-full">
+<<<<<<< Updated upstream
                   <label className="mooa-label">성명</label>
+=======
+                  <label className="block text-sm font-medium text-gray-300 mb-1">생년월일</label>
+>>>>>>> Stashed changes
                   <input
                     name="name"
                     onChange={handleChange}
+<<<<<<< Updated upstream
                     placeholder="성명을 입력하세요"
                     className="mooa-input"
+=======
+                    className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[var(--love-green)] focus:ring-1 focus:ring-[var(--love-green)] transition-all"
+>>>>>>> Stashed changes
                     required
+                    style={{ colorScheme: 'dark' }}
                   />
                 </div>
 
@@ -460,22 +483,22 @@ const SignUp = () => {
                 </div>
 
                 <div className="w-full">
-                  <label className="mooa-label">성별</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-1">성별</label>
                   <div className="relative">
                     <select
                       name="gender"
                       onChange={handleChange}
-                      className="mooa-input appearance-none cursor-pointer"
+                      className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[var(--love-green)] focus:ring-1 focus:ring-[var(--love-green)] transition-all appearance-none cursor-pointer"
                       required
                     >
-                      <option value="">성별을 선택하세요</option>
-                      <option value="male">남성</option>
-                      <option value="female">여성</option>
-                      <option value="other">기타</option>
+                      <option value="" style={{ color: 'black' }}>성별을 선택하세요</option>
+                      <option value="male" style={{ color: 'black' }}>남성</option>
+                      <option value="female" style={{ color: 'black' }}>여성</option>
+                      <option value="other" style={{ color: 'black' }}>기타</option>
                     </select>
                     <div
                       className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4"
-                      style={{ color: 'var(--mooa-text-muted)' }}
+                      style={{ color: 'gray' }}
                     >
                       <svg className="fill-current h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                         <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
@@ -483,16 +506,20 @@ const SignUp = () => {
                     </div>
                   </div>
 
-                  <div className="w-full">
-                    <label className="mooa-label">휴대폰 번호</label>
+                  <div className="w-full mt-5">
+                    <label className="block text-sm font-medium text-gray-300 mb-1">휴대폰 번호</label>
                     <input
                       type="tel"
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder="휴대폰 번호를 입력하세요 (예: 010-1234-5678)"
+<<<<<<< Updated upstream
                       className="mooa-input"
                       maxLength="13"
+=======
+                      className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[var(--love-green)] focus:ring-1 focus:ring-[var(--love-green)] transition-all"
+>>>>>>> Stashed changes
                       required
                     />
                     <Text fontSize="xs" color="gray.500" mt={1}>
@@ -500,51 +527,65 @@ const SignUp = () => {
                     </Text>
                   </div>
 
+<<<<<<< Updated upstream
                   <div className="w-full">
                     <label className="mooa-label">이메일</label>
+=======
+                  <div className="w-full mt-5">
+                    <label className="block text-sm font-medium text-gray-300 mb-1">이메일 주소</label>
+>>>>>>> Stashed changes
                     <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                       <input
                         name="emailId"
                         value={formData.emailId}
                         onChange={handleChange}
                         placeholder="이메일 아이디"
-                        className="mooa-input"
+                        className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[var(--love-green)] focus:ring-1 focus:ring-[var(--love-green)] transition-all"
                         style={{ flex: 1 }}
                         required
                       />
-                      <span style={{ color: 'var(--mooa-text-muted)' }}>@</span>
+                      <span style={{ color: 'gray' }}>@</span>
                       <input
                         name="emailDomain"
                         value={formData.emailDomain}
                         onChange={handleChange}
                         placeholder="직접 입력"
-                        className="mooa-input"
+                        className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[var(--love-green)] focus:ring-1 focus:ring-[var(--love-green)] transition-all"
                         style={{ flex: 1 }}
                         required
                       />
                       <select
                         onChange={handleDomainSelect}
                         value={['naver.com', 'gmail.com', 'daum.net', 'hanmail.net'].includes(formData.emailDomain) ? formData.emailDomain : 'custom'}
-                        className="mooa-input appearance-none cursor-pointer"
+                        className="h-12 px-2 rounded-xl bg-white/5 border border-white/10 text-white focus:outline-none focus:border-[var(--love-green)] focus:ring-1 focus:ring-[var(--love-green)] transition-all appearance-none cursor-pointer"
                         style={{ width: '140px' }}
                       >
-                        <option value="custom">직접입력</option>
-                        <option value="naver.com">naver.com</option>
-                        <option value="gmail.com">gmail.com</option>
-                        <option value="daum.net">daum.net</option>
-                        <option value="hanmail.net">hanmail.net</option>
+                        <option value="custom" style={{ color: 'black' }}>직접입력</option>
+                        <option value="naver.com" style={{ color: 'black' }}>naver.com</option>
+                        <option value="gmail.com" style={{ color: 'black' }}>gmail.com</option>
+                        <option value="daum.net" style={{ color: 'black' }}>daum.net</option>
+                        <option value="hanmail.net" style={{ color: 'black' }}>hanmail.net</option>
                       </select>
                     </div>
                   </div>
                 </div>
 
                 <div className="w-full">
+<<<<<<< Updated upstream
                   <label className="mooa-label">주소</label>
                   <input
                     name="location"
                     onChange={handleChange}
                     placeholder="거주 주소 (예: 서울시 강남구 역삼동)"
                     className="mooa-input"
+=======
+                  <label className="block text-sm font-medium text-gray-300 mb-1">지역</label>
+                  <input
+                    name="location"
+                    onChange={handleChange}
+                    placeholder="거주 지역 (예: 서울시 강남구 역삼동)"
+                    className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[var(--love-green)] focus:ring-1 focus:ring-[var(--love-green)] transition-all"
+>>>>>>> Stashed changes
                     required
                   />
                   <Text fontSize="xs" color="gray.500" mt={1}>
@@ -553,6 +594,7 @@ const SignUp = () => {
                 </div>
 
                 <div className="w-full">
+<<<<<<< Updated upstream
                   <label className="mooa-label">나의 관심사 (필수, 최소 1개 ~ 최대 3개)</label>
                   <Text fontSize="xs" color="gray.500" mb={2}>
                     * 최소 1개 이상, 최대 3개까지 선택 가능합니다. (현재 {(formData.interests || []).length}/3개 선택)
@@ -585,12 +627,37 @@ const SignUp = () => {
                         </div>
                       );
                     })}
+=======
+                  <label className="block text-sm font-medium text-gray-300 mb-1">나의 관심사</label>
+                  <div className="relative">
+                    <select
+                      name="interests"
+                      onChange={handleChange}
+                      className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[var(--love-green)] focus:ring-1 focus:ring-[var(--love-green)] transition-all appearance-none cursor-pointer"
+                      required
+                    >
+                      <option value="" style={{ color: 'black' }}>관심사를 선택하세요</option>
+                      {[
+                        "기타", "노래", "댄스", "독서", "뜨개질", "먹방", "바둑",
+                        "사진", "스터디", "여행", "요리", "장기", "친목", "등산"
+                      ].sort().map(interest => (
+                        <option key={interest} value={interest} style={{ color: 'black' }}>{interest}</option>
+                      ))}
+                    </select>
+                    <div
+                      className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4"
+                      style={{ color: 'gray' }}
+                    >
+                      <svg className="fill-current h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                      </svg>
+                    </div>
+>>>>>>> Stashed changes
                   </div>
                 </div>
 
-
-
                 <div className="w-full">
+<<<<<<< Updated upstream
                   <label className="mooa-label">모임개설하기 (선택, 최대 3개)</label>
                   <Text fontSize="xs" color="gray.500" mb={2}>
                     * 선택사항입니다. 최대 3개까지 선택 가능합니다. (현재 {(formData.wantToHost || []).length}/3개 선택)
@@ -623,6 +690,31 @@ const SignUp = () => {
                         </div>
                       );
                     })}
+=======
+                  <label className="block text-sm font-medium text-gray-300 mb-1">모임개설하기</label>
+                  <div className="relative">
+                    <select
+                      name="wantToHost"
+                      onChange={handleChange}
+                      className="w-full h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[var(--love-green)] focus:ring-1 focus:ring-[var(--love-green)] transition-all appearance-none cursor-pointer"
+                    >
+                      <option value="" style={{ color: 'black' }}>개설할 모임을 선택하세요</option>
+                      {[
+                        "기타", "노래", "댄스", "독서", "뜨개질", "먹방", "바둑",
+                        "사진", "스터디", "여행", "요리", "장기", "친목", "등산"
+                      ].sort().map(interest => (
+                        <option key={interest} value={interest} style={{ color: 'black' }}>{interest}</option>
+                      ))}
+                    </select>
+                    <div
+                      className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4"
+                      style={{ color: 'gray' }}
+                    >
+                      <svg className="fill-current h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                      </svg>
+                    </div>
+>>>>>>> Stashed changes
                   </div>
                 </div>
 
@@ -633,10 +725,10 @@ const SignUp = () => {
                     id="wantToFindFriends"
                     checked={formData.wantToFindFriends}
                     onChange={handleChange}
-                    className="w-5 h-5 text-orange-500 rounded focus:ring-orange-500 border-gray-300 cursor-pointer"
-                    style={{ accentColor: 'var(--mooa-orange)' }}
+                    className="w-5 h-5 text-green-500 rounded focus:ring-green-500 border-gray-500 cursor-pointer bg-gray-700"
+                    style={{ accentColor: 'var(--love-green)' }}
                   />
-                  <label htmlFor="wantToFindFriends" className="cursor-pointer select-none text-gray-700 font-medium">
+                  <label htmlFor="wantToFindFriends" className="cursor-pointer select-none text-gray-300 font-medium">
                     친구찾기에 참여하고 싶습니다
                   </label>
                 </div>
@@ -648,10 +740,10 @@ const SignUp = () => {
                     id="wantToMeet"
                     checked={formData.wantToMeet}
                     onChange={handleChange}
-                    className="w-5 h-5 text-orange-500 rounded focus:ring-orange-500 border-gray-300 cursor-pointer"
-                    style={{ accentColor: 'var(--mooa-orange)' }}
+                    className="w-5 h-5 text-green-500 rounded focus:ring-green-500 border-gray-500 cursor-pointer bg-gray-700"
+                    style={{ accentColor: 'var(--love-green)' }}
                   />
-                  <label htmlFor="wantToMeet" className="cursor-pointer select-none text-gray-700 font-medium">
+                  <label htmlFor="wantToMeet" className="cursor-pointer select-none text-gray-300 font-medium">
                     모임하기에 참여하고 싶습니다
                   </label>
                 </div>
@@ -663,10 +755,10 @@ const SignUp = () => {
                     id="wantToChat"
                     checked={formData.wantToChat}
                     onChange={handleChange}
-                    className="w-5 h-5 text-orange-500 rounded focus:ring-orange-500 border-gray-300 cursor-pointer"
-                    style={{ accentColor: 'var(--mooa-orange)' }}
+                    className="w-5 h-5 text-green-500 rounded focus:ring-green-500 border-gray-500 cursor-pointer bg-gray-700"
+                    style={{ accentColor: 'var(--love-green)' }}
                   />
-                  <label htmlFor="wantToChat" className="cursor-pointer select-none text-gray-700 font-medium">
+                  <label htmlFor="wantToChat" className="cursor-pointer select-none text-gray-300 font-medium">
                     대화하기에 참여하고 싶습니다
                   </label>
                 </div>
@@ -678,32 +770,32 @@ const SignUp = () => {
                     id="wantToShare"
                     checked={formData.wantToShare}
                     onChange={handleChange}
-                    className="w-5 h-5 text-orange-500 rounded focus:ring-orange-500 border-gray-300 cursor-pointer"
-                    style={{ accentColor: 'var(--mooa-orange)' }}
+                    className="w-5 h-5 text-green-500 rounded focus:ring-green-500 border-gray-500 cursor-pointer bg-gray-700"
+                    style={{ accentColor: 'var(--love-green)' }}
                   />
-                  <label htmlFor="wantToShare" className="cursor-pointer select-none text-gray-700 font-medium">
+                  <label htmlFor="wantToShare" className="cursor-pointer select-none text-gray-300 font-medium">
                     무아나눔에 참여하고 싶습니다
                   </label>
                 </div>
 
                 {/* 약관 동의 섹션 */}
-                <Box mt={6} p={5} borderWidth="1px" borderRadius="lg" bg="whiteAlpha.500" borderColor="gray.200">
+                <Box mt={6} p={5} borderWidth="1px" borderRadius="lg" bg="whiteAlpha.100" borderColor="whiteAlpha.200">
                   <VStack align="stretch" spacing={4}>
-                    <Box pb={3} borderBottomWidth="1px" borderColor="gray.200">
+                    <Box pb={3} borderBottomWidth="1px" borderColor="whiteAlpha.200">
                       <div className="flex items-center gap-3">
                         <input
                           type="checkbox"
                           id="allAgree"
                           checked={formData.agreedToTerms && formData.agreedToPrivacy && formData.agreedToPrivacyOptional && formData.agreeToReceiveTexts}
                           onChange={handleAllAgree}
-                          className="w-5 h-5 text-orange-500 rounded focus:ring-orange-500 border-gray-300 cursor-pointer"
-                          style={{ accentColor: 'var(--mooa-orange)' }}
+                          className="w-5 h-5 text-green-500 rounded focus:ring-green-500 border-gray-500 cursor-pointer bg-gray-700"
+                          style={{ accentColor: 'var(--love-green)' }}
                         />
-                        <label htmlFor="allAgree" className="cursor-pointer select-none font-bold text-lg text-gray-800">
+                        <label htmlFor="allAgree" className="cursor-pointer select-none font-bold text-lg text-white">
                           모두 동의합니다.
                         </label>
                       </div>
-                      <Text fontSize="xs" color="gray.500" mt={1} ml={8}>
+                      <Text fontSize="xs" color="gray.400" mt={1} ml={8}>
                         이용약관, 개인정보 수집 및 이용, 프로모션 안내 메일 수신(선택)에 모두 동의합니다.
                       </Text>
                     </Box>
@@ -716,10 +808,10 @@ const SignUp = () => {
                           id="agreedToTerms"
                           checked={formData.agreedToTerms}
                           onChange={handleChange}
-                          className="w-4 h-4 text-orange-500 rounded border-gray-300 cursor-pointer"
-                          style={{ accentColor: 'var(--mooa-orange)' }}
+                          className="w-4 h-4 text-green-500 rounded border-gray-500 cursor-pointer bg-gray-700"
+                          style={{ accentColor: 'var(--love-green)' }}
                         />
-                        <label htmlFor="agreedToTerms" className="cursor-pointer select-none text-gray-700 text-sm">
+                        <label htmlFor="agreedToTerms" className="cursor-pointer select-none text-gray-300 text-sm">
                           MOOA 이용 약관 (필수)
                         </label>
                       </div>
@@ -734,10 +826,10 @@ const SignUp = () => {
                           id="agreedToPrivacy"
                           checked={formData.agreedToPrivacy}
                           onChange={handleChange}
-                          className="w-4 h-4 text-orange-500 rounded border-gray-300 cursor-pointer"
-                          style={{ accentColor: 'var(--mooa-orange)' }}
+                          className="w-4 h-4 text-green-500 rounded border-gray-500 cursor-pointer bg-gray-700"
+                          style={{ accentColor: 'var(--love-green)' }}
                         />
-                        <label htmlFor="agreedToPrivacy" className="cursor-pointer select-none text-gray-700 text-sm">
+                        <label htmlFor="agreedToPrivacy" className="cursor-pointer select-none text-gray-300 text-sm">
                           개인정보 수집 및 이용 동의 (필수)
                         </label>
                       </div>
@@ -752,10 +844,10 @@ const SignUp = () => {
                           id="agreedToPrivacyOptional"
                           checked={formData.agreedToPrivacyOptional}
                           onChange={handleChange}
-                          className="w-4 h-4 text-orange-500 rounded border-gray-300 cursor-pointer"
-                          style={{ accentColor: 'var(--mooa-orange)' }}
+                          className="w-4 h-4 text-green-500 rounded border-gray-500 cursor-pointer bg-gray-700"
+                          style={{ accentColor: 'var(--love-green)' }}
                         />
-                        <label htmlFor="agreedToPrivacyOptional" className="cursor-pointer select-none text-gray-700 text-sm">
+                        <label htmlFor="agreedToPrivacyOptional" className="cursor-pointer select-none text-gray-300 text-sm">
                           개인정보 수집 및 이용 동의 (선택)
                         </label>
                       </div>
@@ -770,10 +862,10 @@ const SignUp = () => {
                           id="agreeToReceiveTexts"
                           checked={formData.agreeToReceiveTexts}
                           onChange={handleChange}
-                          className="w-4 h-4 text-orange-500 rounded border-gray-300 cursor-pointer"
-                          style={{ accentColor: 'var(--mooa-orange)' }}
+                          className="w-4 h-4 text-green-500 rounded border-gray-500 cursor-pointer bg-gray-700"
+                          style={{ accentColor: 'var(--love-green)' }}
                         />
-                        <label htmlFor="agreeToReceiveTexts" className="cursor-pointer select-none text-gray-700 text-sm">
+                        <label htmlFor="agreeToReceiveTexts" className="cursor-pointer select-none text-gray-300 text-sm">
                           문자 수신 서비스 이용 동의 (선택)
                         </label>
                       </div>
@@ -784,8 +876,7 @@ const SignUp = () => {
 
                 <button
                   type="submit"
-                  className="mooa-btn-primary w-full"
-                  style={{ marginTop: '8px' }}
+                  className="w-full h-12 mt-2 rounded-xl bg-[var(--love-green)] text-black font-bold hover:bg-[#22c55e] transition-colors shadow-[0_0_15px_rgba(74,222,128,0.3)]"
                 >
                   가입하기
                 </button>
@@ -795,15 +886,16 @@ const SignUp = () => {
             <Text
               textAlign="center"
               mt={4}
-              style={{ color: 'var(--mooa-text-secondary)', fontSize: 'var(--font-size-base)' }}
+              color="gray.400"
+              fontSize="base"
             >
               이미 계정이 있으신가요?{' '}
               <ChakraLink
                 as={Link}
                 to="/login"
                 fontWeight="bold"
-                style={{ color: 'var(--mooa-orange)' }}
-                _hover={{ textDecoration: 'underline' }}
+                color="var(--love-green)"
+                _hover={{ textDecoration: 'underline', color: '#22c55e' }}
               >
                 로그인
               </ChakraLink>
