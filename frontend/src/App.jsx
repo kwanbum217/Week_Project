@@ -118,11 +118,13 @@ const Layout = () => {
     };
 
     window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
+    window.addEventListener('auth-change', handleStorageChange); // Listen for custom auth event
 
-  // Check if we are on the Chat page
-  const isChatPage = location.pathname === '/chat';
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('auth-change', handleStorageChange);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen relative">

@@ -68,7 +68,12 @@ public class ChatController {
 
   @MessageMapping("/chat.sendMessage")
   @SendTo("/topic/public")
-  public ChatMessage sendMessage(@Payload ChatMessage chatMessage) {
+  public ChatMessage sendMessage(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
+    // Try to get userId from session if available
+    Map<String, Object> attrs = headerAccessor.getSessionAttributes();
+    if (attrs != null && attrs.containsKey("userId")) {
+      chatMessage.setSenderId((Long) attrs.get("userId"));
+    }
     return chatMessage;
   }
 
@@ -92,6 +97,13 @@ public class ChatController {
       SimpMessageHeaderAccessor headerAccessor) {
     // Add username in web socket session
     headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
+
+    // Set senderId from session (put by JwtHandshakeInterceptor)
+    Map<String, Object> attrs = headerAccessor.getSessionAttributes();
+    if (attrs != null && attrs.containsKey("userId")) {
+      chatMessage.setSenderId((Long) attrs.get("userId"));
+    }
+
     chatMessage.setContent("joined the chat");
     return chatMessage;
   }

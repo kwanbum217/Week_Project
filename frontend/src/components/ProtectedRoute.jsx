@@ -3,8 +3,12 @@ import { Box, Heading, Text, Button, VStack } from '@chakra-ui/react';
 
 const ProtectedRoute = ({ children }) => {
   const user = JSON.parse(localStorage.getItem('user'));
+  const token = localStorage.getItem('token');
 
-  if (!user) {
+  // Guest 사용자 또는 로그인하지 않은 사용자는 접근 불가
+  const isAuthenticated = user && token && user.username !== 'Guest';
+
+  if (!isAuthenticated) {
     return (
       <Box
         height="100vh"

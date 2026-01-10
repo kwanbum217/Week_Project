@@ -302,6 +302,7 @@ const LandingPage = () => {
                                                     px={1}
                                                     h="32px"
                                                     leftIcon={<span style={{ fontSize: '12px' }}>💬</span>}
+                                                    onClick={() => navigate('/chat')}
                                                 >
                                                     대화 요청
                                                 </Button>
@@ -422,51 +423,53 @@ const LandingPage = () => {
                             </Text>
                         </VStack>
 
-                        <Box
-                            bg="var(--love-bg-glass)"
-                            borderRadius="2xl"
-                            overflow="hidden"
-                            boxShadow="none"
-                            height="400px"
-                            position="relative"
-                            cursor="pointer"
-                            transition="all 0.3s"
-                            _hover={{ transform: 'translateY(-5px)', boxShadow: '0 0 20px rgba(74,222,128,0.2)' }}
-                        >
-                            <img
-                                src="/img/chat_couple.jpg"
-                                alt="Chat with friends"
-                                style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.7 }}
-                            />
+                        <Link to="/chat">
                             <Box
-                                position="absolute"
-                                bottom={0}
-                                left={0}
-                                right={0}
-                                bg="linear-gradient(to top, rgba(0,0,0,0.9), transparent)"
-                                p={8}
-                                pt={20}
+                                bg="var(--love-bg-glass)"
+                                borderRadius="2xl"
+                                overflow="hidden"
+                                boxShadow="none"
+                                height="400px"
+                                position="relative"
+                                cursor="pointer"
+                                transition="all 0.3s"
+                                _hover={{ transform: 'translateY(-5px)', boxShadow: '0 0 20px rgba(74,222,128,0.2)' }}
                             >
-                                <VStack align="start" spacing={2}>
-                                    <Badge
-                                        bg="var(--love-green)"
-                                        color="black"
-                                        px={3}
-                                        py={1}
-                                        borderRadius="full"
-                                        fontSize="md"
-                                    >
-                                        NEW
-                                    </Badge>
-                                    <Heading color="white" fontSize="3xl">
-                                        새로운 친구와 대화를 시작해보세요
-                                    </Heading>
-                                    <Text color="gray.300" fontSize="lg">
-                                        나와 비슷한 관심사를 가진 친구들이 기다리고 있어요.
-                                    </Text>
-                                </VStack>
+                                <img
+                                    src="/img/chat_couple.jpg"
+                                    alt="Chat with friends"
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.7 }}
+                                />
+                                <Box
+                                    position="absolute"
+                                    bottom={0}
+                                    left={0}
+                                    right={0}
+                                    bg="linear-gradient(to top, rgba(0,0,0,0.9), transparent)"
+                                    p={8}
+                                    pt={20}
+                                >
+                                    <VStack align="start" spacing={2}>
+                                        <Badge
+                                            bg="var(--love-green)"
+                                            color="black"
+                                            px={3}
+                                            py={1}
+                                            borderRadius="full"
+                                            fontSize="md"
+                                        >
+                                            NEW
+                                        </Badge>
+                                        <Heading color="white" fontSize="3xl">
+                                            새로운 친구와 대화를 시작해보세요
+                                        </Heading>
+                                        <Text color="gray.300" fontSize="lg">
+                                            나와 비슷한 관심사를 가진 친구들이 기다리고 있어요.
+                                        </Text>
+                                    </VStack>
+                                </Box>
                             </Box>
-                        </Box>
+                        </Link>
                     </Box>
                 </Box>
 

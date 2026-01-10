@@ -22,6 +22,14 @@ public class ChatMessage {
   private Long roomId;
   private MessageType type;
 
+  @jakarta.persistence.Column(updatable = false)
+  private java.time.LocalDateTime createdAt;
+
+  @jakarta.persistence.PrePersist
+  protected void onCreate() {
+    createdAt = java.time.LocalDateTime.now();
+  }
+
   public enum MessageType {
     CHAT,
     JOIN,
