@@ -31,7 +31,8 @@ public class AIConfig {
           .build();
     }
 
-    System.out.println("API Key: " + apiKey.substring(0, Math.min(10, apiKey.length())) + "...");
+    String maskedKey = (apiKey != null && apiKey.length() > 10) ? apiKey.substring(0, 10) : apiKey;
+    System.out.println("API Key: " + maskedKey + "...");
 
     String baseUrl = "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent?key="
         + apiKey;

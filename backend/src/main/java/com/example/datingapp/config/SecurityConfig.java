@@ -45,6 +45,7 @@ public class SecurityConfig {
             .requestMatchers(new AntPathRequestMatcher("/api/auth/**")).permitAll() // Allow auth endpoints
             .requestMatchers(new AntPathRequestMatcher("/api/support/**")).permitAll() // Allow customer support
             .requestMatchers(new AntPathRequestMatcher("/api/matches/**")).permitAll() // Allow match endpoints
+            .requestMatchers(new AntPathRequestMatcher("/api/meetups/**")).permitAll() // Allow meetup endpoints
             .requestMatchers(new AntPathRequestMatcher("/ws/**")).permitAll() // Allow WebSocket
             .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll() // Allow H2 console
             .requestMatchers(new AntPathRequestMatcher("/oauth2/**")).permitAll() // Allow OAuth2
@@ -58,6 +59,9 @@ public class SecurityConfig {
             .requestMatchers(new AntPathRequestMatcher("/auth/**")).permitAll() // Auth alias
             .requestMatchers(new AntPathRequestMatcher("/error")).permitAll() // Allow error page
             .anyRequest().authenticated())
+        .exceptionHandling(exception -> exception
+            .authenticationEntryPoint(new org.springframework.security.web.authentication.HttpStatusEntryPoint(
+                org.springframework.http.HttpStatus.UNAUTHORIZED)))
         .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin())) // Allow H2 console frames
         .httpBasic(basic -> basic.disable()) // Disable basic auth
         .formLogin(form -> form.disable()) // Disable default login form

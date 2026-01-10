@@ -79,14 +79,72 @@ const FeatureCard = ({ title, subtitle, icon }) => (
     </Flex>
 );
 
+const ChatBubble = ({ isUser, children }) => (
+    <Flex w="full" justify={isUser ? 'flex-end' : 'flex-start'} mb={6}>
+        {!isUser && (
+            <Flex
+                w={10}
+                h={10}
+                rounded="full"
+                bg="white"
+                border="1px solid"
+                borderColor="orange.200"
+                align="center"
+                justify="center"
+                mr={3}
+                shrink={0}
+                mt={1}
+            >
+                <Icon as={FaSmile} color="var(--mooa-orange)" w={5} h={5} />
+            </Flex>
+        )}
+        <Box
+            maxW={{ base: "85%", md: "70%" }}
+            bg={isUser ? 'orange.100' : 'white'}
+            color="gray.800"
+            px={6}
+            py={4}
+            borderRadius="2xl"
+            borderTopRightRadius={isUser ? '2px' : '2xl'}
+            borderTopLeftRadius={!isUser ? '2px' : '2xl'}
+            boxShadow="sm"
+            border={!isUser ? '1px solid' : 'none'}
+            borderColor={!isUser ? 'gray.100' : 'transparent'}
+        >
+            <Text fontSize={{ base: "md", md: "lg" }} lineHeight="1.6" wordBreak="keep-all">
+                {children}
+            </Text>
+        </Box>
+    </Flex>
+);
+
 const Intro = () => {
+    const faqData = [
+        {
+            q: "MOOA는 어떤 서비스인가요?",
+            a: <>MOOA(무아)는 시니어 세대를 위한 소셜 네트워킹 플랫폼입니다. 취미 모임, 친구 찾기, 1:1 대화 등 다양한 방식으로 새로운 인연을 만들고, 외로움을 달래며 활기찬 제2의 인생을 즐길 수 있도록 돕는 따뜻한 커뮤니티 공간입니다.</>
+        },
+        {
+            q: "이용료는 무료인가요?",
+            a: <>네, MOOA의 회원가입과 기본적인 커뮤니티 활동, 친구 찾기 기능은 모두 <strong>무료</strong>로 제공됩니다. 단, 일부 주최자가 운영하는 유료 클래스나 모임의 경우 별도의 참가비가 발생할 수 있습니다.</>
+        },
+        {
+            q: "회원가입은 어떻게 하나요?",
+            a: <>홈페이지 우측 상단의 <strong>'회원가입'</strong> 버튼을 클릭하신 후, 간단한 휴대폰 본인인증과 프로필 정보를 입력하시면 즉시 가입하실 수 있습니다. 어려우신 경우 고객센터로 연락 주시면 상세히 안내해 드립니다.</>
+        },
+        {
+            q: "안전하게 이용할 수 있나요?",
+            a: <>MOOA는 회원님들의 안전을 최우선으로 생각합니다. <strong>실명 인증 시스템</strong>을 도입하여 신뢰할 수 있는 회원만 활동하며, 24시간 모니터링과 강력한 신고 기능을 통해 불건전한 이용자를 즉시 제재하고 있습니다.</>
+        },
+        {
+            q: "모임은 어떻게 만드나요?",
+            a: <>로그인 후 상단 메뉴의 <strong>'모임하기'</strong>로 이동하여 <strong>'모임 개설'</strong> 버튼을 눌러보세요. 모임의 주제, 장소, 시간 등 간단한 정보만 입력하면 누구나 쉽게 모임장이 되어 사람들을 초대할 수 있습니다.</>
+        }
+    ];
+
     return (
         <Box className="font-sans" minHeight="100vh" display="flex" flexDirection="column">
             <Box flex="1">
-                {/* Hero Section */}
-                {/* Hero Section */}
-                {/* Hero Section */}
-                {/* Hero Section */}
                 {/* Hero Section */}
                 <Box position="relative" bg="var(--mooa-bg-warm)" bgImage="var(--mooa-gradient-warm)" pt={0} overflow="hidden">
                     <Box maxW="1980px" mx="auto" px="200px" py={8}>
@@ -203,6 +261,48 @@ const Intro = () => {
                                     text="일상이 이어지는 끈끈한 관계"
                                 />
                             </SimpleGrid>
+                        </VStack>
+                    </Box>
+                </Box>
+
+                {/* FAQ Section (Chat Style) */}
+                <Box py={24} bg="white">
+                    <Box maxW="1980px" mx="auto" px="200px">
+                        <VStack spacing={12}>
+                            <Box textAlign="center">
+                                <Heading size="xl" mb={4} color="var(--mooa-navy)">
+                                    무아에게 물어보세요 (FAQ)
+                                </Heading>
+                                <Text fontSize="lg" color="gray.600">
+                                    궁금한 점이 있으신가요? 자주 묻는 질문들을 모아봤습니다.
+                                </Text>
+                            </Box>
+
+                            <Box
+                                w="full"
+                                maxW="3xl"
+                                mx="auto"
+                                bg="gray.50"
+                                p={8}
+                                borderRadius="3xl"
+                                boxShadow="inset 0 2px 4px rgba(0,0,0,0.05)"
+                            >
+                                <VStack spacing={2} w="full">
+                                    {faqData.map((item, index) => (
+                                        <Box key={index} w="full">
+                                            {/* User Question */}
+                                            <ChatBubble isUser={true}>
+                                                {item.q}
+                                            </ChatBubble>
+
+                                            {/* Mooa Answer */}
+                                            <ChatBubble isUser={false}>
+                                                {item.a}
+                                            </ChatBubble>
+                                        </Box>
+                                    ))}
+                                </VStack>
+                            </Box>
                         </VStack>
                     </Box>
                 </Box>

@@ -3,6 +3,8 @@ package com.example.datingapp.service;
 import com.example.datingapp.model.Meetup;
 import com.example.datingapp.model.MeetupCategory;
 import com.example.datingapp.repository.MeetupRepository;
+import com.example.datingapp.repository.MeetupMemberRepository;
+import com.example.datingapp.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,9 +16,14 @@ import java.util.List;
 public class MeetupService {
 
   private final MeetupRepository meetupRepository;
+  private final MeetupMemberRepository meetupMemberRepository;
+  private final UserRepository userRepository;
 
-  public MeetupService(MeetupRepository meetupRepository) {
+  public MeetupService(MeetupRepository meetupRepository, MeetupMemberRepository meetupMemberRepository,
+      UserRepository userRepository) {
     this.meetupRepository = meetupRepository;
+    this.meetupMemberRepository = meetupMemberRepository;
+    this.userRepository = userRepository;
   }
 
   /**
@@ -47,5 +54,54 @@ public class MeetupService {
    */
   public Meetup saveMeetup(Meetup meetup) {
     return meetupRepository.save(meetup);
+  }
+
+  /**
+   * 모임 가입
+   */
+  public void joinMeetup(Long meetupId, String username) {
+    Meetup meetup = meetupRepository.findById(meetupId)
+        .orElseThrow(() -> new IllegalArgumentException("모임을 찾을 수 없습니다."));
+
+    com.example.datingapp.model.User user = userRepository.findByUsername(username)
+        .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+
+    if (meetupMemberRepository.existsByMeetupIdAndUserId(meetupId, user.getId())) {
+      throw new IllegalStateException("이미 가입한 모임입니다.");
+    }
+
+    com.example.datingapp.model.MeetupMember member = new com.example.datingapp.model.MeetupMember();
+    member.setMeetup(meetup);
+    member.setUser(user);
+    meetupMemberRepository.save(member);
+
+    // 멤버 수 증가
+    meetup.setMembers(meetup.getMembers() + 1);
+
+    // 가입 회원 ID 목록 업데이트
+    String currentUsernames = meetup.getMemberUsernames();
+    if (currentUsernames == null || currentUsernames.isEmpty()) {
+      meetup.setMemberUsernames(username);
+    } else {
+      meetup.setMemberUsernames(currentUsernames + ", " + username);
+    }
+
+    // 가입 회원 프로필명 목록 업데이트
+    String nickname = user.getNickname() != null ? user.getNickname() : username;
+    String currentNicknames = meetup.getMemberNicknames();
+    if (currentNicknames == null || currentNicknames.isEmpty()) {
+      meetup.setMemberNicknames(nickname);
+    } else {
+      meetup.setMemberNicknames(currentNicknames + ", " + nickname);
+    }
+
+    meetupRepository.save(meetup);
+  }
+
+  /**
+   * 모임 멤버 조회
+   */
+  public List<com.example.datingapp.model.MeetupMember> getMeetupMembers(Long meetupId) {
+    return meetupMemberRepository.findByMeetupIdWithUser(meetupId);
   }
 }

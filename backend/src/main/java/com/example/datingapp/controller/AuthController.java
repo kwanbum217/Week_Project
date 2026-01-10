@@ -45,6 +45,18 @@ public class AuthController {
 
   @PostMapping("/login")
   public ResponseEntity<?> loginUser(@RequestBody User user) {
+    System.out.println("========== LOGIN ATTEMPT ==========");
+    System.out.println("Received username: [" + user.getUsername() + "]");
+    System.out.println("Received password: [" + user.getPassword() + "]");
+    System.out.println("===================================");
+
+    if (user.getUsername() == null || user.getUsername().isEmpty()) {
+      return ResponseEntity.badRequest().body("Username is required");
+    }
+    if (user.getPassword() == null || user.getPassword().isEmpty()) {
+      return ResponseEntity.badRequest().body("Password is required");
+    }
+
     return userService.findByUsername(user.getUsername())
         .map(u -> {
           if (passwordEncoder.matches(user.getPassword(), u.getPassword())) {
@@ -66,7 +78,7 @@ public class AuthController {
             // Let's create a UsernamePasswordAuthenticationToken for generation.
 
             org.springframework.security.authentication.UsernamePasswordAuthenticationToken authentication = new org.springframework.security.authentication.UsernamePasswordAuthenticationToken(
-                u, null, new com.example.datingapp.security.CustomUserDetails(u).getAuthorities());
+                u.getUsername(), null, new com.example.datingapp.security.CustomUserDetails(u).getAuthorities());
 
             String token = jwtTokenProvider.generateToken(authentication);
 

@@ -21,6 +21,7 @@ const Login = () => {
     username: '',
     password: ''
   });
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -46,7 +47,8 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem('user', JSON.stringify(data.user));
-        localStorage.setItem('accessToken', data.accessToken);
+        localStorage.setItem('token', data.accessToken); // Navbar와 키 통일
+        window.dispatchEvent(new Event('auth-change')); // Navbar 상태 업데이트
         toaster.create({
           title: '로그인 성공',
           description: 'MOOA에 오신 것을 환영합니다!',
@@ -78,6 +80,7 @@ const Login = () => {
         position="relative"
         overflow="hidden"
         py={8}
+        mb="75px"
       >
         {/* 배경 요소 */}
 
@@ -131,13 +134,35 @@ const Login = () => {
 
                 <Field.Root required width="100%">
                   <label className="mooa-label">비밀번호</label>
-                  <input
-                    type="password"
-                    name="password"
-                    onChange={handleChange}
-                    placeholder="비밀번호를 입력하세요"
-                    className="mooa-input"
-                  />
+                  <div style={{ position: 'relative', width: '100%' }}>
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      onChange={handleChange}
+                      placeholder="비밀번호를 입력하세요"
+                      className="mooa-input"
+                      style={{ width: '100%', paddingRight: '80px' }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      style={{
+                        position: 'absolute',
+                        right: '12px',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        background: 'none',
+                        border: 'none',
+                        cursor: 'pointer',
+                        padding: '5px',
+                        color: '#666',
+                        fontSize: '14px',
+                        whiteSpace: 'nowrap'
+                      }}
+                    >
+                      {showPassword ? '🙈 숨기기' : '👁️ 보기'}
+                    </button>
+                  </div>
                 </Field.Root>
 
                 <button

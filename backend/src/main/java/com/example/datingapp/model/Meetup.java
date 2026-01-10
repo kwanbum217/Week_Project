@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 
 /**
  * 모임 엔티티
@@ -13,6 +14,7 @@ import lombok.AllArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Meetup {
 
   @Id
@@ -22,6 +24,15 @@ public class Meetup {
 
   @Column(nullable = false)
   private String title;
+
+  @Column(name = "creator_username")
+  private String creatorUsername;
+
+  @Column(name = "creator_nickname")
+  private String creatorNickname;
+
+  @Column(name = "creator_phone")
+  private String creatorPhone;
 
   @Column(length = 500)
   private String description;
@@ -55,4 +66,12 @@ public class Meetup {
   @Enumerated(EnumType.STRING)
   @Column(nullable = false)
   private MeetupCategory category;
+
+  // 가입 회원 ID 목록 (쉼표로 구분)
+  @Column(name = "member_usernames", length = 2000)
+  private String memberUsernames;
+
+  // 가입 회원 프로필명 목록 (쉼표로 구분)
+  @Column(name = "member_nicknames", length = 2000)
+  private String memberNicknames;
 }

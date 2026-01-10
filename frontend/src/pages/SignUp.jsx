@@ -18,6 +18,8 @@ const toaster = createToaster({
 const SignUp = () => {
   const [formData, setFormData] = useState({
     username: '',
+    nickname: '',
+    name: '',
     password: '',
     birthDate: '',
     gender: '',
@@ -26,8 +28,8 @@ const SignUp = () => {
     emailId: '',
     emailDomain: '',
     location: '',
-    interests: '',
-    wantToHost: '',
+    interests: [],
+    wantToHost: [],
     wantToFindFriends: false,
     wantToMeet: false,
     wantToChat: false,
@@ -41,15 +43,67 @@ const SignUp = () => {
 
   const [idCheckResult, setIdCheckResult] = useState('');
   const [isIdChecked, setIsIdChecked] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  // 생년월일 분리 입력
+  const [birthYear, setBirthYear] = useState('');
+  const [birthMonth, setBirthMonth] = useState('');
+  const [birthDay, setBirthDay] = useState('');
+
+  // 만 60세 이상만 가입 가능하므로 년도 제한
+  const currentYear = new Date().getFullYear();
+  const maxBirthYear = currentYear - 60;
 
   const handleChange = (e) => {
-    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    let value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+
+    // 휴대폰 번호 자동 하이픈 포맷팅
+    if (e.target.name === 'phone') {
+      value = value.replace(/[^0-9]/g, '');
+      if (value.length <= 3) {
+        // 그대로 유지
+      } else if (value.length <= 7) {
+        value = value.replace(/(\d{3})(\d{1,4})/, '$1-$2');
+      } else {
+        value = value.replace(/(\d{3})(\d{4})(\d{1,4})/, '$1-$2-$3');
+      }
+    }
+
     setFormData({ ...formData, [e.target.name]: value });
 
     if (e.target.name === 'username') {
       setIsIdChecked(false);
       setIdCheckResult('');
     }
+  };
+
+  const handleInterestChange = (interest) => {
+    setFormData(prev => {
+      const currentInterests = prev.interests || [];
+      if (currentInterests.includes(interest)) {
+        // 이미 선택된 경우 제거
+        return { ...prev, interests: currentInterests.filter(i => i !== interest) };
+      } else if (currentInterests.length < 3) {
+        // 3개 미만이면 추가
+        return { ...prev, interests: [...currentInterests, interest] };
+      } else {
+        // 3개 이상이면 추가하지 않음
+        return prev;
+      }
+    });
+  };
+
+  const handleMeetingChange = (category) => {
+    setFormData(prev => {
+      const currentMeetings = prev.wantToHost || [];
+      if (currentMeetings.includes(category)) {
+        return { ...prev, wantToHost: currentMeetings.filter(c => c !== category) };
+      } else if (currentMeetings.length < 3) {
+        return { ...prev, wantToHost: [...currentMeetings, category] };
+      } else {
+        return prev;
+      }
+    });
   };
 
   useEffect(() => {
@@ -137,6 +191,15 @@ const SignUp = () => {
       return;
     }
 
+    if (!formData.interests || formData.interests.length < 1) {
+      toaster.create({
+        title: '관심사를 선택해주세요',
+        description: '나의 관심사를 최소 1개 이상 선택해야 합니다.',
+        type: 'warning',
+      });
+      return;
+    }
+
     if (formData.birthDate) {
       const today = new Date();
       const birthDate = new Date(formData.birthDate);
@@ -202,6 +265,7 @@ const SignUp = () => {
         position="relative"
         overflow="hidden"
         py={8}
+        mb="75px"
       >
         <div className="mooa-glass-card w-full max-w-2xl mx-4 animate-fade-in">
           <VStack spacing={6} align="stretch">
@@ -274,28 +338,124 @@ const SignUp = () => {
                 </div>
 
                 <div className="w-full">
-                  <label className="mooa-label">비밀번호</label>
+                  <label className="mooa-label">프로필명</label>
                   <input
-                    type="password"
-                    name="password"
+                    name="nickname"
                     onChange={handleChange}
-                    placeholder="비밀번호를 입력하세요"
+                    placeholder="프로필명을 입력하세요"
                     className="mooa-input"
                     required
                   />
                 </div>
 
                 <div className="w-full">
-                  <label className="mooa-label">생년월일</label>
+                  <label className="mooa-label">성명</label>
                   <input
-                    type="date"
-                    name="birthDate"
+                    name="name"
                     onChange={handleChange}
+                    placeholder="성명을 입력하세요"
                     className="mooa-input"
                     required
                   />
+                </div>
+
+                <div className="w-full">
+                  <label className="mooa-label">비밀번호</label>
+                  <div style={{ position: 'relative', width: '100%' }}>
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      onChange={handleChange}
+                      placeholder="비밀번호를 입력하세요"
+                      className="mooa-input"
+                      style={{ width: '100%', paddingRight: '80px' }}
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      style={{
+                        position: 'absolute',
+                        right: '12px',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        background: 'none',
+                        border: 'none',
+                        cursor: 'pointer',
+                        padding: '5px',
+                        color: '#666',
+                        fontSize: '14px',
+                        whiteSpace: 'nowrap'
+                      }}
+                    >
+                      {showPassword ? '🙈 숨기기' : '👁️ 보기'}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="w-full">
+                  <label className="mooa-label">생년월일</label>
+                  <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                    <div style={{ flex: 1 }}>
+                      <select
+                        value={birthYear}
+                        onChange={(e) => {
+                          setBirthYear(e.target.value);
+                          if (e.target.value && birthMonth && birthDay) {
+                            setFormData(prev => ({ ...prev, birthDate: `${e.target.value}-${birthMonth}-${birthDay}` }));
+                          }
+                        }}
+                        className="mooa-input appearance-none cursor-pointer"
+                        style={{ width: '100%' }}
+                        required
+                      >
+                        <option value="">년도</option>
+                        {Array.from({ length: maxBirthYear - 1920 + 1 }, (_, i) => maxBirthYear - i).map(year => (
+                          <option key={year} value={year}>{year}년</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <select
+                        value={birthMonth}
+                        onChange={(e) => {
+                          setBirthMonth(e.target.value);
+                          if (birthYear && e.target.value && birthDay) {
+                            setFormData(prev => ({ ...prev, birthDate: `${birthYear}-${e.target.value}-${birthDay}` }));
+                          }
+                        }}
+                        className="mooa-input appearance-none cursor-pointer"
+                        style={{ width: '100%' }}
+                        required
+                      >
+                        <option value="">월</option>
+                        {Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, '0')).map(month => (
+                          <option key={month} value={month}>{parseInt(month)}월</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <select
+                        value={birthDay}
+                        onChange={(e) => {
+                          setBirthDay(e.target.value);
+                          if (birthYear && birthMonth && e.target.value) {
+                            setFormData(prev => ({ ...prev, birthDate: `${birthYear}-${birthMonth}-${e.target.value}` }));
+                          }
+                        }}
+                        className="mooa-input appearance-none cursor-pointer"
+                        style={{ width: '100%' }}
+                        required
+                      >
+                        <option value="">일</option>
+                        {Array.from({ length: 31 }, (_, i) => String(i + 1).padStart(2, '0')).map(day => (
+                          <option key={day} value={day}>{parseInt(day)}일</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
                   <Text fontSize="xs" color="gray.500" mt={1}>
-                    * 만 60세 이상만 가입 가능합니다.
+                    * 만 60세 이상만 가입 가능합니다. ({maxBirthYear}년 이전 출생자)
                   </Text>
                 </div>
 
@@ -328,15 +488,20 @@ const SignUp = () => {
                     <input
                       type="tel"
                       name="phone"
+                      value={formData.phone}
                       onChange={handleChange}
                       placeholder="휴대폰 번호를 입력하세요 (예: 010-1234-5678)"
                       className="mooa-input"
+                      maxLength="13"
                       required
                     />
+                    <Text fontSize="xs" color="gray.500" mt={1}>
+                      * 숫자만 입력하시면 하이픈(-)이 자동으로 생성됩니다.
+                    </Text>
                   </div>
 
                   <div className="w-full">
-                    <label className="mooa-label">이메일 주소</label>
+                    <label className="mooa-label">이메일</label>
                     <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                       <input
                         name="emailId"
@@ -374,70 +539,90 @@ const SignUp = () => {
                 </div>
 
                 <div className="w-full">
-                  <label className="mooa-label">지역</label>
+                  <label className="mooa-label">주소</label>
                   <input
                     name="location"
                     onChange={handleChange}
-                    placeholder="거주 지역 (예: 서울시 강남구 역삼동)"
+                    placeholder="거주 주소 (예: 서울시 강남구 역삼동)"
                     className="mooa-input"
                     required
                   />
+                  <Text fontSize="xs" color="gray.500" mt={1}>
+                    * 정확한 매칭을 위해 '동' 또는 '리'까지 상세히 입력해 주세요.
+                  </Text>
                 </div>
 
                 <div className="w-full">
-                  <label className="mooa-label">나의 관심사</label>
-                  <div className="relative">
-                    <select
-                      name="interests"
-                      onChange={handleChange}
-                      className="mooa-input appearance-none cursor-pointer"
-                      required
-                    >
-                      <option value="">관심사를 선택하세요</option>
-                      {[
-                        "기타", "노래", "댄스", "독서", "뜨개질", "먹방", "바둑",
-                        "사진", "스터디", "여행", "요리", "장기", "친목", "등산"
-                      ].sort().map(interest => (
-                        <option key={interest} value={interest}>{interest}</option>
-                      ))}
-                    </select>
-                    <div
-                      className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4"
-                      style={{ color: 'var(--mooa-text-muted)' }}
-                    >
-                      <svg className="fill-current h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                      </svg>
-                    </div>
+                  <label className="mooa-label">나의 관심사 (필수, 최소 1개 ~ 최대 3개)</label>
+                  <Text fontSize="xs" color="gray.500" mb={2}>
+                    * 최소 1개 이상, 최대 3개까지 선택 가능합니다. (현재 {(formData.interests || []).length}/3개 선택)
+                  </Text>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px' }}>
+                    {[
+                      "기타", "노래", "댄스", "독서", "뜨개질", "먹방", "바둑",
+                      "사진", "스터디", "여행", "요리", "장기", "친목", "등산"
+                    ].sort().map(interest => {
+                      const isSelected = (formData.interests || []).includes(interest);
+                      const isDisabled = !isSelected && (formData.interests || []).length >= 3;
+                      return (
+                        <div
+                          key={interest}
+                          onClick={() => !isDisabled && handleInterestChange(interest)}
+                          style={{
+                            padding: '10px 12px',
+                            borderRadius: '8px',
+                            border: isSelected ? '2px solid var(--mooa-orange)' : '1px solid #e2e8f0',
+                            background: isSelected ? 'rgba(255, 126, 54, 0.1)' : isDisabled ? '#f7fafc' : 'white',
+                            color: isSelected ? 'var(--mooa-orange)' : isDisabled ? '#a0aec0' : '#4a5568',
+                            cursor: isDisabled ? 'not-allowed' : 'pointer',
+                            fontWeight: isSelected ? 'bold' : 'normal',
+                            textAlign: 'center',
+                            transition: 'all 0.2s',
+                            opacity: isDisabled ? 0.6 : 1
+                          }}
+                        >
+                          {isSelected && '✓ '}{interest}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
 
 
 
                 <div className="w-full">
-                  <label className="mooa-label">모임개설하기</label>
-                  <div className="relative">
-                    <select
-                      name="wantToHost"
-                      onChange={handleChange}
-                      className="mooa-input appearance-none cursor-pointer"
-                    >
-                      <option value="">개설할 모임을 선택하세요</option>
-                      {[
-                        "기타", "노래", "댄스", "독서", "뜨개질", "먹방", "바둑",
-                        "사진", "스터디", "여행", "요리", "장기", "친목", "등산"
-                      ].sort().map(interest => (
-                        <option key={interest} value={interest}>{interest}</option>
-                      ))}
-                    </select>
-                    <div
-                      className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4"
-                      style={{ color: 'var(--mooa-text-muted)' }}
-                    >
-                      <svg className="fill-current h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                      </svg>
-                    </div>
+                  <label className="mooa-label">모임개설하기 (선택, 최대 3개)</label>
+                  <Text fontSize="xs" color="gray.500" mb={2}>
+                    * 선택사항입니다. 최대 3개까지 선택 가능합니다. (현재 {(formData.wantToHost || []).length}/3개 선택)
+                  </Text>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px' }}>
+                    {[
+                      "기타", "노래", "댄스", "독서", "뜨개질", "먹방", "바둑",
+                      "사진", "스터디", "여행", "요리", "장기", "친목", "등산"
+                    ].sort().map(category => {
+                      const isSelected = (formData.wantToHost || []).includes(category);
+                      const isDisabled = !isSelected && (formData.wantToHost || []).length >= 3;
+                      return (
+                        <div
+                          key={category}
+                          onClick={() => !isDisabled && handleMeetingChange(category)}
+                          style={{
+                            padding: '10px 12px',
+                            borderRadius: '8px',
+                            border: isSelected ? '2px solid #38A169' : '1px solid #e2e8f0',
+                            background: isSelected ? 'rgba(56, 161, 105, 0.1)' : isDisabled ? '#f7fafc' : 'white',
+                            color: isSelected ? '#38A169' : isDisabled ? '#a0aec0' : '#4a5568',
+                            cursor: isDisabled ? 'not-allowed' : 'pointer',
+                            fontWeight: isSelected ? 'bold' : 'normal',
+                            textAlign: 'center',
+                            transition: 'all 0.2s',
+                            opacity: isDisabled ? 0.6 : 1
+                          }}
+                        >
+                          {isSelected && '✓ '}{category}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
 
