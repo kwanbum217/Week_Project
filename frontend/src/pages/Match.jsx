@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaUserPlus, FaRegEnvelope, FaComments } from 'react-icons/fa6';
 import Footer from '../components/Footer';
-import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import { Map, MapMarker, useKakaoLoader } from 'react-kakao-maps-sdk';
 
 const Match = () => {
   const navigate = useNavigate();
@@ -14,6 +14,12 @@ const Match = () => {
   const [nearbyUsers, setNearbyUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [mapLevel, setMapLevel] = useState(7); // Zoom level for ~5km radius
+
+  // 카카오맵 SDK 로딩 (react-kakao-maps-sdk 권장 방식)
+  const [kakaoLoading, kakaoError] = useKakaoLoader({
+    appkey: '7c7b2503bbdfda05254a0841382d3e75',
+    libraries: ['services', 'clusterer'],
+  });
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -251,11 +257,20 @@ const Match = () => {
           {/* Map Section */}
           {!isGuest && (
             <Box h="400px" w="100%" borderRadius="2xl" overflow="hidden" boxShadow="lg" border="1px solid" borderColor="gray.200" position="relative">
-              {!location ? (
+              {kakaoLoading || !location ? (
                 <Flex justify="center" align="center" h="100%" bg="gray.50" direction="column" gap={4}>
                   <Spinner size="xl" color="#25D366" thickness="4px" />
-                  <Text color="gray.500">현재 위치를 불러오는 중입니다...</Text>
-                  <Text fontSize="sm" color="gray.400">브라우저의 위치 권한을 허용해주세요.</Text>
+                  <Text color="gray.500">
+                    {kakaoLoading ? "카카오맵을 로딩하는 중입니다..." : "현재 위치를 불러오는 중입니다..."}
+                  </Text>
+                  <Text fontSize="sm" color="gray.400">
+                    {!location ? "브라우저의 위치 권한을 허용해주세요." : ""}
+                  </Text>
+                  {kakaoError && (
+                    <Text fontSize="sm" color="red.500">
+                      카카오맵 로딩 오류: {kakaoError.message || "API 키 또는 도메인을 확인해주세요."}
+                    </Text>
+                  )}
                 </Flex>
               ) : (
                 <Map

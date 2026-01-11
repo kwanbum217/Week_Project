@@ -1,12 +1,20 @@
 import { useState, useEffect } from 'react';
-import { Box, Heading, Text, Badge, Button, VStack, Flex, HStack } from '@chakra-ui/react';
+import { Box, Heading, Text, Badge, Button, VStack, Flex, HStack, Dialog, useDisclosure } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import { FaUserPlus, FaRegEnvelope, FaComments, FaUsers } from "react-icons/fa6";
+import { FaUserPlus, FaRegEnvelope, FaComments, FaUsers, FaMapLocationDot } from "react-icons/fa6";
 import Footer from '../components/Footer';
+import KakaoMap from '../components/map/KakaoMap';
 
 const Meetup = () => {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const [selectedMeetup, setSelectedMeetup] = useState(null);
+
+    const handleOpenMap = (meetup) => {
+        setSelectedMeetup(meetup);
+        onOpen();
+    };
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -33,7 +41,9 @@ const Meetup = () => {
             endTime: "18:00",
             image: '/img/photo_meetup.png',
             tags: ['사진', '예술', '여행'],
-            supplies: '개인 카메라, 삼각대(선택)'
+            supplies: '개인 카메라, 삼각대(선택)',
+            lat: 37.566826,
+            lng: 126.9786567
         },
         {
             id: 1,
@@ -49,7 +59,9 @@ const Meetup = () => {
             endTime: "13:00",
             image: '/img/hiking_meetup.png',
             tags: ['등산', '건강', '친목'],
-            supplies: '등산화, 물, 간단한 간식'
+            supplies: '등산화, 물, 간단한 간식',
+            lat: 37.4449168,
+            lng: 126.9632669
         },
         {
             id: 5,
@@ -65,7 +77,9 @@ const Meetup = () => {
             endTime: "21:30",
             image: '/img/gourmet_meetup.png',
             tags: ['맛집', '먹방', '불금'],
-            supplies: '즐거운 마음, 회비'
+            supplies: '즐거운 마음, 회비',
+            lat: 37.557527,
+            lng: 126.9244669
         },
         {
             id: 2,
@@ -81,7 +95,9 @@ const Meetup = () => {
             endTime: "17:00",
             image: '/img/book_club_meetup.png',
             tags: ['독서', '토론', '교양'],
-            supplies: '이달의 선정 도서, 필기도구'
+            supplies: '이달의 선정 도서, 필기도구',
+            lat: 37.497942,
+            lng: 127.027621
         },
         {
             id: 6,
@@ -97,7 +113,9 @@ const Meetup = () => {
             endTime: "16:30",
             image: '/img/classic_music_meetup.png',
             tags: ['음악', '클래식', '힐링'],
-            supplies: '편안한 복장'
+            supplies: '편안한 복장',
+            lat: 37.484085,
+            lng: 127.013009
         },
         {
             id: 4,
@@ -113,7 +131,9 @@ const Meetup = () => {
             endTime: "21:30",
             image: '/img/neighborhood_walk.png',
             tags: ['산책', '운동', '동네'],
-            supplies: '운동화, 물'
+            supplies: '운동화, 물',
+            lat: 37.556790,
+            lng: 126.901538
         }
     ];
 
@@ -224,6 +244,9 @@ const Meetup = () => {
 
                                             <Text color="gray.500" fontSize="md" mb={1}>
                                                 📍 {isGuest ? meetup.location.split(' ')[0] + ' ***' : meetup.location}
+                                                <Button size="xs" ml={2} colorScheme="teal" variant="outline" onClick={() => handleOpenMap(meetup)}>
+                                                    <FaMapLocationDot /> 지도 보기
+                                                </Button>
                                             </Text>
                                             <Text color="gray.500" fontSize="md" mb={4}>
                                                 📅 {meetup.date} ({meetup.startTime} ~ {meetup.endTime})
@@ -342,9 +365,45 @@ const Meetup = () => {
                         </Box>
                     )}
                 </VStack>
+
             </Box>
+
+            {/* Map Modal */}
+            {/* Map Modal */}
+            <Dialog.Root open={isOpen} onOpenChange={onClose} size="xl" placement="center">
+                <Dialog.Backdrop />
+                <Dialog.Positioner>
+                    <Dialog.Content>
+                        <Dialog.Header>
+                            <Dialog.Title>{selectedMeetup?.title} 위치</Dialog.Title>
+                            <Dialog.CloseTrigger />
+                        </Dialog.Header>
+                        <Dialog.Body pb={6}>
+                            {selectedMeetup && (
+                                <KakaoMap
+                                    x={selectedMeetup.lng}
+                                    y={selectedMeetup.lat}
+                                    className="w-full h-[400px] rounded-lg"
+                                    markerImage={{
+                                        src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
+                                        size: { width: 24, height: 35 }
+                                    }}
+                                >
+                                    <div style={{ padding: '5px', background: 'white', borderRadius: '4px', border: '1px solid #ccc' }}>
+                                        {selectedMeetup.title}
+                                    </div>
+                                </KakaoMap>
+                            )}
+                            <Text mt={4} fontSize="sm" color="gray.600">
+                                📍 {selectedMeetup?.location}
+                            </Text>
+                        </Dialog.Body>
+                    </Dialog.Content>
+                </Dialog.Positioner>
+            </Dialog.Root>
+
             <Footer />
-        </Flex>
+        </Flex >
     );
 };
 
