@@ -172,15 +172,21 @@ const Navbar = () => {
 
             {/* Row 2: Main Menu + Screen Size */}
             <div className="flex justify-between items-center w-full whitespace-nowrap">
-              {(!user ? publicNavItems : navItems).map((item) => (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  className="text-lg font-bold text-gray-600 hover:text-[var(--love-green)] transition-all duration-200 ease-in-out px-3 py-2 rounded-lg"
-                >
-                  {item.label}
-                </Link>
-              ))}
+              {(!user ? publicNavItems : navItems).map((item) => {
+                const isActive = location.pathname === item.path;
+                return (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`text-lg font-bold px-3 py-2 rounded-lg transition-all duration-200 ease-in-out transform hover:scale-110 active:scale-95 ${isActive
+                      ? 'text-[var(--love-green)] bg-[rgba(74,222,128,0.1)]'
+                      : 'text-gray-600 hover:text-[var(--love-green)] hover:bg-[rgba(74,222,128,0.1)]'
+                      }`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
 
               {/* Screen Size Dropdown Moved Here - Next to Intro */}
               <div className="relative">

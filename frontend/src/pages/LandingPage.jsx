@@ -146,7 +146,7 @@ const LandingPage = () => {
                                     fontSize={{ base: "4xl", md: "6xl" }}
                                     fontWeight="900"
                                     lineHeight="1.2"
-                                    color="white"
+                                    color="#333333"
                                     mb={6}
                                 >
                                     친구와 함께하는<br />
@@ -154,7 +154,7 @@ const LandingPage = () => {
                                 </Heading>
                                 <Text
                                     fontSize={{ base: "lg", md: "xl" }}
-                                    color="gray.300"
+                                    color="gray.600"
                                     maxW="2xl"
                                     mx="auto"
                                     mb={10}
@@ -235,14 +235,14 @@ const LandingPage = () => {
                                         <VStack align="start" spacing={3}>
                                             <Box>
                                                 <Flex align="baseline" gap={2}>
-                                                    <Text fontSize="xl" fontWeight="bold" color="white">
+                                                    <Text fontSize="xl" fontWeight="bold" color="#333333">
                                                         {friend.name},
                                                     </Text>
-                                                    <Text fontSize="xl" color="gray.400">
+                                                    <Text fontSize="xl" color="gray.600">
                                                         {friend.age}
                                                     </Text>
                                                 </Flex>
-                                                <Text fontSize="sm" color="gray.500">
+                                                <Text fontSize="sm" color="gray.600">
                                                     {friend.location}
                                                 </Text>
                                             </Box>
@@ -269,7 +269,8 @@ const LandingPage = () => {
                                                     flex={1}
                                                     bg="var(--love-green)"
                                                     color="black"
-                                                    _hover={{ bg: "var(--love-green-dark)" }}
+                                                    _hover={{ bg: "var(--love-green-dark)", transform: 'scale(1.05)' }}
+                                                    _active={{ transform: 'scale(0.95)' }}
                                                     borderRadius="xl"
                                                     fontSize="11px"
                                                     px={1}
@@ -283,7 +284,8 @@ const LandingPage = () => {
                                                     bg="transparent"
                                                     border="1px solid var(--love-green)"
                                                     color="var(--love-green)"
-                                                    _hover={{ bg: "rgba(74,222,128,0.1)" }}
+                                                    _hover={{ bg: "rgba(74,222,128,0.1)", transform: 'scale(1.05)' }}
+                                                    _active={{ transform: 'scale(0.95)' }}
                                                     borderRadius="xl"
                                                     fontSize="11px"
                                                     px={1}
@@ -296,7 +298,8 @@ const LandingPage = () => {
                                                     flex={1}
                                                     bg="gray.700"
                                                     color="white"
-                                                    _hover={{ bg: "gray.600" }}
+                                                    _hover={{ bg: "gray.600", transform: 'scale(1.05)' }}
+                                                    _active={{ transform: 'scale(0.95)' }}
                                                     borderRadius="xl"
                                                     fontSize="11px"
                                                     px={1}
@@ -382,21 +385,21 @@ const LandingPage = () => {
                                                 >
                                                     {meeting.category}
                                                 </Badge>
-                                                <Text fontSize="xs" color="gray.400">
+                                                <Text fontSize="xs" color="gray.500">
                                                     {meeting.date}
                                                 </Text>
                                             </Flex>
-                                            <Text fontSize="md" fontWeight="bold" color="white" noOfLines={1} mb={2}>
+                                            <Text fontSize="md" fontWeight="bold" color="#333333" noOfLines={1} mb={2}>
                                                 {meeting.title}
                                             </Text>
                                         </Box>
 
                                         <VStack align="start" spacing={1} w="full">
-                                            <Flex align="center" gap={2} color="gray.400" fontSize="xs">
+                                            <Flex align="center" gap={2} color="gray.600" fontSize="xs">
                                                 <span>📍</span>
                                                 <Text noOfLines={1}>{meeting.location}</Text>
                                             </Flex>
-                                            <Flex align="center" gap={2} color="gray.400" fontSize="xs">
+                                            <Flex align="center" gap={2} color="gray.600" fontSize="xs">
                                                 <span>👥</span>
                                                 <Text>{meeting.members}명 참여중</Text>
                                             </Flex>
@@ -532,7 +535,7 @@ const LandingPage = () => {
                                             <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
                                             <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                                         </svg>
-                                        <Text color="white" fontWeight="bold">복지정책</Text>
+                                        <Text color="#1e3a5f" fontWeight="bold">복지정책</Text>
                                     </VStack>
 
                                     {/* 2. 지자체소식 - Dark Green */}
@@ -552,28 +555,28 @@ const LandingPage = () => {
                                             <path d="M5 21V7l8-4 8 4v14" />
                                             <path d="M9 10a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2" />
                                         </svg>
-                                        <Text color="white" fontWeight="bold">지자체소식</Text>
+                                        <Text color="#15803d" fontWeight="bold">지자체소식</Text>
                                     </VStack>
 
-                                    {/* 3. 병원정보 - Gray */}
+                                    {/* 3. 병원정보 - Green Style */}
                                     <VStack
-                                        bg="rgba(255, 255, 255, 0.05)"
-                                        border="1px solid rgba(255, 255, 255, 0.1)"
+                                        bg="rgba(74, 222, 128, 0.1)"
+                                        border="1px solid var(--love-green)"
                                         h="140px"
                                         justify="center"
                                         spacing={2}
                                         cursor="pointer"
                                         transition="transform 0.2s"
-                                        _hover={{ transform: 'translateY(-5px)', bg: "rgba(255, 255, 255, 0.1)" }}
+                                        _hover={{ transform: 'translateY(-5px)', bg: "rgba(74, 222, 128, 0.2)" }}
                                         borderRadius="lg"
                                     >
-                                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--love-green)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                             <rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect>
                                             <path d="M17 7V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v3"></path>
                                             <line x1="12" y1="12" x2="12" y2="17"></line>
                                             <line x1="9" y1="14.5" x2="15" y2="14.5"></line>
                                         </svg>
-                                        <Text color="white" fontWeight="bold">병원정보</Text>
+                                        <Text color="#333333" fontWeight="bold">병원정보</Text>
                                     </VStack>
 
                                     {/* 4. 건강상식 - Light Green */}
@@ -591,26 +594,26 @@ const LandingPage = () => {
                                         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#86efac" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                                         </svg>
-                                        <Text color="white" fontWeight="bold">건강상식</Text>
+                                        <Text color="#166534" fontWeight="bold">건강상식</Text>
                                     </VStack>
 
-                                    {/* 5. 도서추천 - White */}
+                                    {/* 5. 도서추천 - Green Style */}
                                     <VStack
-                                        bg="rgba(255, 255, 255, 0.05)"
-                                        border="1px solid rgba(255, 255, 255, 0.2)"
+                                        bg="rgba(74, 222, 128, 0.1)"
+                                        border="1px solid var(--love-green)"
                                         h="140px"
                                         justify="center"
                                         spacing={2}
                                         cursor="pointer"
                                         transition="transform 0.2s"
-                                        _hover={{ transform: 'translateY(-5px)', bg: "rgba(255, 255, 255, 0.1)" }}
+                                        _hover={{ transform: 'translateY(-5px)', bg: "rgba(74, 222, 128, 0.2)" }}
                                         borderRadius="lg"
                                     >
-                                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--love-green)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
                                             <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
                                         </svg>
-                                        <Text color="white" fontWeight="bold">도서추천</Text>
+                                        <Text color="#333333" fontWeight="bold">도서추천</Text>
                                     </VStack>
 
                                     {/* 6. 공연안내 - Green Accent */}
@@ -630,7 +633,7 @@ const LandingPage = () => {
                                             <circle cx="6" cy="18" r="3"></circle>
                                             <circle cx="18" cy="16" r="3"></circle>
                                         </svg>
-                                        <Text color="white" fontWeight="bold">공연안내</Text>
+                                        <Text color="#1e3a5f" fontWeight="bold">공연안내</Text>
                                     </VStack>
                                 </SimpleGrid>
                             </Box>

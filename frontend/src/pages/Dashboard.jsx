@@ -468,12 +468,14 @@ const Dashboard = () => {
                   color="white"
                   size="lg"
                   width="200px"
+                  _hover={{ transform: 'scale(1.05)' }}
+                  _active={{ transform: 'scale(0.95)' }}
                 >
                   로그인 하기
                 </Button>
                 <Text fontSize="sm" color="gray.500">
                   아직 회원이 아니신가요?
-                  <Button variant="link" color="var(--mooa-orange)" ml={2} onClick={() => navigate('/signup')}>
+                  <Button variant="link" color="var(--mooa-orange)" ml={2} onClick={() => navigate('/signup')} _hover={{ transform: 'scale(1.05)' }} _active={{ transform: 'scale(0.95)' }}>
                     회원가입
                   </Button>
                 </Text>
@@ -779,20 +781,20 @@ const Dashboard = () => {
                     <HStack justify="flex-end" pt={4} spacing={3}>
                       {isEditing ? (
                         <>
-                          <Button colorScheme="gray" size="lg" variant="outline" borderRadius="xl" px={8} onClick={() => setIsEditing(false)}>
+                          <Button colorScheme="gray" size="lg" variant="outline" borderRadius="xl" px={8} onClick={() => setIsEditing(false)} _hover={{ transform: 'scale(1.05)' }} _active={{ transform: 'scale(0.95)' }}>
                             취소
                           </Button>
-                          <Button colorScheme="orange" size="lg" borderRadius="xl" px={8} onClick={handleSaveProfile}>
+                          <Button colorScheme="orange" size="lg" borderRadius="xl" px={8} onClick={handleSaveProfile} _hover={{ transform: 'scale(1.05)' }} _active={{ transform: 'scale(0.95)' }}>
                             저장
                           </Button>
                         </>
                       ) : (
-                        <Button leftIcon={<FaUserEdit />} size="lg" colorScheme="orange" variant="outline" borderRadius="xl" px={8} onClick={() => setIsEditing(true)}>
+                        <Button leftIcon={<FaUserEdit />} size="lg" colorScheme="orange" variant="outline" borderRadius="xl" px={8} onClick={() => setIsEditing(true)} _hover={{ transform: 'scale(1.05)' }} _active={{ transform: 'scale(0.95)' }}>
                           프로필 수정
                         </Button>
                       )}
                       {!isEditing && user.username !== 'Guest' && (
-                        <Button onClick={handleLogout} size="lg" variant="ghost" color="red.500" _hover={{ bg: 'red.50' }}>
+                        <Button onClick={handleLogout} size="lg" variant="ghost" color="red.500" _hover={{ bg: 'red.50', transform: 'scale(1.05)' }} _active={{ transform: 'scale(0.95)' }}>
                           로그아웃
                         </Button>
                       )}
@@ -1036,6 +1038,8 @@ const Dashboard = () => {
                                         colorScheme="teal"
                                         width="full"
                                         isLoading={loadingMembers[index]}
+                                        _hover={{ transform: 'scale(1.05)' }}
+                                        _active={{ transform: 'scale(0.95)' }}
                                         onClick={() => {
                                           // We need the real ID. 
                                           // If meetingData doesn't have ID, we might need to find it.
@@ -1070,6 +1074,8 @@ const Dashboard = () => {
                                               colorScheme="green"
                                               leftIcon={<FaFileExcel />}
                                               isDisabled={viewingMembers[index].length === 0}
+                                              _hover={{ transform: 'scale(1.05)' }}
+                                              _active={{ transform: 'scale(0.95)' }}
                                               onClick={() => exportMembersToExcel(
                                                 viewingMembers[index],
                                                 meetingData.name || meetingData.category || '모임'
@@ -1115,14 +1121,14 @@ const Dashboard = () => {
                         <HStack justify="flex-end" spacing={3}>
                           {isThisMeetingEditing ? (
                             <>
-                              <Button colorScheme="gray" size="lg" variant="outline" borderRadius="xl" px={8} onClick={() => {
+                              <Button colorScheme="gray" size="lg" variant="outline" borderRadius="xl" px={8} _hover={{ transform: 'scale(1.05)' }} _active={{ transform: 'scale(0.95)' }} onClick={() => {
                                 setEditingMeetingIndex(null);
                                 // Reset specific card form data handled on open logic ideally, but simplistic reset:
                                 // We keep edits if canceled in this simple version, or can reset from prop. Keeping for now.
                               }}>
                                 취소
                               </Button>
-                              <Button colorScheme="orange" size="lg" borderRadius="xl" px={8} onClick={() => handleSaveMeeting(index)}>
+                              <Button colorScheme="orange" size="lg" borderRadius="xl" px={8} onClick={() => handleSaveMeeting(index)} _hover={{ transform: 'scale(1.05)' }} _active={{ transform: 'scale(0.95)' }}>
                                 저장
                               </Button>
                             </>
@@ -1136,6 +1142,8 @@ const Dashboard = () => {
                                 px={8}
                                 leftIcon={<FaCog />}
                                 onClick={() => setEditingMeetingIndex(index)}
+                                _hover={{ transform: 'scale(1.05)' }}
+                                _active={{ transform: 'scale(0.95)' }}
                               >
                                 주제 변경
                               </Button>
@@ -1144,6 +1152,8 @@ const Dashboard = () => {
                                 size="lg"
                                 borderRadius="xl"
                                 px={8}
+                                _hover={{ transform: 'scale(1.05)' }}
+                                _active={{ transform: 'scale(0.95)' }}
                                 onClick={async () => {
                                   if (!meetingData.category) {
                                     setEditingMeetingIndex(index); // Ensure editing mode if trying to create on empty slot
@@ -1199,6 +1209,8 @@ const Dashboard = () => {
                                 variant="outline"
                                 isDisabled={!meetingData.category}
                                 onClick={() => handleDeleteMeeting(index)}
+                                _hover={{ transform: 'scale(1.05)' }}
+                                _active={{ transform: 'scale(0.95)' }}
                               >
                                 삭제하기
                               </Button>
@@ -1377,6 +1389,8 @@ const Dashboard = () => {
                             px={8}
                             onClick={() => alert(`'${itemData.name || "상품"}' 등록이 완료되었습니다. (준비중)`)}
                             leftIcon={<Box fontSize="20px">🎁</Box>}
+                            _hover={{ transform: 'scale(1.05)' }}
+                            _active={{ transform: 'scale(0.95)' }}
                           >
                             상품 등록하기
                           </Button>
