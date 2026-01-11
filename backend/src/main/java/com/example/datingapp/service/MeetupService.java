@@ -6,6 +6,7 @@ import com.example.datingapp.repository.MeetupRepository;
 import com.example.datingapp.repository.MeetupMemberRepository;
 import com.example.datingapp.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -103,5 +104,25 @@ public class MeetupService {
    */
   public List<com.example.datingapp.model.MeetupMember> getMeetupMembers(Long meetupId) {
     return meetupMemberRepository.findByMeetupIdWithUser(meetupId);
+  }
+
+  /**
+   * 모임 삭제 (모임장만 삭제 가능)
+   */
+  @Transactional
+  public void deleteMeetup(Long meetupId, String username) {
+    Meetup meetup = meetupRepository.findById(meetupId)
+        .orElseThrow(() -> new IllegalArgumentException("모임을 찾을 수 없습니다."));
+
+    // 모임 생성자만 삭제 가능
+    if (!meetup.getCreatorUsername().equals(username)) {
+      throw new IllegalStateException("모임장만 삭제할 수 있습니다.");
+    }
+
+    // 모임 멤버 먼저 삭제
+    meetupMemberRepository.deleteByMeetupId(meetupId);
+
+    // 모임 삭제
+    meetupRepository.delete(meetup);
   }
 }

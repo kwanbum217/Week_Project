@@ -5,10 +5,20 @@ package com.example.datingapp.model;
  */
 public enum MeetupCategory {
   ALL("전체"),
-  EXERCISE_HEALTH("운동/건강"),
-  CULTURE_ART("문화/예술"),
+  GUITAR("기타"),
+  SINGING("노래"),
+  DANCE("댄스"),
+  READING("독서"),
+  HIKING("등산"),
+  KNITTING("뜨개질"),
+  FOODIE("먹방"),
+  BADUK("바둑"),
+  PHOTO("사진"),
+  STUDY("스터디"),
   TRAVEL("여행"),
-  VOLUNTEER("봉사활동");
+  COOKING("요리"),
+  JANGGI("장기"),
+  SOCIAL("친목");
 
   private final String displayName;
 

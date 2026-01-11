@@ -16,4 +16,6 @@ public interface MeetupMemberRepository extends JpaRepository<MeetupMember, Long
     List<MeetupMember> findByMeetupIdWithUser(@Param("meetupId") Long meetupId);
 
     boolean existsByMeetupIdAndUserId(Long meetupId, Long userId);
+
+    void deleteByMeetupId(Long meetupId);
 }

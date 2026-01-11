@@ -18,8 +18,8 @@ public class ChatCleanupScheduler {
   @Scheduled(cron = "0 0 3 * * *")
   @Transactional
   public void cleanupOldMessages() {
-    // Delete messages older than 30 days
-    LocalDateTime expiryDate = LocalDateTime.now().minusDays(30);
+    // Delete messages older than 7 days
+    LocalDateTime expiryDate = LocalDateTime.now().minusDays(7);
     chatMessageRepository.deleteByCreatedAtBefore(expiryDate);
     System.out.println("Old chat messages deleted before " + expiryDate);
   }

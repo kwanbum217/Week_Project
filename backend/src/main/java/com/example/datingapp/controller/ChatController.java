@@ -74,6 +74,8 @@ public class ChatController {
     if (attrs != null && attrs.containsKey("userId")) {
       chatMessage.setSenderId((Long) attrs.get("userId"));
     }
+    // 공개 채널 메시지도 DB에 저장
+    messageRepo.save(chatMessage);
     return chatMessage;
   }
 

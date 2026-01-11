@@ -18,7 +18,7 @@ import {
   Flex
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import { FaUserEdit, FaCog, FaHistory, FaHeart, FaBan, FaFileExcel } from 'react-icons/fa';
+import { FaUserEdit, FaCog, FaHistory, FaHeart, FaBan, FaFileExcel, FaTrash } from 'react-icons/fa';
 import Footer from '../components/Footer';
 
 const Dashboard = () => {
@@ -190,6 +190,53 @@ const Dashboard = () => {
     }
 
     setEditingMeetingIndex(null);
+  };
+
+  // 모임 삭제 함수
+  const handleDeleteMeeting = async (index) => {
+    const meetingData = user?.meetings?.[index];
+    if (!meetingData || !meetingData.id) {
+      // 로컬 데이터만 삭제
+      const updatedMeetings = [...(user.meetings || [{}, {}, {}])];
+      updatedMeetings[index] = {};
+      const updatedUser = { ...user, meetings: updatedMeetings };
+      setUser(updatedUser);
+      localStorage.setItem('user', JSON.stringify(updatedUser));
+      alert('모임이 삭제되었습니다.');
+      return;
+    }
+
+    if (!window.confirm(`'${meetingData.name || meetingData.category || "이"} 모임'을 정말 삭제하시겠습니까?`)) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/meetups/${meetingData.id}?username=${user.username}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        // 로컬 상태에서도 삭제
+        const updatedMeetings = [...(user.meetings || [{}, {}, {}])];
+        updatedMeetings[index] = {};
+        const updatedUser = { ...user, meetings: updatedMeetings };
+        setUser(updatedUser);
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+
+        // editForm에서도 삭제
+        const updatedEditMeetings = [...editForm.meetings];
+        updatedEditMeetings[index] = {};
+        setEditForm({ ...editForm, meetings: updatedEditMeetings });
+
+        alert('모임이 삭제되었습니다.');
+      } else {
+        const errorMsg = await response.text();
+        alert(`삭제 실패: ${errorMsg}`);
+      }
+    } catch (error) {
+      console.error('Error deleting meetup:', error);
+      alert('모임 삭제 중 오류가 발생했습니다.');
+    }
   };
 
   // 회원 목록을 엑셀(CSV)로 내보내기
@@ -1142,6 +1189,18 @@ const Dashboard = () => {
                                 }}
                               >
                                 {meetingData.id ? '개설 완료' : '모임 개설하기'}
+                              </Button>
+                              <Button
+                                colorScheme="red"
+                                size="lg"
+                                borderRadius="xl"
+                                px={8}
+                                leftIcon={<FaTrash />}
+                                variant="outline"
+                                isDisabled={!meetingData.category}
+                                onClick={() => handleDeleteMeeting(index)}
+                              >
+                                삭제하기
                               </Button>
                             </>
                           )}

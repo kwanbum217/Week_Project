@@ -80,32 +80,67 @@ public class MeetupController {
     meetup.setMembers(0);
 
     // 한글 카테고리를 영어 enum으로 매핑
-    String categoryStr = (String) body.getOrDefault("category", "VOLUNTEER");
+    String categoryStr = (String) body.getOrDefault("category", "SOCIAL");
     MeetupCategory category;
     switch (categoryStr) {
+      case "기타":
+      case "GUITAR":
+        category = MeetupCategory.GUITAR;
+        break;
+      case "노래":
+      case "SINGING":
+        category = MeetupCategory.SINGING;
+        break;
+      case "댄스":
+      case "DANCE":
+        category = MeetupCategory.DANCE;
+        break;
+      case "독서":
+      case "READING":
+        category = MeetupCategory.READING;
+        break;
       case "등산":
+      case "HIKING":
+        category = MeetupCategory.HIKING;
+        break;
+      case "뜨개질":
+      case "KNITTING":
+        category = MeetupCategory.KNITTING;
+        break;
+      case "먹방":
+      case "FOODIE":
+        category = MeetupCategory.FOODIE;
+        break;
+      case "바둑":
+      case "BADUK":
+        category = MeetupCategory.BADUK;
+        break;
+      case "사진":
+      case "PHOTO":
+        category = MeetupCategory.PHOTO;
+        break;
+      case "스터디":
+      case "STUDY":
+        category = MeetupCategory.STUDY;
+        break;
       case "여행":
       case "TRAVEL":
         category = MeetupCategory.TRAVEL;
         break;
-      case "운동":
-      case "건강":
-      case "EXERCISE_HEALTH":
-        category = MeetupCategory.EXERCISE_HEALTH;
+      case "요리":
+      case "COOKING":
+        category = MeetupCategory.COOKING;
         break;
-      case "노래":
-      case "댄스":
-      case "문화":
-      case "예술":
-      case "CULTURE_ART":
-        category = MeetupCategory.CULTURE_ART;
+      case "장기":
+      case "JANGGI":
+        category = MeetupCategory.JANGGI;
         break;
-      case "봉사":
-      case "VOLUNTEER":
-        category = MeetupCategory.VOLUNTEER;
+      case "친목":
+      case "SOCIAL":
+        category = MeetupCategory.SOCIAL;
         break;
       default:
-        category = MeetupCategory.VOLUNTEER;
+        category = MeetupCategory.SOCIAL;
     }
     meetup.setCategory(category);
 
@@ -119,5 +154,18 @@ public class MeetupController {
   @GetMapping("/{id}/members")
   public ResponseEntity<List<com.example.datingapp.model.MeetupMember>> getMeetupMembers(@PathVariable Long id) {
     return ResponseEntity.ok(meetupService.getMeetupMembers(id));
+  }
+
+  /**
+   * 모임 삭제
+   */
+  @DeleteMapping("/{id}")
+  public ResponseEntity<String> deleteMeetup(@PathVariable Long id, @RequestParam String username) {
+    try {
+      meetupService.deleteMeetup(id, username);
+      return ResponseEntity.ok("모임이 삭제되었습니다.");
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
   }
 }
