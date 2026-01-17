@@ -78,7 +78,7 @@ const Navbar = () => {
               src="/img/mooa_logo_main.png"
               alt="MOOA Logo"
               className="w-[100px] h-[100px] min-w-[100px] min-h-[100px]"
-              style={{ objectFit: 'contain', objectPosition: 'left', filter: 'brightness(1.2)' }}
+              style={{ objectFit: 'contain', objectPosition: 'left' }}
             />
           </Link>
 
@@ -90,22 +90,23 @@ const Navbar = () => {
               {/* Search Bar */}
               <div
                 className="relative w-[500px] rounded-full"
-                style={{ background: 'var(--love-gradient)', padding: '1px' }}
+                style={{ background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)', padding: '2px' }}
               >
-                <div className="relative w-full bg-black rounded-full flex items-center">
+                <div className="relative w-full rounded-full flex items-center" style={{ background: 'rgba(255, 255, 255, 0.95)' }}>
                   <input
                     type="text"
                     placeholder=" 궁금하신 내용을 이곳에 입력해 보세요."
-                    className="w-full py-3 pr-12 bg-transparent border-none focus:ring-0 rounded-full text-sm text-white placeholder-gray-500"
+                    className="w-full py-3 pr-12 bg-transparent border-none focus:ring-0 rounded-full text-sm placeholder-gray-400"
                     style={{
                       outline: 'none',
                       transform: 'scale(0.8)',
                       transformOrigin: 'left center',
                       width: '125%',
-                      paddingLeft: '30px'
+                      paddingLeft: '30px',
+                      color: '#374151'
                     }}
                   />
-                  <button className="absolute right-4 text-gray-400 hover:text-[var(--love-green)] transition-colors top-1/2 transform -translate-y-1/2">
+                  <button className="absolute right-4 text-[#22c55e] hover:text-[#16a34a] transition-colors top-1/2 transform -translate-y-1/2">
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>

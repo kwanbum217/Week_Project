@@ -27,6 +27,13 @@ public class MarketItemService {
   }
 
   /**
+   * 상품 상세 조회
+   */
+  public MarketItem getItemById(Long id) {
+    return marketItemRepository.findById(id).orElse(null);
+  }
+
+  /**
    * 카테고리별 상품 조회
    */
   public List<MarketItem> getItemsByCategory(String categoryStr) {

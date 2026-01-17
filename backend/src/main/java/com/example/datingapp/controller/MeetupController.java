@@ -36,6 +36,18 @@ public class MeetupController {
   }
 
   /**
+   * 모임 상세 조회
+   */
+  @GetMapping("/{id}")
+  public ResponseEntity<Meetup> getMeetupById(@PathVariable Long id) {
+    Meetup meetup = meetupService.getMeetupById(id);
+    if (meetup == null) {
+      return ResponseEntity.notFound().build();
+    }
+    return ResponseEntity.ok(meetup);
+  }
+
+  /**
    * 모임 가입
    */
   @PostMapping("/{id}/join")

@@ -214,9 +214,10 @@ const Meetup = () => {
                                             overflow="hidden"
                                             boxShadow="lg"
                                             transition="all 0.3s"
-                                            _hover={{ transform: 'translateY(-5px)', boxShadow: 'xl' }}
+                                            _hover={{ transform: 'translateY(-5px)', boxShadow: 'xl', cursor: 'pointer' }}
                                             border="1px solid"
                                             borderColor="gray.100"
+                                            onClick={() => navigate(`/meetup/${meetup.id}`)}
                                         >
                                             {/* Image Area */}
                                             <Box h="280px" bg="gray.100" position="relative">

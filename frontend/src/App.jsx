@@ -6,7 +6,9 @@ import Dashboard from './pages/Dashboard';
 import Chat from './pages/Chat';
 import Match from './pages/Match';
 import Meetup from './pages/Meetup';
+import MeetupDetail from './pages/MeetupDetail';
 import Market from './pages/Market';
+import MarketDetail from './pages/MarketDetail';
 import Info from './pages/Info';
 import TermsOfService from './pages/TermsOfService';
 import Intro from './pages/Intro';
@@ -147,12 +149,12 @@ const Layout = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
 
-
-
           {/* Public Preview Routes */}
           <Route path="/match" element={<Match />} />
           <Route path="/meetup" element={<Meetup />} />
+          <Route path="/meetup/:id" element={<MeetupDetail />} />
           <Route path="/market" element={<Market />} />
+          <Route path="/market/:id" element={<MarketDetail />} />
           <Route path="/info" element={<Info />} />
 
           {/* Protected Routes */}
@@ -166,8 +168,6 @@ const Layout = () => {
           <Route path="/oauth2/redirect" element={<OAuth2RedirectHandler />} />
         </Routes>
       </div>
-
-
 
       <CustomerSupportChat />
     </div>

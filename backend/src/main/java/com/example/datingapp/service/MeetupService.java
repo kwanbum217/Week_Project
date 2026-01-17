@@ -35,6 +35,13 @@ public class MeetupService {
   }
 
   /**
+   * 모임 상세 조회
+   */
+  public Meetup getMeetupById(Long id) {
+    return meetupRepository.findById(id).orElse(null);
+  }
+
+  /**
    * 카테고리별 모임 조회
    */
   public List<Meetup> getMeetupsByCategory(String categoryStr) {

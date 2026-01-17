@@ -42,4 +42,16 @@ public class MarketController {
 
     return ResponseEntity.ok(items);
   }
+
+  /**
+   * 상품 상세 조회
+   */
+  @GetMapping("/{id}")
+  public ResponseEntity<MarketItem> getItemById(@PathVariable Long id) {
+    MarketItem item = marketItemService.getItemById(id);
+    if (item == null) {
+      return ResponseEntity.notFound().build();
+    }
+    return ResponseEntity.ok(item);
+  }
 }
