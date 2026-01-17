@@ -74,10 +74,10 @@ const Chat = () => {
   }, [roomId, navigate]);
 
   const sendMessage = () => {
-    if (stompClient && inputValue) {
+    if (stompClient && inputValue && currentUser) {
       const message = {
         content: inputValue,
-        sender: 'Me', // Should be derived from token/user info
+        sender: currentUser.username,
         type: 'CHAT'
       };
 
@@ -166,17 +166,19 @@ const Chat = () => {
             }}>
               <VStack spacing={4} align="stretch">
                 {messages.map((msg, idx) => {
-                  const isMe = msg.sender === 'Me' || msg.sender === '나'; // Adjust based on actual sender logic
+                  const isMe = msg.sender === currentUser?.username;
                   return (
-                    <Flex key={idx} justify={isMe ? 'flex-end' : 'flex-start'}>
+                    <Flex key={idx} justify={isMe ? 'flex-end' : 'flex-start'} mb={2}>
                       {!isMe && (
                         <Box
-                          w="32px"
-                          h="32px"
+                          w="40px"
+                          h="40px"
                           borderRadius="full"
                           overflow="hidden"
-                          mr={2}
+                          mr={3}
                           flexShrink={0}
+                          border="2px solid"
+                          borderColor="gray.200"
                         >
                           <img
                             src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${msg.sender}`}
@@ -185,19 +187,33 @@ const Chat = () => {
                           />
                         </Box>
                       )}
-                      <Box
-                        maxW="70%"
-                        bg={isMe ? '#25D366' : 'white'}
-                        color={isMe ? 'white' : 'gray.800'}
-                        px={4}
-                        py={2}
-                        borderRadius="2xl"
-                        borderTopLeftRadius={!isMe ? '0' : '2xl'}
-                        borderTopRightRadius={isMe ? '0' : '2xl'}
-                        boxShadow="sm"
-                      >
-                        {!isMe && <Text fontSize="xs" fontWeight="bold" mb={1} color="gray.500">{msg.sender}</Text>}
-                        <Text>{msg.content}</Text>
+                      <Box maxW="70%">
+                        {!isMe && (
+                          <Text fontSize="xs" fontWeight="bold" mb={1} color="gray.600" ml={1}>
+                            {msg.sender}
+                          </Text>
+                        )}
+                        <Box
+                          bg={isMe ? 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)' : 'white'}
+                          background={isMe ? 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)' : 'white'}
+                          color={isMe ? 'white' : 'gray.800'}
+                          px={4}
+                          py={3}
+                          borderRadius="xl"
+                          borderTopLeftRadius={!isMe ? '4px' : 'xl'}
+                          borderTopRightRadius={isMe ? '4px' : 'xl'}
+                          boxShadow={isMe ? 'md' : 'sm'}
+                          border={!isMe ? '1px solid' : 'none'}
+                          borderColor="gray.200"
+                          position="relative"
+                        >
+                          <Text fontSize="md" lineHeight="1.5">{msg.content}</Text>
+                        </Box>
+                        {isMe && (
+                          <Text fontSize="2xs" color="gray.400" textAlign="right" mt={1} mr={1}>
+                            나
+                          </Text>
+                        )}
                       </Box>
                     </Flex>
                   );

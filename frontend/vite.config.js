@@ -12,6 +12,8 @@ export default defineConfig({
     global: 'window',
   },
   server: {
+    host: '0.0.0.0',  // Allow access from other devices on the network
+    port: 5173,
     open: false,
     proxy: {
       '/api': {
