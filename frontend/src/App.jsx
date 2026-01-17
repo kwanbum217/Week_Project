@@ -16,8 +16,8 @@ import ProtectedRoute from './components/ProtectedRoute';
 import CustomerSupportChat from './components/CustomerSupportChat';
 import Background from './components/Background';
 import Navbar from './components/Navbar';
+import OnlineUsers from './components/OnlineUsers';
 import AdminPage from './pages/AdminPage';
-
 import LandingPage from './pages/LandingPage';
 import './App.css';
 
@@ -130,6 +130,7 @@ const Layout = () => {
     <div className="min-h-screen relative">
       <Background />
       <Navbar />
+      <OnlineUsers currentUser={user} />
       {/* Remove side margin on Chat page to give it full width */}
       <div style={{ paddingTop: '180px' }}>
         <Routes>

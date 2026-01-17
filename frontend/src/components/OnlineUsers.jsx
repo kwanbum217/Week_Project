@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
+import { FaChevronRight, FaChevronLeft, FaUsers } from 'react-icons/fa6';
 
 const OnlineUsers = ({ currentUser }) => {
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [isConnected, setIsConnected] = useState(false);
+  const [isFolded, setIsFolded] = useState(false); // Default to open, or true if you want it closed initially
+  const sidebarRef = useRef(null);
 
   useEffect(() => {
     if (!currentUser) return;
@@ -52,10 +55,36 @@ const OnlineUsers = ({ currentUser }) => {
     };
   }, [currentUser]);
 
+  // Click outside to fold
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setIsFolded(true);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   if (!currentUser) return null;
 
   return (
-    <div className="online-users-sidebar">
+    <div
+      className={`online-users-sidebar ${isFolded ? 'folded' : ''}`}
+      ref={sidebarRef}
+    >
+      {/* Toggle Button */}
+      <button
+        className="online-users-toggle-btn"
+        onClick={() => setIsFolded(!isFolded)}
+        title={isFolded ? "친구 목록 펼치기" : "친구 목록 접기"}
+      >
+        {isFolded ? <FaUsers /> : <FaChevronRight />}
+      </button>
+
       <div className="online-users-header">
         <h3>접속 중인 친구</h3>
         <span className="online-count">{onlineUsers.length}명</span>

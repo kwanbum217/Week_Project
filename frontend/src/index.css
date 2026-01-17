@@ -427,3 +427,48 @@ h4 {
   background: var(--love-green);
   box-shadow: 0 0 5px var(--love-green);
 }
+
+/* Folded State & Toggle Button */
+.online-users-sidebar {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.online-users-sidebar.folded {
+  transform: translateX(280px);
+  /* Move completely off-screen to the right */
+}
+
+.online-users-toggle-btn {
+  position: absolute;
+  left: -40px;
+  /* Position to the left of the sidebar */
+  top: 24px;
+  width: 40px;
+  height: 40px;
+  background: white;
+  border: 1px solid var(--love-gray-light);
+  border-right: none;
+  border-radius: 12px 0 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--love-green);
+  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  z-index: 101;
+}
+
+.online-users-toggle-btn:hover {
+  background: var(--love-gray-lightest);
+  color: var(--love-green-dark);
+  width: 44px;
+  /* Slight expansion on hover */
+  left: -44px;
+}
+
+.online-users-sidebar.folded .online-users-toggle-btn {
+  background: var(--love-green);
+  color: white;
+  border-color: var(--love-green);
+}
