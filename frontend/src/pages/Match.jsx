@@ -535,7 +535,7 @@ const Match = () => {
                   size="lg"
                   _hover={{ bg: '#20bd5a' }}
                 >
-                  러브레터 회원가입하기
+                  무아 회원가입하기
                 </Button>
               </Box>
             </Box>

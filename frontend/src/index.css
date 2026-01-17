@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
-/* Love Letter 디자인 시스템 - 라이트 테마 */
+/* MOOA 디자인 시스템 - 라이트 테마 */
 
 :root {
-  /* Love Letter 색상 팔레트 - 라이트 테마 */
+  /* MOOA 색상 팔레트 - 라이트 테마 */
   --love-green: #22c55e;
 
   /* Missing variables for Chat */
@@ -101,7 +101,7 @@ h4 {
   animation: fade-in 0.5s ease-out forwards;
 }
 
-/* Love Letter 카드 스타일 - 라이트 테마 */
+/* MOOA 카드 스타일 - 라이트 테마 */
 .mooa-card {
   background: var(--love-bg-card);
   border-radius: 24px;

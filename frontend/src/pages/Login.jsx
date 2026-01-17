@@ -118,13 +118,13 @@ const Login = () => {
                 letterSpacing="-0.02em"
                 style={{ color: 'var(--love-navy)' }}
               >
-                Love Letter
+                MOOA
               </Heading>
               <Text
                 fontSize="lg"
                 style={{ color: 'var(--love-text-secondary)' }}
               >
-                Love Letter - 소중한 인연의 시작
+                무아 - 소중한 인연의 시작
               </Text>
             </Box>
 

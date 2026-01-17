@@ -544,7 +544,7 @@ const Dashboard = () => {
                   }}>
                     <HStack spacing={4}>
                       <Box p={2} bg="green.50" borderRadius="lg" color="green.500"><Box fontSize="20px">🎁</Box></Box>
-                      <Text fontSize="lg">Love Letter 나눔 상품등록하기</Text>
+                      <Text fontSize="lg">무아 나눔 상품등록하기</Text>
                     </HStack>
                     <Text color="gray.400">{'>'}</Text>
                   </HStack>

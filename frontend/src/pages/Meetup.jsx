@@ -368,7 +368,7 @@ const Meetup = () => {
                                     size="lg"
                                     px={8}
                                 >
-                                    러브레터 회원가입하기
+                                    무아 회원가입하기
                                 </Button>
                             </Box>
                         </Box>

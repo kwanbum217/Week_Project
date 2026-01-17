@@ -1,6 +1,6 @@
 import React from 'react';
 
-// Love Letter 브랜드 배경 컴포넌트 - 다크하고 네온 느낌의 디자인
+// MOOA 브랜드 배경 컴포넌트 - 다크하고 네온 느낌의 디자인
 const Background = () => {
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden" style={{ background: 'var(--love-bg-main)' }}>

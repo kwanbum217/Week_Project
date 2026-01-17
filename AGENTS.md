@@ -1,10 +1,10 @@
 # AI Coding Guidelines
 
-This document outlines the coding standards, technology stack, and design system for the **Love Letter** dating app project.
+This document outlines the coding standards, technology stack, and design system for the **MOOA** dating app project.
 
 ## 1. Project Overview
 
-**Love Letter**는 소셜 매칭 서비스로, 사용자가 프로필을 만들고 채팅 및 음성/영상 통화를 통해 소통할 수 있는 플랫폼입니다.
+**MOOA**는 소셜 매칭 서비스로, 사용자가 프로필을 만들고 채팅 및 음성/영상 통화를 통해 소통할 수 있는 플랫폼입니다.
 
 ## 2. Tech Stack
 

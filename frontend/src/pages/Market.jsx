@@ -313,7 +313,7 @@ const Market = () => {
                 {/* Header / Title */}
                 <Box textAlign="center" mb={12}>
                     <Heading as="h1" size="2xl" mb={4} color="gray.800" fontWeight="bold">
-                        러브회원 무료나눔
+                        무아회원 무료나눔
                     </Heading>
                     <Text fontSize="xl" color="gray.600">
                         {isGuest ? "회원가입 후 로그인하고 가까운 친구들과 함께 무료나눔하세요!" : "당신 근처의 따뜻한 직거래 마켓"}
@@ -411,7 +411,7 @@ const Market = () => {
                             onClick={() => navigate('/signup')}
                             boxShadow="lg"
                         >
-                            러브나눔 함께하기
+                            무아나눔 함께하기
                         </Button>
                     </Box>
                 )}

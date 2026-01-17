@@ -175,7 +175,7 @@ const SignUp = () => {
       if (response.ok) {
         toaster.create({
           title: '회원가입 성공',
-          description: 'Love Letter에 오신 것을 환영합니다!',
+          description: '무아에 오신 것을 환영합니다!',
           type: 'success',
         });
         navigate('/login');
@@ -232,7 +232,7 @@ const SignUp = () => {
                 mb={2}
                 style={{ color: 'var(--love-navy)', fontSize: 'var(--font-size-3xl)' }}
               >
-                Love Letter 회원가입
+                MOOA 회원가입
               </Heading>
               <Text style={{ color: 'var(--mooa-text-secondary)', fontSize: 'var(--font-size-base)' }}>
                 새로운 인연을 만나보세요

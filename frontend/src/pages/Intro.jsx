@@ -122,7 +122,7 @@ const Intro = () => {
     const faqData = [
         {
             q: "MOOA는 어떤 서비스인가요?",
-            a: <>Love Letter는 시니어 세대를 위한 소셜 네트워킹 플랫폼입니다. 취미 모임, 친구 찾기, 1:1 대화 등 다양한 방식으로 새로운 인연을 만들고, 외로움을 달래며 활기찬 제2의 인생을 즐길 수 있도록 돕는 따뜻한 커뮤니티 공간입니다.</>
+            a: <>MOOA는 시니어 세대를 위한 소셜 네트워킹 플랫폼입니다. 취미 모임, 친구 찾기, 1:1 대화 등 다양한 방식으로 새로운 인연을 만들고, 외로움을 달래며 활기찬 제2의 인생을 즐길 수 있도록 돕는 따뜻한 커뮤니티 공간입니다.</>
         },
         {
             q: "이용료는 무료인가요?",
@@ -166,7 +166,7 @@ const Intro = () => {
                                     color="var(--mooa-navy)"
                                     mb={6}
                                 >
-                                    Love Letter<br />
+                                    MOOA<br />
                                     <span style={{ fontSize: '0.5em', display: 'block', marginTop: '20px', fontWeight: '500' }}>사람과 사람이 자연스럽게 이어지는 공간</span>
                                 </Heading>
                                 <Text
@@ -271,7 +271,7 @@ const Intro = () => {
                         <VStack spacing={12}>
                             <Box textAlign="center">
                                 <Heading size="xl" mb={4} color="var(--mooa-navy)">
-                                    Love Letter에게 물어보세요 (FAQ)
+                                    MOOA에게 물어보세요 (FAQ)
                                 </Heading>
                                 <Text fontSize="lg" color="gray.600">
                                     궁금한 점이 있으신가요? 자주 묻는 질문들을 모아봤습니다.
