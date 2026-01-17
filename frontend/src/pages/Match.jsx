@@ -36,14 +36,38 @@ const Match = () => {
             fetchNearbyUsers(parsedUser.username, latitude, longitude);
           },
           (error) => {
-            console.error("Error getting location:", error);
-            alert("위치 정보를 가져올 수 없습니다. 기본 위치로 설정됩니다.");
-            // Default location (e.g., Seoul City Hall)
-            setLocation({ lat: 37.5665, lng: 126.9780 });
-          }
+            console.warn("Geolocation denied or failed:", error.message);
+
+            // Fallback strategy:
+            // 1. Try to use user's profile location if available
+            // 2. Otherwise use default (Seoul City Hall)
+            if (parsedUser.location && window.kakao && window.kakao.maps && window.kakao.maps.services) {
+              const geocoder = new window.kakao.maps.services.Geocoder();
+              geocoder.addressSearch(parsedUser.location, (result, status) => {
+                if (status === window.kakao.maps.services.Status.OK) {
+                  const lat = parseFloat(result[0].y);
+                  const lng = parseFloat(result[0].x);
+                  setLocation({ lat, lng });
+                  fetchNearbyUsers(parsedUser.username, lat, lng);
+                } else {
+                  // Final fallback
+                  const defaultLoc = { lat: 37.5665, lng: 126.9780 };
+                  setLocation(defaultLoc);
+                  fetchNearbyUsers(parsedUser.username, defaultLoc.lat, defaultLoc.lng);
+                }
+              });
+            } else {
+              const defaultLoc = { lat: 37.5665, lng: 126.9780 };
+              setLocation(defaultLoc);
+              fetchNearbyUsers(parsedUser.username, defaultLoc.lat, defaultLoc.lng);
+            }
+          },
+          { timeout: 10000 }
         );
       } else {
-        alert("이 브라우저는 위치 정보를 지원하지 않습니다.");
+        const defaultLoc = { lat: 37.5665, lng: 126.9780 };
+        setLocation(defaultLoc);
+        fetchNearbyUsers(parsedUser.username, defaultLoc.lat, defaultLoc.lng);
       }
     }
   }, []);
@@ -511,7 +535,7 @@ const Match = () => {
                   size="lg"
                   _hover={{ bg: '#20bd5a' }}
                 >
-                  무아 회원가입하기
+                  러브레터 회원가입하기
                 </Button>
               </Box>
             </Box>

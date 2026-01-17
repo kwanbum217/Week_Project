@@ -59,7 +59,12 @@ public class AuthController {
 
     return userService.findByUsername(user.getUsername())
         .map(u -> {
-          if (passwordEncoder.matches(user.getPassword(), u.getPassword())) {
+          String storedPassword = u.getPassword().trim();
+          System.out.println("Stored password hash length: " + storedPassword.length());
+          boolean isMatch = passwordEncoder.matches(user.getPassword(), storedPassword);
+          System.out.println("Password match result: " + isMatch);
+
+          if (isMatch) {
             // Generate Token
             // We can use the username or email. TokenProvider expects Authentication or
             // String.

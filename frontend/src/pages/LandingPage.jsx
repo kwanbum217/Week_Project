@@ -483,7 +483,7 @@ const LandingPage = () => {
                             {/* Mooa Market */}
                             <Box>
                                 <Heading fontSize="2xl" color="white" mb={2}>
-                                    무아나눔
+                                    러브나눔
                                 </Heading>
                                 <Text color="gray.400" fontSize="lg" mb={8}>
                                     가까운 친구들과 함께 무료나눔하세요
@@ -501,7 +501,7 @@ const LandingPage = () => {
                                     >
                                         <img
                                             src="/img/market_intro.jpg"
-                                            alt="무아나눔 소개"
+                                            alt="러브나눔 소개"
                                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                         />
                                     </Box>
@@ -511,10 +511,10 @@ const LandingPage = () => {
                             {/* Mooa Info */}
                             <Box>
                                 <Heading fontSize="2xl" color="white" mb={2}>
-                                    무아정보
+                                    러브정보
                                 </Heading>
                                 <Text color="gray.400" fontSize="lg" mb={8}>
-                                    무아님들에게 필요한 정보를 확인하세요
+                                    러브레터 회원님들에게 필요한 정보를 확인하세요
                                 </Text>
                                 <SimpleGrid columns={3} gap={4}>
                                     {/* 1. 복지정책 - Green */}

@@ -116,15 +116,15 @@ const Login = () => {
                 mb={2}
                 fontFamily="'Noto Sans KR', 'Inter', sans-serif"
                 letterSpacing="-0.02em"
-                style={{ color: 'var(--mooa-navy)' }}
+                style={{ color: 'var(--love-navy)' }}
               >
-                MOOA
+                Love Letter
               </Heading>
               <Text
                 fontSize="lg"
-                style={{ color: 'var(--mooa-text-secondary)' }}
+                style={{ color: 'var(--love-text-secondary)' }}
               >
-                무아 - 함께하는 즐거움
+                Love Letter - 소중한 인연의 시작
               </Text>
             </Box>
 
@@ -233,7 +233,7 @@ const Login = () => {
                 as={Link}
                 to="/signup"
                 fontWeight="bold"
-                style={{ color: 'var(--mooa-orange)' }}
+                style={{ color: 'var(--love-green)' }}
                 _hover={{ textDecoration: 'underline' }}
               >
                 회원가입

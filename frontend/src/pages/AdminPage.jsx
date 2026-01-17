@@ -39,10 +39,10 @@ const AdminPage = () => {
     // 채팅 관리 탭 state
     const [activeChatTab, setActiveChatTab] = useState('monitoring');
 
-    // 무아 정보 관리 탭 state
+    // 러브 정보 관리 탭 state
     const [activeInfoTab, setActiveInfoTab] = useState('welfare');
 
-    // 무아 정보 Mock Data
+    // 러브 정보 Mock Data
     const [mockInfoPosts, setMockInfoPosts] = useState([
         { id: 101, category: 'welfare', title: '[복지] 2025년 신규 청년 지원 정책 안내', date: '2025-01-08', image: 'https://via.placeholder.com/40/blue', summary: '2025년부터 시행되는 청년 지원 정책에 대한 상세 안내입니다.' },
         { id: 102, category: 'welfare', title: '[복지] 어르신 기초연금 수급 자격 변경', date: '2025-01-07', image: 'https://via.placeholder.com/40/blue', summary: '기초연금 수급 자격이 변경되었습니다. 확인해보세요.' },
@@ -271,7 +271,7 @@ const AdminPage = () => {
             '친구찾기': user.wantToFindFriends ? 'Y' : 'N',
             '모임하기': (user.wantToMeet === true || user.wantToMeet === 'true') ? 'Y' : 'N',
             '대화하기': (user.wantToChat === true || user.wantToChat === 'true') ? 'Y' : 'N',
-            '무아나눔': (user.wantToShare === true || user.wantToShare === 'true') ? 'Y' : 'N',
+            '러브나눔': (user.wantToShare === true || user.wantToShare === 'true') ? 'Y' : 'N',
             '메모': user.memo || '-'
         }));
 
@@ -297,7 +297,7 @@ const AdminPage = () => {
             { wch: 10 }, // 친구찾기
             { wch: 10 }, // 모임하기
             { wch: 10 }, // 대화하기
-            { wch: 10 }, // 무아나눔
+            { wch: 10 }, // 러브나눔
             { wch: 40 }  // 메모
         ];
         worksheet['!cols'] = wscols;
@@ -354,7 +354,7 @@ const AdminPage = () => {
         ];
         worksheet['!cols'] = wscols;
 
-        XLSX.writeFile(workbook, `MOOA_모임목록_${new Date().toISOString().split('T')[0]}.xlsx`);
+        XLSX.writeFile(workbook, `LoveLetter_모임목록_${new Date().toISOString().split('T')[0]}.xlsx`);
     };
 
 
@@ -457,7 +457,7 @@ const AdminPage = () => {
                             <button
                                 type="submit"
                                 className="mooa-btn-primary"
-                                style={{ width: '100%', padding: '12px', cursor: 'pointer', backgroundColor: 'var(--mooa-orange, #FF7E36)', color: 'white', border: 'none', borderRadius: '4px', fontSize: '16px', fontWeight: 'bold' }}
+                                style={{ width: '100%', padding: '12px', cursor: 'pointer', backgroundColor: 'var(--love-green)', color: 'white', border: 'none', borderRadius: '4px', fontSize: '16px', fontWeight: 'bold' }}
                             >
                                 로그인
                             </button>
@@ -754,7 +754,7 @@ const AdminPage = () => {
                                 <Table.ColumnHeader px={4} py={4} whiteSpace="nowrap">친구찾기</Table.ColumnHeader>
                                 <Table.ColumnHeader px={4} py={4} whiteSpace="nowrap">모임하기</Table.ColumnHeader>
                                 <Table.ColumnHeader px={4} py={4} whiteSpace="nowrap">대화하기</Table.ColumnHeader>
-                                <Table.ColumnHeader px={4} py={4} whiteSpace="nowrap">무아나눔</Table.ColumnHeader>
+                                <Table.ColumnHeader px={4} py={4} whiteSpace="nowrap">러브나눔</Table.ColumnHeader>
                                 <Table.ColumnHeader px={4} py={4} whiteSpace="nowrap">메모</Table.ColumnHeader>
                             </Table.Row>
                         </Table.Header>
@@ -1213,7 +1213,7 @@ const AdminPage = () => {
 
                 {/* 무아 정보 관리 섹션 (Mooa Info Management) */}
                 <Box mb={8} p={6} shadow="md" borderRadius="2xl" bg="gray.50" border="1px solid #e2e8f0">
-                    <Heading size="md" mb={6} color="gray.700">📰 무아 정보 관리</Heading>
+                    <Heading size="md" mb={6} color="gray.700">📰 러브 정보 관리</Heading>
 
                     <Flex gap={4} mb={6} overflowX="auto" pb={2}>
                         {[

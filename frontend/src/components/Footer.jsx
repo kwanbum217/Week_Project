@@ -10,7 +10,7 @@ const Footer = () => {
                     <VStack align="start" spacing={4}>
                         <Flex align="center" gap={6}>
                             <Text fontSize="2xl" fontWeight="900" color="white" fontFamily="'Noto Sans KR', sans-serif">
-                                MOOA
+                                Love Letter
                             </Text>
                             <HStack spacing={4} fontSize="sm">
                                 <Text as={RouterLink} to="/privacy-policy" color="white" textDecoration="underline" _hover={{ opacity: 0.8 }}>
@@ -36,13 +36,13 @@ const Footer = () => {
                 <Box borderTop="1px solid" borderColor="whiteAlpha.200" pt={8} mb={8}>
                     <SimpleGrid columns={{ base: 1, md: 2 }} gap={4} fontSize="xs" lineHeight="1.6">
                         <Box>
-                            <Text>대표 : 김무아</Text>
+                            <Text>대표 : 김러브</Text>
                             <Text>개인정보책임관리자 : 이보안</Text>
-                            <Text>호스팅사업자 : (주)무아코퍼레이션</Text>
+                            <Text>호스팅사업자 : (주)러브레터코퍼레이션</Text>
                         </Box>
                         <Box>
                             <Text>사업자등록번호 : 123-45-67890</Text>
-                            <Text>서울특별시 강남구 테헤란로 123, 무아빌딩 4층</Text>
+                            <Text>서울특별시 강남구 테헤란로 123, 러브빌딩 4층</Text>
                         </Box>
                     </SimpleGrid>
                 </Box>
@@ -50,7 +50,7 @@ const Footer = () => {
                 {/* Bottom Row */}
                 <Flex justify="space-between" align="center" pt={8} borderTop="1px solid" borderColor="whiteAlpha.200">
                     <Text fontSize="xs" color="whiteAlpha.600">
-                        © Mooa Corporation. All rights reserved.
+                        © Love Letter Corporation. All rights reserved.
                     </Text>
 
                     <HStack spacing={4}>

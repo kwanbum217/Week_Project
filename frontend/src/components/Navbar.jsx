@@ -42,9 +42,9 @@ const Navbar = () => {
     { path: '/match', label: '친구찾기', icon: '👥' },
     { path: '/meetup', label: '모임하기', icon: '🫂' },
     { path: '/chat', label: '대화하기', icon: '💬' },
-    { path: '/market', label: '무아나눔', icon: '🛒' },
-    { path: '/info', label: '무아정보', icon: 'ℹ️' },
-    { path: '/intro', label: '무아소개', icon: '👋' },
+    { path: '/market', label: '러브나눔', icon: '🛒' },
+    { path: '/info', label: '러브정보', icon: 'ℹ️' },
+    { path: '/intro', label: '러브소개', icon: '👋' },
   ];
 
   // 퍼블릭 메뉴 아이템 (비로그인 시)
@@ -53,9 +53,9 @@ const Navbar = () => {
     { label: '친구찾기', path: '/match' },
     { label: '모임하기', path: '/meetup' },
     { label: '대화하기', path: '/chat' },
-    { label: '무아나눔', path: '/market' },
-    { label: '무아정보', path: '/info' },
-    { label: '무아소개', path: '/intro' },
+    { label: '러브나눔', path: '/market' },
+    { label: '러브정보', path: '/info' },
+    { label: '러브소개', path: '/intro' },
   ];
 
   return (
@@ -132,7 +132,7 @@ const Navbar = () => {
                       className="text-[7px] font-medium text-gray-300 hover:text-[var(--love-green)] transition-colors flex items-center gap-1"
                       style={{ transform: 'scale(0.8)', transformOrigin: 'right center' }}
                     >
-                      무아가입
+                      러브가입
                       <svg className="w-5 h-5" fill="none" stroke="var(--love-green)" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                       </svg>

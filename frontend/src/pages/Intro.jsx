@@ -22,7 +22,7 @@ const ValueItem = ({ title, text, icon }) => (
             h={12}
             align="center"
             justify="center"
-            color="var(--mooa-orange)"
+            color="var(--love-green)"
             bg="orange.50"
             rounded="full"
             mb={2}
@@ -62,7 +62,7 @@ const FeatureCard = ({ title, subtitle, icon }) => (
             align="center"
             justify="center"
             bg="orange.50"
-            color="var(--mooa-orange)"
+            color="var(--love-green)"
             borderRadius="2xl"
             mr={6}
         >
@@ -95,7 +95,7 @@ const ChatBubble = ({ isUser, children }) => (
                 shrink={0}
                 mt={1}
             >
-                <Icon as={FaSmile} color="var(--mooa-orange)" w={5} h={5} />
+                <Icon as={FaSmile} color="var(--love-green)" w={5} h={5} />
             </Flex>
         )}
         <Box
@@ -122,7 +122,7 @@ const Intro = () => {
     const faqData = [
         {
             q: "MOOA는 어떤 서비스인가요?",
-            a: <>MOOA(무아)는 시니어 세대를 위한 소셜 네트워킹 플랫폼입니다. 취미 모임, 친구 찾기, 1:1 대화 등 다양한 방식으로 새로운 인연을 만들고, 외로움을 달래며 활기찬 제2의 인생을 즐길 수 있도록 돕는 따뜻한 커뮤니티 공간입니다.</>
+            a: <>Love Letter는 시니어 세대를 위한 소셜 네트워킹 플랫폼입니다. 취미 모임, 친구 찾기, 1:1 대화 등 다양한 방식으로 새로운 인연을 만들고, 외로움을 달래며 활기찬 제2의 인생을 즐길 수 있도록 돕는 따뜻한 커뮤니티 공간입니다.</>
         },
         {
             q: "이용료는 무료인가요?",
@@ -152,7 +152,7 @@ const Intro = () => {
                             <Box className="animate-fade-in">
                                 <Text
                                     fontSize={{ base: "xl", md: "2xl" }}
-                                    color="var(--mooa-orange)"
+                                    color="var(--love-green)"
                                     fontWeight="bold"
                                     mb={4}
                                 >
@@ -166,7 +166,7 @@ const Intro = () => {
                                     color="var(--mooa-navy)"
                                     mb={6}
                                 >
-                                    MOOA (무아)<br />
+                                    Love Letter<br />
                                     <span style={{ fontSize: '0.5em', display: 'block', marginTop: '20px', fontWeight: '500' }}>사람과 사람이 자연스럽게 이어지는 공간</span>
                                 </Heading>
                                 <Text
@@ -190,7 +190,7 @@ const Intro = () => {
                         <Box flex={1}>
                             <Heading size="2xl" mb={8} color="gray.800" lineHeight="1.4" wordBreak="keep-all">
                                 누군가는 대화를 나누고 싶고,<br />
-                                <span style={{ color: 'var(--mooa-orange)' }}>누군가는 함께할 사람을 찾고 있습니다.</span>
+                                <span style={{ color: 'var(--love-green)' }}>누군가는 함께할 사람을 찾고 있습니다.</span>
                             </Heading>
                             <VStack align="start" spacing={6} fontSize="lg" color="gray.600">
                                 <Text>
@@ -271,7 +271,7 @@ const Intro = () => {
                         <VStack spacing={12}>
                             <Box textAlign="center">
                                 <Heading size="xl" mb={4} color="var(--mooa-navy)">
-                                    무아에게 물어보세요 (FAQ)
+                                    Love Letter에게 물어보세요 (FAQ)
                                 </Heading>
                                 <Text fontSize="lg" color="gray.600">
                                     궁금한 점이 있으신가요? 자주 묻는 질문들을 모아봤습니다.
@@ -310,7 +310,7 @@ const Intro = () => {
                 {/* Promise Section */}
                 <Box py={24} textAlign="center">
                     <Box maxW="1980px" mx="auto" px="200px">
-                        <Icon as={FaHandHoldingHeart} w={12} h={12} color="var(--mooa-orange)" mb={6} />
+                        <Icon as={FaHandHoldingHeart} w={12} h={12} color="var(--love-green)" mb={6} />
                         <Heading size="xl" mb={8} color="var(--mooa-navy)" fontWeight="bold">
                             “혼자가 아닌, 함께여서 더 좋은 일상”
                         </Heading>
@@ -318,7 +318,7 @@ const Intro = () => {
                             MOOA는 단순한 플랫폼이 아닌<br />
                             <strong>사람과 사람을 잇는 따뜻한 공간</strong>이 되고자 합니다.
                         </Text>
-                        <Box w={20} h={1} bg="var(--mooa-orange)" mx="auto" borderRadius="full" />
+                        <Box w={20} h={1} bg="var(--love-green)" mx="auto" borderRadius="full" />
                     </Box>
                 </Box>
             </Box>

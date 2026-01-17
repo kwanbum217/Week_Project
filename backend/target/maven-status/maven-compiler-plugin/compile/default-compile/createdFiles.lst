@@ -44,6 +44,7 @@ com\example\datingapp\model\Vital.class
 com\example\datingapp\model\Meetup.class
 com\example\datingapp\controller\MatchController$LocationRequest.class
 com\example\datingapp\config\JwtChannelInterceptor.class
+com\example\datingapp\scheduler\ChatCleanupScheduler.class
 com\example\datingapp\controller\LocationController.class
 com\example\datingapp\repository\MeetupRepository.class
 com\example\datingapp\config\MatchDataLoader.class

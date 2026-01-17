@@ -454,7 +454,7 @@ const Dashboard = () => {
     return (
       <Box minHeight="100vh" py={20} bg="gray.50" className="w-full">
         <div className="w-full max-w-[800px] mx-auto px-[50px] text-center">
-          <Heading size="xl" mb={6} color="var(--mooa-navy)">나의 정보</Heading>
+          <Heading size="xl" mb={6} color="var(--love-navy)">나의 정보</Heading>
           <Card.Root variant="elevated" borderRadius="24px" p={10} bg="white">
             <CardBody>
               <VStack spacing={6}>
@@ -464,7 +464,7 @@ const Dashboard = () => {
                 <Button
                   onClick={() => navigate('/login')}
                   colorScheme="orange"
-                  bg="var(--mooa-orange)"
+                  bg="var(--love-green)"
                   color="white"
                   size="lg"
                   width="200px"
@@ -475,7 +475,7 @@ const Dashboard = () => {
                 </Button>
                 <Text fontSize="sm" color="gray.500">
                   아직 회원이 아니신가요?
-                  <Button variant="link" color="var(--mooa-orange)" ml={2} onClick={() => navigate('/signup')} _hover={{ transform: 'scale(1.05)' }} _active={{ transform: 'scale(0.95)' }}>
+                  <Button variant="link" color="var(--love-green)" ml={2} onClick={() => navigate('/signup')} _hover={{ transform: 'scale(1.05)' }} _active={{ transform: 'scale(0.95)' }}>
                     회원가입
                   </Button>
                 </Text>
@@ -494,7 +494,7 @@ const Dashboard = () => {
           {/* Welcome Message */}
           <Box mb={8}>
             <Heading size="lg" color="gray.800" mb={2}>
-              안녕하세요, <Text as="span" color="var(--mooa-orange)">{user.username}</Text>님
+              안녕하세요, <Text as="span" color="var(--love-green)">{user.username}</Text>님
             </Heading>
             <Text fontSize="lg" color="gray.600">
               친구들과 즐거운 활동을 시작해 보세요
@@ -502,7 +502,7 @@ const Dashboard = () => {
           </Box>
 
           {/* Page Title */}
-          <Heading size="xl" mb={8} color="var(--mooa-navy)">나의 정보</Heading>
+          <Heading size="xl" mb={8} color="var(--love-navy)">나의 정보</Heading>
 
           <VStack spacing={8} align="stretch">
             {/* Stats Row (Moved to Top) */}
@@ -510,7 +510,7 @@ const Dashboard = () => {
               {['내 친구', '참여 모임', '찜한 목록'].map((item, idx) => (
                 <Card.Root key={idx} variant="elevated" borderRadius="xl" bg="white">
                   <CardBody textAlign="center" py={6}>
-                    <Heading size="xl" color="var(--mooa-navy)" mb={2}>{idx * 2 + 1}</Heading>
+                    <Heading size="xl" color="var(--love-navy)" mb={2}>{idx * 2 + 1}</Heading>
                     <Text fontSize="md" color="gray.500">{item}</Text>
                   </CardBody>
                 </Card.Root>
@@ -544,7 +544,7 @@ const Dashboard = () => {
                   }}>
                     <HStack spacing={4}>
                       <Box p={2} bg="green.50" borderRadius="lg" color="green.500"><Box fontSize="20px">🎁</Box></Box>
-                      <Text fontSize="lg">무아나눔 상품등록하기</Text>
+                      <Text fontSize="lg">Love Letter 나눔 상품등록하기</Text>
                     </HStack>
                     <Text color="gray.400">{'>'}</Text>
                   </HStack>
@@ -568,7 +568,7 @@ const Dashboard = () => {
                   <VStack spacing={2} align="center" flexShrink={0} mb={{ base: 4, lg: 0 }}>
                     <Box position="relative" borderRadius="full" overflow="hidden">
                       <Avatar.Root w="200px" h="200px">
-                        <Avatar.Fallback name={user.username} bg="var(--mooa-orange)" color="white" fontSize="4xl" />
+                        <Avatar.Fallback name={user.username} bg="var(--love-green)" color="white" fontSize="4xl" />
                         <Avatar.Image src={user.profileImage || "https://bit.ly/broken-link"} />
                       </Avatar.Root>
 

@@ -25,7 +25,10 @@ public class UserService implements UserDetailsService {
   private PasswordEncoder passwordEncoder;
 
   public User registerUser(User user) {
-    user.setPassword(passwordEncoder.encode(user.getPassword()));
+    String encodedPassword = passwordEncoder.encode(user.getPassword());
+    System.out.println("Registering user: " + user.getUsername());
+    System.out.println("Encoded password length: " + encodedPassword.length());
+    user.setPassword(encodedPassword);
     return userRepository.save(user);
   }
 

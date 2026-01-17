@@ -175,7 +175,7 @@ const SignUp = () => {
       if (response.ok) {
         toaster.create({
           title: '회원가입 성공',
-          description: 'MOOA에 오신 것을 환영합니다!',
+          description: 'Love Letter에 오신 것을 환영합니다!',
           type: 'success',
         });
         navigate('/login');
@@ -230,9 +230,9 @@ const SignUp = () => {
               <Heading
                 fontFamily="'Noto Sans KR', 'Inter', sans-serif"
                 mb={2}
-                style={{ color: 'var(--mooa-navy)', fontSize: 'var(--font-size-3xl)' }}
+                style={{ color: 'var(--love-navy)', fontSize: 'var(--font-size-3xl)' }}
               >
-                MOOA 회원가입
+                Love Letter 회원가입
               </Heading>
               <Text style={{ color: 'var(--mooa-text-secondary)', fontSize: 'var(--font-size-base)' }}>
                 새로운 인연을 만나보세요
@@ -449,7 +449,7 @@ const SignUp = () => {
                     checked={formData.wantToFindFriends}
                     onChange={handleChange}
                     className="w-5 h-5 text-orange-500 rounded focus:ring-orange-500 border-gray-300 cursor-pointer"
-                    style={{ accentColor: 'var(--mooa-orange)' }}
+                    style={{ accentColor: 'var(--love-green)' }}
                   />
                   <label htmlFor="wantToFindFriends" className="cursor-pointer select-none text-gray-700 font-medium">
                     친구찾기에 참여하고 싶습니다
@@ -464,7 +464,7 @@ const SignUp = () => {
                     checked={formData.wantToMeet}
                     onChange={handleChange}
                     className="w-5 h-5 text-orange-500 rounded focus:ring-orange-500 border-gray-300 cursor-pointer"
-                    style={{ accentColor: 'var(--mooa-orange)' }}
+                    style={{ accentColor: 'var(--love-green)' }}
                   />
                   <label htmlFor="wantToMeet" className="cursor-pointer select-none text-gray-700 font-medium">
                     모임하기에 참여하고 싶습니다
@@ -479,7 +479,7 @@ const SignUp = () => {
                     checked={formData.wantToChat}
                     onChange={handleChange}
                     className="w-5 h-5 text-orange-500 rounded focus:ring-orange-500 border-gray-300 cursor-pointer"
-                    style={{ accentColor: 'var(--mooa-orange)' }}
+                    style={{ accentColor: 'var(--love-green)' }}
                   />
                   <label htmlFor="wantToChat" className="cursor-pointer select-none text-gray-700 font-medium">
                     대화하기에 참여하고 싶습니다
@@ -494,7 +494,7 @@ const SignUp = () => {
                     checked={formData.wantToShare}
                     onChange={handleChange}
                     className="w-5 h-5 text-orange-500 rounded focus:ring-orange-500 border-gray-300 cursor-pointer"
-                    style={{ accentColor: 'var(--mooa-orange)' }}
+                    style={{ accentColor: 'var(--love-green)' }}
                   />
                   <label htmlFor="wantToShare" className="cursor-pointer select-none text-gray-700 font-medium">
                     무아나눔에 참여하고 싶습니다
@@ -512,7 +512,7 @@ const SignUp = () => {
                           checked={formData.agreedToTerms && formData.agreedToPrivacy && formData.agreedToPrivacyOptional && formData.agreeToReceiveTexts}
                           onChange={handleAllAgree}
                           className="w-5 h-5 text-orange-500 rounded focus:ring-orange-500 border-gray-300 cursor-pointer"
-                          style={{ accentColor: 'var(--mooa-orange)' }}
+                          style={{ accentColor: 'var(--love-green)' }}
                         />
                         <label htmlFor="allAgree" className="cursor-pointer select-none font-bold text-lg text-gray-800">
                           모두 동의합니다.
@@ -532,7 +532,7 @@ const SignUp = () => {
                           checked={formData.agreedToTerms}
                           onChange={handleChange}
                           className="w-4 h-4 text-orange-500 rounded border-gray-300 cursor-pointer"
-                          style={{ accentColor: 'var(--mooa-orange)' }}
+                          style={{ accentColor: 'var(--love-green)' }}
                         />
                         <label htmlFor="agreedToTerms" className="cursor-pointer select-none text-gray-700 text-sm">
                           MOOA 이용 약관 (필수)
@@ -550,7 +550,7 @@ const SignUp = () => {
                           checked={formData.agreedToPrivacy}
                           onChange={handleChange}
                           className="w-4 h-4 text-orange-500 rounded border-gray-300 cursor-pointer"
-                          style={{ accentColor: 'var(--mooa-orange)' }}
+                          style={{ accentColor: 'var(--love-green)' }}
                         />
                         <label htmlFor="agreedToPrivacy" className="cursor-pointer select-none text-gray-700 text-sm">
                           개인정보 수집 및 이용 동의 (필수)
@@ -568,7 +568,7 @@ const SignUp = () => {
                           checked={formData.agreedToPrivacyOptional}
                           onChange={handleChange}
                           className="w-4 h-4 text-orange-500 rounded border-gray-300 cursor-pointer"
-                          style={{ accentColor: 'var(--mooa-orange)' }}
+                          style={{ accentColor: 'var(--love-green)' }}
                         />
                         <label htmlFor="agreedToPrivacyOptional" className="cursor-pointer select-none text-gray-700 text-sm">
                           개인정보 수집 및 이용 동의 (선택)
@@ -586,7 +586,7 @@ const SignUp = () => {
                           checked={formData.agreeToReceiveTexts}
                           onChange={handleChange}
                           className="w-4 h-4 text-orange-500 rounded border-gray-300 cursor-pointer"
-                          style={{ accentColor: 'var(--mooa-orange)' }}
+                          style={{ accentColor: 'var(--love-green)' }}
                         />
                         <label htmlFor="agreeToReceiveTexts" className="cursor-pointer select-none text-gray-700 text-sm">
                           문자 수신 서비스 이용 동의 (선택)
@@ -617,7 +617,7 @@ const SignUp = () => {
                 as={Link}
                 to="/login"
                 fontWeight="bold"
-                style={{ color: 'var(--mooa-orange)' }}
+                style={{ color: 'var(--love-green)' }}
                 _hover={{ textDecoration: 'underline' }}
               >
                 로그인
