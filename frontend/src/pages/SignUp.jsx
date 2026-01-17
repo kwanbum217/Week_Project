@@ -120,20 +120,33 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Required field validation with alert
+    const requiredFields = [
+      { field: 'username', label: '아이디' },
+      { field: 'password', label: '비밀번호' },
+      { field: 'birthDate', label: '생년월일' },
+      { field: 'gender', label: '성별' },
+      { field: 'phone', label: '휴대폰 번호' },
+      { field: 'emailId', label: '이메일 아이디' },
+      { field: 'emailDomain', label: '이메일 도메인' },
+      { field: 'location', label: '지역' },
+      { field: 'interests', label: '관심사' }
+    ];
+
+    const missingFields = requiredFields.filter(({ field }) => !formData[field]);
+    if (missingFields.length > 0) {
+      const missingLabels = missingFields.map(f => f.label).join(', ');
+      alert(`다음 필수 항목을 입력해주세요:\n${missingLabels}`);
+      return;
+    }
+
     if (!isIdChecked) {
-      toaster.create({
-        title: '아이디 중복 확인이 필요합니다',
-        type: 'warning',
-      });
+      alert('아이디 중복 확인이 필요합니다.');
       return;
     }
 
     if (!formData.agreedToTerms || !formData.agreedToPrivacy) {
-      toaster.create({
-        title: '필수 약관에 동의해주세요',
-        description: '이용약관 및 개인정보 수집·이용(필수)에 동의해야 가입할 수 있습니다.',
-        type: 'warning',
-      });
+      alert('필수 약관에 동의해주세요.\n이용약관 및 개인정보 수집·이용(필수)에 동의해야 가입할 수 있습니다.');
       return;
     }
 
@@ -240,9 +253,9 @@ const SignUp = () => {
             </Box>
 
             <form onSubmit={handleSubmit}>
-              <VStack spacing={5}>
-                <div className="w-full">
-                  <label className="mooa-label">아이디</label>
+              <VStack gap={6}>
+                <div className="w-full" style={{ marginBottom: '8px' }}>
+                  <label style={{ display: 'block', fontSize: '15px', fontWeight: '600', color: '#374151', marginBottom: '10px' }}>아이디 <span style={{ color: '#ef4444' }}>*</span></label>
                   <div style={{ display: 'flex', gap: '10px', width: '100%' }}>
                     <input
                       name="username"
@@ -273,8 +286,8 @@ const SignUp = () => {
                   )}
                 </div>
 
-                <div className="w-full">
-                  <label className="mooa-label">비밀번호</label>
+                <div className="w-full" style={{ marginBottom: '8px' }}>
+                  <label style={{ display: 'block', fontSize: '15px', fontWeight: '600', color: '#374151', marginBottom: '10px' }}>비밀번호 <span style={{ color: '#ef4444' }}>*</span></label>
                   <input
                     type="password"
                     name="password"
@@ -285,8 +298,8 @@ const SignUp = () => {
                   />
                 </div>
 
-                <div className="w-full">
-                  <label className="mooa-label">생년월일</label>
+                <div className="w-full" style={{ marginBottom: '8px' }}>
+                  <label style={{ display: 'block', fontSize: '15px', fontWeight: '600', color: '#374151', marginBottom: '10px' }}>생년월일 <span style={{ color: '#ef4444' }}>*</span></label>
                   <input
                     type="date"
                     name="birthDate"
@@ -299,8 +312,8 @@ const SignUp = () => {
                   </Text>
                 </div>
 
-                <div className="w-full">
-                  <label className="mooa-label">성별</label>
+                <div className="w-full" style={{ marginBottom: '8px' }}>
+                  <label style={{ display: 'block', fontSize: '15px', fontWeight: '600', color: '#374151', marginBottom: '10px' }}>성별 <span style={{ color: '#ef4444' }}>*</span></label>
                   <div className="relative">
                     <select
                       name="gender"
@@ -323,8 +336,8 @@ const SignUp = () => {
                     </div>
                   </div>
 
-                  <div className="w-full">
-                    <label className="mooa-label">휴대폰 번호</label>
+                  <div className="w-full" style={{ marginTop: '16px', marginBottom: '8px' }}>
+                    <label style={{ display: 'block', fontSize: '15px', fontWeight: '600', color: '#374151', marginBottom: '10px' }}>휴대폰 번호 <span style={{ color: '#ef4444' }}>*</span></label>
                     <input
                       type="tel"
                       name="phone"
@@ -335,8 +348,8 @@ const SignUp = () => {
                     />
                   </div>
 
-                  <div className="w-full">
-                    <label className="mooa-label">이메일 주소</label>
+                  <div className="w-full" style={{ marginTop: '16px', marginBottom: '8px' }}>
+                    <label style={{ display: 'block', fontSize: '15px', fontWeight: '600', color: '#374151', marginBottom: '10px' }}>이메일 주소 <span style={{ color: '#ef4444' }}>*</span></label>
                     <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                       <input
                         name="emailId"
@@ -373,8 +386,8 @@ const SignUp = () => {
                   </div>
                 </div>
 
-                <div className="w-full">
-                  <label className="mooa-label">지역</label>
+                <div className="w-full" style={{ marginBottom: '8px' }}>
+                  <label style={{ display: 'block', fontSize: '15px', fontWeight: '600', color: '#374151', marginBottom: '10px' }}>지역 <span style={{ color: '#ef4444' }}>*</span></label>
                   <input
                     name="location"
                     onChange={handleChange}
@@ -384,8 +397,8 @@ const SignUp = () => {
                   />
                 </div>
 
-                <div className="w-full">
-                  <label className="mooa-label">나의 관심사</label>
+                <div className="w-full" style={{ marginBottom: '8px' }}>
+                  <label style={{ display: 'block', fontSize: '15px', fontWeight: '600', color: '#374151', marginBottom: '10px' }}>나의 관심사 <span style={{ color: '#ef4444' }}>*</span></label>
                   <div className="relative">
                     <select
                       name="interests"
@@ -414,8 +427,8 @@ const SignUp = () => {
 
 
 
-                <div className="w-full">
-                  <label className="mooa-label">모임개설하기</label>
+                <div className="w-full" style={{ marginBottom: '8px' }}>
+                  <label style={{ display: 'block', fontSize: '15px', fontWeight: '600', color: '#374151', marginBottom: '10px' }}>모임개설하기</label>
                   <div className="relative">
                     <select
                       name="wantToHost"
