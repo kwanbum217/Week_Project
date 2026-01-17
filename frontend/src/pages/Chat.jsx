@@ -6,7 +6,6 @@ import {
   Input,
   IconButton,
   Text,
-  Avatar,
   Badge,
   Heading,
   Flex,
@@ -21,8 +20,10 @@ import { over } from 'stompjs';
 const Chat = () => {
   const { roomId } = useParams();
   const [messages, setMessages] = useState([]);
+  const [onlineParticipants, setOnlineParticipants] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [stompClient, setStompClient] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
   const navigate = useNavigate();
   const messagesEndRef = useRef(null);
 
@@ -43,6 +44,22 @@ const Chat = () => {
         const payload = JSON.parse(msg.body);
         setMessages((prev) => [...prev, payload]);
       });
+
+      // Subscribe to participants list
+      client.subscribe('/topic/chat/participants', (msg) => {
+        const users = JSON.parse(msg.body);
+        // Convert string list to object list for UI compatibility
+        setOnlineParticipants(users.map(u => ({ name: u, id: u })));
+      });
+
+      // Join notification
+      const user = JSON.parse(localStorage.getItem('user'));
+      setCurrentUser(user);
+      client.send("/app/chat.addUser", {}, JSON.stringify({
+        sender: user.username,
+        type: 'JOIN'
+      }));
+
     }, (err) => {
       console.error('WebSocket connection error:', err);
     });
@@ -73,22 +90,14 @@ const Chat = () => {
     }
   };
 
-  // Extract unique participants from messages
-  // We need to store both name and id.
-  // Map: name -> id (last seen id for that name)
-  const participantMap = new Map();
-  messages.forEach(msg => {
-    if (msg.sender && msg.sender !== 'Me' && msg.sender !== '나') {
-      participantMap.set(msg.sender, msg.senderId);
-    }
-  });
+  // Use onlineParticipants from server
+  const participants = onlineParticipants.map(p => ({
+    ...p,
+    name: p.name === currentUser?.username ? '나' : p.name
+  }));
 
-  const participants = Array.from(participantMap, ([name, id]) => ({ name, id }));
-
-  // Add 'Me' manually if not present (though 'Me' usually doesn't need a menu)
-  if (!participants.some(p => p.name === '나')) {
-    participants.unshift({ name: '나', id: null });
-  }
+  // Ensure '나' is at the top
+  participants.sort((a, b) => (a.name === '나' ? -1 : b.name === '나' ? 1 : 0));
 
   const handlePrivateChat = async (targetUserId) => {
     if (!targetUserId) {
@@ -161,7 +170,20 @@ const Chat = () => {
                   return (
                     <Flex key={idx} justify={isMe ? 'flex-end' : 'flex-start'}>
                       {!isMe && (
-                        <Avatar size="sm" name={msg.sender} mr={2} src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${msg.sender}`} />
+                        <Box
+                          w="32px"
+                          h="32px"
+                          borderRadius="full"
+                          overflow="hidden"
+                          mr={2}
+                          flexShrink={0}
+                        >
+                          <img
+                            src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${msg.sender}`}
+                            alt={msg.sender}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                          />
+                        </Box>
                       )}
                       <Box
                         maxW="70%"
@@ -236,36 +258,42 @@ const Chat = () => {
 
               <VStack align="stretch" spacing={3}>
                 {participants.map((participant, idx) => (
-                  <Popover.Root key={idx} placement="left" trigger="click">
-                    <Popover.Trigger>
-                      <HStack
+                  <Popover.Root key={idx} positioning={{ placement: 'left' }}>
+                    <Popover.Trigger asChild>
+                      <Button
+                        variant="ghost"
+                        w="full"
+                        justifyContent="flex-start"
                         p={2}
                         borderRadius="lg"
-                        _hover={{ bg: 'whiteAlpha.500', cursor: 'pointer' }}
-                        transition="all 0.2s"
+                        _hover={{ bg: 'whiteAlpha.500' }}
                       >
-                        <Text fontWeight="medium" fontSize="sm" color="gray.700">
-                          {participant.name}
-                        </Text>
-                        {participant.name === '나' && (
-                          <Badge ml="auto" fontSize="xs" bg="#25D366" color="white">ME</Badge>
-                        )}
-                      </HStack>
+                        <HStack w="full">
+                          <Text fontWeight="medium" fontSize="sm" color="gray.700">
+                            {participant.name}
+                          </Text>
+                          {participant.name === '나' && (
+                            <Badge ml="auto" fontSize="xs" bg="#25D366" color="white">ME</Badge>
+                          )}
+                        </HStack>
+                      </Button>
                     </Popover.Trigger>
                     {participant.name !== '나' && (
-                      <Popover.Content w="200px">
-                        <Popover.Arrow />
-                        <Popover.Body p={2}>
-                          <VStack align="stretch" spacing={1}>
-                            <Button size="sm" variant="ghost" onClick={() => handlePrivateChat(participant.id)}>
-                              1:1 채팅하기
-                            </Button>
-                            <Button size="sm" variant="ghost" onClick={() => handleVoiceChat(participant.id)}>
-                              보이스톡
-                            </Button>
-                          </VStack>
-                        </Popover.Body>
-                      </Popover.Content>
+                      <Popover.Positioner>
+                        <Popover.Content w="200px">
+                          <Popover.Arrow />
+                          <Popover.Body p={2}>
+                            <VStack align="stretch" gap={1}>
+                              <Button size="sm" variant="ghost" onClick={() => handlePrivateChat(participant.id)}>
+                                1:1 채팅하기
+                              </Button>
+                              <Button size="sm" variant="ghost" onClick={() => handleVoiceChat(participant.id)}>
+                                보이스톡
+                              </Button>
+                            </VStack>
+                          </Popover.Body>
+                        </Popover.Content>
+                      </Popover.Positioner>
                     )}
                   </Popover.Root>
                 ))}

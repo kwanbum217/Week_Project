@@ -23,13 +23,16 @@ public class ChatController {
   private final ChatRoomRepository roomRepo;
   private final ChatMessageRepository messageRepo;
   private final SimpMessagingTemplate messagingTemplate;
+  private final com.example.datingapp.service.OnlineUserService onlineUserService;
 
   public ChatController(ChatRoomRepository roomRepo,
       ChatMessageRepository messageRepo,
-      SimpMessagingTemplate messagingTemplate) {
+      SimpMessagingTemplate messagingTemplate,
+      com.example.datingapp.service.OnlineUserService onlineUserService) {
     this.roomRepo = roomRepo;
     this.messageRepo = messageRepo;
     this.messagingTemplate = messagingTemplate;
+    this.onlineUserService = onlineUserService;
   }
 
   // --- REST API (User Requested) ---
@@ -106,7 +109,13 @@ public class ChatController {
       chatMessage.setSenderId((Long) attrs.get("userId"));
     }
 
-    chatMessage.setContent("joined the chat");
+    // Add to online users service
+    onlineUserService.addUser(chatMessage.getSender());
+
+    // Broadcast updated list
+    messagingTemplate.convertAndSend("/topic/chat/participants", onlineUserService.getOnlineUsers());
+
+    chatMessage.setContent(chatMessage.getSender() + " joined the chat");
     return chatMessage;
   }
 }
