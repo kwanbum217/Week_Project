@@ -122,26 +122,64 @@ const MeetupDetail = () => {
           border="1px solid"
           borderColor="gray.200"
         >
-          {/* Header */}
+          {/* Header with Image */}
           <Box
-            bg="linear-gradient(135deg, #22c55e 0%, #16a34a 100%)"
-            color="white"
-            p={8}
+            position="relative"
+            h="300px"
+            overflow="hidden"
           >
-            <Badge colorScheme="whiteAlpha" mb={3} fontSize="sm">
-              {meetup.category || '모임'}
-            </Badge>
-            <Heading size="xl" mb={2}>{meetup.title}</Heading>
-            <HStack gap={4} flexWrap="wrap">
-              <HStack>
-                <FaUserCircle />
-                <Text>주최: {meetup.hostName || meetup.host || '알 수 없음'}</Text>
+            {meetup.image ? (
+              <img
+                src={meetup.image}
+                alt={meetup.title}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  position: 'absolute',
+                  top: 0,
+                  left: 0
+                }}
+                onError={(e) => { e.target.src = 'https://via.placeholder.com/600x300?text=Meetup'; }}
+              />
+            ) : (
+              <Box
+                w="100%"
+                h="100%"
+                bg="linear-gradient(135deg, #22c55e 0%, #16a34a 100%)"
+              />
+            )}
+            <Box
+              position="absolute"
+              top={0}
+              left={0}
+              right={0}
+              bottom={0}
+              bg="blackAlpha.400"
+            />
+            <Box
+              position="absolute"
+              bottom={0}
+              left={0}
+              right={0}
+              p={8}
+              color="white"
+            >
+              <Badge colorScheme="whiteAlpha" mb={3} fontSize="sm">
+                {meetup.category || '모임'}
+              </Badge>
+              <Heading size="xl" mb={2}>{meetup.title}</Heading>
+              <HStack gap={4} flexWrap="wrap">
+                <HStack>
+                  <FaUserCircle />
+                  <Text>주최: {meetup.hostName || meetup.host || '알 수 없음'}</Text>
+                </HStack>
+                <HStack>
+                  <FaUsers />
+                  <Text>참가자: {meetup.participantCount || 0}명</Text>
+                </HStack>
               </HStack>
-              <HStack>
-                <FaUsers />
-                <Text>참가자: {meetup.participantCount || 0}명</Text>
-              </HStack>
-            </HStack>
+            </Box>
           </Box>
 
           {/* Body */}

@@ -101,9 +101,9 @@ const MarketDetail = () => {
               aspectRatio={1}
               position="relative"
             >
-              {item.imageUrl ? (
+              {item.image ? (
                 <Image
-                  src={item.imageUrl}
+                  src={item.image}
                   alt={item.title}
                   w="100%"
                   h="100%"
